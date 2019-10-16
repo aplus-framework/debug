@@ -1,0 +1,56 @@
+{
+	"name": "natanfelles/debug",
+	"type": "library",
+	"description": "The Framework Debug Library",
+	"keywords": [
+		"debug"
+	],
+	"homepage": "https://the-framework.gitlab.io/libraries/debug.html",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Natan Felles",
+			"email": "natanfelles@gmail.com"
+		}
+	],
+	"require": {
+		"php": ">=7.3",
+		"natanfelles/cli": "^1.0",
+		"natanfelles/language": "^1.0"
+	},
+	"require-dev": {
+		"ext-xdebug": "*",
+		"localheinz/composer-normalize": "^1.3",
+		"natanfelles/coding-standard": "^1.0",
+		"phpmd/phpmd": "^2.7",
+		"phpstan/phpstan": "^0.11",
+		"phpunit/phpunit": "^8.3"
+	},
+	"autoload": {
+		"psr-4": {
+			"Framework\\Debug\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Tests\\Debug\\": "tests/"
+		}
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"scripts": {
+		"post-install-cmd": [
+			".hooks/init"
+		],
+		"post-update-cmd": [
+			"composer dump-autoload"
+		]
+	},
+	"support": {
+		"email": "natanfelles@gmail.com",
+		"issues": "https://gitlab.com/the-framework/libraries/debug/issues",
+		"wiki": "https://gitlab.com/the-framework/libraries/debug/wikis/home",
+		"source": "https://gitlab.com/the-framework/libraries/debug",
+		"docs": "https://the-framework.gitlab.io/libraries/debug/docs/"
+	}
+}
