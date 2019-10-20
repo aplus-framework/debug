@@ -16,7 +16,9 @@
 	"require": {
 		"php": ">=7.3",
 		"natanfelles/cli": "^1.0",
-		"natanfelles/language": "^1.0"
+		"natanfelles/http": "^1.0",
+		"natanfelles/language": "^1.0",
+		"natanfelles/log": "^1.0"
 	},
 	"require-dev": {
 		"ext-xdebug": "*",

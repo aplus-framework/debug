@@ -2,6 +2,7 @@
 
 use Framework\CLI\CLI;
 use Framework\Language\Language;
+use Framework\Log\Logger;
 
 /**
  * Class Exceptions.
@@ -18,28 +19,34 @@ class Exceptions
 	 * @var bool
 	 */
 	protected $cleanBuffer = true;
+	/**
+	 * @var Logger
+	 */
 	protected $logger;
+	/**
+	 * @var string
+	 */
 	protected $environment = 'production';
 	/**
 	 * @var Language
 	 */
 	protected $language;
+	/**
+	 * @var bool
+	 */
 	protected $handleErrors = true;
 
 	public function __construct(
-		$environment = self::ENV_PROD,
-		$clearBuffer = true,
-		string $viewsDir = null,
-		Language $language = null
+		Logger $logger,
+		Language $language = null,
+		$environment = self::ENV_PROD
 	) {
 		$this->environment = $environment;
-		$this->initialize($clearBuffer);
-		if ($viewsDir) {
-			$this->setViewsDir($viewsDir);
-		}
-		$this->language = $language ?: new Language('pt-br');
+		$this->initialize();
+		$this->language = $language ?: new Language('en');
 		$this->language
 			->addDirectory(__DIR__ . '/Languages');
+		$this->logger = $logger;
 	}
 
 	public function getViewsDir() : string
@@ -72,7 +79,7 @@ class Exceptions
 		if ($this->cleanBuffer && \ob_get_length()) {
 			\ob_end_clean();
 		}
-		//logger()->log('CRITICAL', $exception);
+		$this->logger->critical($exception);
 		if (\PHP_SAPI === 'cli') {
 			$message = $this->language->render('debug', 'exception')
 				. ': ' . \get_class($exception) . \PHP_EOL;
@@ -97,7 +104,7 @@ class Exceptions
 			return;
 		}
 		$error = 'Debug exception view "' . $this->viewsDir . $file . '" was not found.';
-		//logger()->log('CRITICAL', $error);
+		$this->logger->critical($error);
 		throw new \LogicException($error);
 	}
 
