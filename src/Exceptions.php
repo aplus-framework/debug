@@ -41,12 +41,10 @@ class Exceptions
 		Language $language = null,
 		$environment = self::ENV_PROD
 	) {
-		$this->environment = $environment;
-		$this->initialize();
-		$this->language = $language ?: new Language('en');
-		$this->language
-			->addDirectory(__DIR__ . '/Languages');
 		$this->logger = $logger;
+		$this->language = $language ?: new Language('en');
+		$this->language->addDirectory(__DIR__ . '/Languages');
+		$this->environment = $environment;
 	}
 
 	public function getViewsDir() : string
