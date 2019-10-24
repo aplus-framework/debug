@@ -8,9 +8,8 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title><?=
-		$this->language->render('debug', 'exception');
-		?>: <?= htmlentities($exception->getMessage()); ?></title>
+	<title><?= $this->language->render('debug', 'exception') ?>: <?=
+		htmlentities($exception->getMessage()) ?></title>
 	<style>
 		body {
 			margin: 0 0 20px;
@@ -139,23 +138,23 @@
 </head>
 <body>
 <header>
-	<small><?= $this->language->render('debug', 'exception'); ?>:</small>
-	<h1><?= get_class($exception); ?></h1>
-	<small><?= $this->language->render('debug', 'message'); ?>:</small>
-	<h2><?= htmlentities($exception->getMessage()); ?></h2>
+	<small><?= $this->language->render('debug', 'exception') ?>:</small>
+	<h1><?= get_class($exception) ?></h1>
+	<small><?= $this->language->render('debug', 'message') ?>:</small>
+	<h2><?= htmlentities($exception->getMessage()) ?></h2>
 </header>
 <section class="file">
 	<div>
-		<small><?= $this->language->render('debug', 'file'); ?>:</small>
-		<h3><?= htmlentities($exception->getFile()); ?></h3>
+		<small><?= $this->language->render('debug', 'file') ?>:</small>
+		<h3><?= htmlentities($exception->getFile()) ?></h3>
 	</div>
 	<div>
-		<small><?= $this->language->render('debug', 'line'); ?>:</small>
-		<h3><?= $exception->getLine(); ?></h3>
+		<small><?= $this->language->render('debug', 'line') ?>:</small>
+		<h3><?= $exception->getLine() ?></h3>
 	</div>
 </section>
 <section class="trace">
-	<small><?= $this->language->render('debug', 'trace'); ?>:</small>
+	<small><?= $this->language->render('debug', 'trace') ?>:</small>
 	<?php
 	$traces = $exception->getTrace();
 	if ($traces
@@ -170,8 +169,8 @@
 		$traces = array_reverse($traces);
 	}
 	?>
-	<?php foreach ($traces as $key => $trace) {
-		?><?php if (isset($trace['file'])) { ?><?php if (is_readable($trace['file'])) { ?>
+	<?php foreach ($traces as $key => $trace) :
+		?><?php if (isset($trace['file'])) : ?><?php if (is_readable($trace['file'])) : ?>
 		<dl>
 			<dt>
 				<span><?= count($traces) - $key; ?></span>
@@ -204,17 +203,16 @@
 						}
 					}
 					?></div>
-				<pre class="code"><?= htmlentities($pre); ?></pre>
+				<pre class="code"><?= htmlentities($pre) ?></pre>
 			</dd>
 		</dl>
-	<?php } else { ?>
+	<?php else : ?>
 		<dl>
 			<dt>
-				<span><?= $key; ?></span> File <em><?= $trace['file']; ?></em> is not readable.
+				<span><?= $key; ?></span> File <em><?= $trace['file'] ?></em> is not readable.
 			</dt>
 		</dl>
-	<?php } ?><?php } ?><?php
-	} ?>
+	<?php endif ?><?php endif ?><?php endforeach ?>
 </section>
 <section class="input">
 	<small>Input:</small>
@@ -232,27 +230,27 @@
 	unset($item);
 	?>
 
-	<?php foreach ($input as $key => $values) { ?><?php if ($values) { ?>
+	<?php foreach ($input as $key => $values) : ?><?php if ($values) : ?>
 		<table>
 			<thead>
 			<tr>
-				<th colspan="2"><?= $key; ?></th>
+				<th colspan="2"><?= $key ?></th>
 			</tr>
 			</thead>
 			<tbody>
-			<?php foreach ($values as $field => $value) { ?>
+			<?php foreach ($values as $field => $value) : ?>
 				<tr>
 					<th><?= htmlentities(
 		is_array($field) ? print_r($field, true) : $field
-	); ?></th>
+	) ?></th>
 					<td><?= htmlentities(
 							is_array($value) ? print_r($value, true) : $value
-						); ?></td>
+						) ?></td>
 				</tr>
-			<?php } ?>
+			<?php endforeach ?>
 			</tbody>
 		</table>
-	<?php } ?><?php } ?>
+	<?php endif ?><?php endforeach ?>
 </section>
 </body>
 </html>

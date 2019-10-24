@@ -107,8 +107,8 @@ class Timer
 		return [
 			'memory' => \number_format(
 				(
-						$this->marks[$to]['memory'] - $this->marks[$from]['memory']
-					) / 1024 / 1024,
+					$this->marks[$to]['memory'] - $this->marks[$from]['memory']
+				) / 1024 / 1024,
 				3
 			) . ' MB',
 			'time' => \number_format(
