@@ -5,10 +5,7 @@ use PHPUnit\Framework\TestCase;
 
 class TimerTest extends TestCase
 {
-	/**
-	 * @var Timer
-	 */
-	protected $timer;
+	protected Timer $timer;
 
 	public function setUp() : void
 	{

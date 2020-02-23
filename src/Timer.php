@@ -5,11 +5,8 @@
  */
 class Timer
 {
-	/**
-	 * @var array
-	 */
-	protected $marks = [];
-	protected $tests_count = 1;
+	protected array $marks = [];
+	protected int $tests_count = 1;
 
 	/**
 	 * Timer constructor.

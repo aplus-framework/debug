@@ -11,30 +11,12 @@ class Exceptions
 {
 	public const ENV_DEV = 'development';
 	public const ENV_PROD = 'production';
-	/**
-	 * @var string
-	 */
-	protected $viewsDir = __DIR__ . '/Views/';
-	/**
-	 * @var bool
-	 */
-	protected $cleanBuffer = true;
-	/**
-	 * @var Logger
-	 */
-	protected $logger;
-	/**
-	 * @var string
-	 */
-	protected $environment = 'production';
-	/**
-	 * @var Language
-	 */
-	protected $language;
-	/**
-	 * @var bool
-	 */
-	protected $handleErrors = true;
+	protected string $viewsDir = __DIR__ . '/Views/';
+	protected bool $cleanBuffer = true;
+	protected Logger $logger;
+	protected string $environment = 'production';
+	protected Language $language;
+	protected bool $handleErrors = true;
 
 	public function __construct(
 		Logger $logger,
