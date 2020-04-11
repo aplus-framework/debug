@@ -68,7 +68,9 @@ class Exceptions
 			$message .= $this->language->render('debug', 'file')
 				. ': ' . $exception->getFile() . \PHP_EOL;
 			$message .= $this->language->render('debug', 'line')
-				. ': ' . $exception->getLine();
+				. ': ' . $exception->getLine() . \PHP_EOL;
+			$message .= $this->language->render('debug', 'trace')
+				. ': ' . $exception->getTraceAsString();
 			CLI::error($message);
 			return;
 		}
