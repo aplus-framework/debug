@@ -16,7 +16,7 @@
 	"require": {
 		"php": ">=7.4",
 		"natanfelles/cli": "^1.2",
-		"natanfelles/http": "^1.3",
+		"natanfelles/http": "^2.0",
 		"natanfelles/language": "^1.1",
 		"natanfelles/log": "^1.1"
 	},
