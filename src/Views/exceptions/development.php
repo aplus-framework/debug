@@ -158,6 +158,7 @@
 	<?php
 	$traces = $exception->getTrace();
 	if ($traces
+		&& isset($traces[0]['file'])
 		&& ($traces[0]['file'] !== $exception->getFile()
 			|| $traces[0]['line'] !== $exception->getLine())
 	) {
