@@ -14,19 +14,18 @@
 		}
 	],
 	"require": {
-		"php": ">=7.4",
-		"natanfelles/cli": "^1.2",
-		"natanfelles/http": "^2.0",
-		"natanfelles/language": "^1.1",
+		"php": ">=8.0",
+		"natanfelles/cli": "^1.5",
+		"natanfelles/language": "^1.2",
 		"natanfelles/log": "^1.1"
 	},
 	"require-dev": {
 		"ext-xdebug": "*",
 		"ergebnis/composer-normalize": "^2.0",
-		"natanfelles/coding-standard": "^1.0",
-		"phpmd/phpmd": "^2.8",
+		"natanfelles/coding-standard": "^1.1",
+		"phpmd/phpmd": "^2.9",
 		"phpstan/phpstan": "^0.12",
-		"phpunit/phpunit": "^8.5"
+		"phpunit/phpunit": "^9.3"
 	},
 	"autoload": {
 		"psr-4": {
