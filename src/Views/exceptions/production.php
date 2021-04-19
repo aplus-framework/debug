@@ -1,6 +1,6 @@
 <?php
 /**
- * @var \Framework\Debug\Exceptions $this
+ * @var \Framework\Debug\ExceptionHandler $this
  */
 ?>
 <!doctype html>

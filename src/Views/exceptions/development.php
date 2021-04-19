@@ -1,7 +1,7 @@
 <?php
 /**
- * @var Exception                   $exception
- * @var \Framework\Debug\Exceptions $this
+ * @var Exception                         $exception
+ * @var \Framework\Debug\ExceptionHandler $this
  */
 ?>
 <!doctype html>
@@ -249,8 +249,8 @@
 		is_array($field) ? print_r($field, true) : $field
 	) ?></th>
 						<td><?= htmlentities(
-								is_array($value) ? print_r($value, true) : $value
-							) ?></td>
+		is_array($value) ? print_r($value, true) : $value
+	) ?></td>
 					</tr>
 				<?php endforeach ?>
 				</tbody>

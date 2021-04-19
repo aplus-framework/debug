@@ -5,25 +5,34 @@ use Framework\Language\Language;
 use Framework\Log\Logger;
 
 /**
- * Class Exceptions.
+ * Class ExceptionHandler.
  */
-class Exceptions
+class ExceptionHandler
 {
 	public const ENV_DEV = 'development';
 	public const ENV_PROD = 'production';
 	protected string $viewsDir = __DIR__ . '/Views/';
 	protected bool $cleanBuffer = true;
-	protected Logger $logger;
+	protected ?Logger $logger = null;
 	protected string $environment = 'production';
 	protected Language $language;
 	protected bool $handleErrors = true;
 
+	/**
+	 * ExceptionHandler constructor.
+	 *
+	 * @param string                            $environment One of ENV_* constants
+	 * @param \Framework\Log\Logger|null        $logger
+	 * @param \Framework\Language\Language|null $language
+	 */
 	public function __construct(
-		Logger $logger,
-		Language $language = null,
-		$environment = self::ENV_PROD
+		$environment = self::ENV_PROD,
+		Logger $logger = null,
+		Language $language = null
 	) {
-		$this->logger = $logger;
+		if ($logger) {
+			$this->logger = $logger;
+		}
 		$this->language = $language ?: new Language('en');
 		$this->language->addDirectory(__DIR__ . '/Languages');
 		$this->environment = $environment;
@@ -44,34 +53,23 @@ class Exceptions
 		return $this;
 	}
 
-	public function initialize(bool $clean_buffer = true)
+	public function initialize(bool $clean_buffer = true) : void
 	{
 		$this->cleanBuffer = $clean_buffer;
 		\set_exception_handler([$this, 'exceptionHandler']);
 		if ($this->handleErrors) {
 			\set_error_handler([$this, 'errorHandler']);
 		}
-		return $this;
 	}
 
-	public function exceptionHandler(\Throwable $exception)
+	public function exceptionHandler(\Throwable $exception) : void
 	{
 		if ($this->cleanBuffer && \ob_get_length()) {
 			\ob_end_clean();
 		}
-		$this->logger->critical($exception);
+		$this->log($exception);
 		if (\PHP_SAPI === 'cli') {
-			$message = $this->language->render('debug', 'exception')
-				. ': ' . \get_class($exception) . \PHP_EOL;
-			$message .= $this->language->render('debug', 'message')
-				. ': ' . $exception->getMessage() . \PHP_EOL;
-			$message .= $this->language->render('debug', 'file')
-				. ': ' . $exception->getFile() . \PHP_EOL;
-			$message .= $this->language->render('debug', 'line')
-				. ': ' . $exception->getLine() . \PHP_EOL;
-			$message .= $this->language->render('debug', 'trace')
-				. ': ' . $exception->getTraceAsString();
-			CLI::error($message);
+			$this->cliError($exception);
 			return;
 		}
 		\http_response_code(500);
@@ -85,9 +83,31 @@ class Exceptions
 			require $this->viewsDir . $file;
 			return;
 		}
-		$error = 'Debug exception view "' . $this->viewsDir . $file . '" was not found.';
-		$this->logger->critical($error);
+		$error = 'Debug exception view "' . $this->viewsDir . $file . '" was not found';
+		$this->log($error);
 		throw new \LogicException($error);
+	}
+
+	protected function cliError(\Throwable $exception) : void
+	{
+		$message = $this->language->render('debug', 'exception')
+			. ': ' . \get_class($exception) . \PHP_EOL;
+		$message .= $this->language->render('debug', 'message')
+			. ': ' . $exception->getMessage() . \PHP_EOL;
+		$message .= $this->language->render('debug', 'file')
+			. ': ' . $exception->getFile() . \PHP_EOL;
+		$message .= $this->language->render('debug', 'line')
+			. ': ' . $exception->getLine() . \PHP_EOL;
+		$message .= $this->language->render('debug', 'trace')
+			. ': ' . $exception->getTraceAsString();
+		CLI::error($message);
+	}
+
+	protected function log(string $message) : void
+	{
+		if ($this->logger) {
+			$this->logger->critical($message);
+		}
 	}
 
 	/**
@@ -107,59 +127,26 @@ class Exceptions
 		string $file = null,
 		int $line = null,
 		$context = null
-	) {
-		switch ($severity) {
-			case \E_ERROR:
-				$type = 'Error';
-				break;
-			case \E_WARNING:
-				$type = 'Warning';
-				break;
-			case \E_PARSE:
-				$type = 'Parse';
-				break;
-			case \E_NOTICE:
-				$type = 'Notice';
-				break;
-			case \E_CORE_ERROR:
-				$type = 'Core Error';
-				break;
-			case \E_CORE_WARNING:
-				$type = 'Core Warning';
-				break;
-			case \E_COMPILE_ERROR:
-				$type = 'Compile Error';
-				break;
-			case \E_COMPILE_WARNING:
-				$type = 'Compile Warning';
-				break;
-			case \E_USER_ERROR:
-				$type = 'User Error';
-				break;
-			case \E_USER_WARNING:
-				$type = 'User Warning';
-				break;
-			case \E_USER_NOTICE:
-				$type = 'User Notice';
-				break;
-			case \E_STRICT:
-				$type = 'Strict';
-				break;
-			case \E_RECOVERABLE_ERROR:
-				$type = 'Recoverable Error';
-				break;
-			case \E_DEPRECATED:
-				$type = 'Deprecated';
-				break;
-			case \E_USER_DEPRECATED:
-				$type = 'User Deprecated';
-				break;
-			case \E_ALL:
-				$type = 'All';
-				break;
-			default:
-				$type = '';
-		}
+	) : void {
+		$type = match ($severity) {
+			\E_ERROR => 'Error',
+			\E_WARNING => 'Warning',
+			\E_PARSE => 'Parse',
+			\E_NOTICE => 'Notice',
+			\E_CORE_ERROR => 'Core Error',
+			\E_CORE_WARNING => 'Core Warning',
+			\E_COMPILE_ERROR => 'Compile Error',
+			\E_COMPILE_WARNING => 'Compile Warning',
+			\E_USER_ERROR => 'User Error',
+			\E_USER_WARNING => 'User Warning',
+			\E_USER_NOTICE => 'User Notice',
+			\E_STRICT => 'Strict',
+			\E_RECOVERABLE_ERROR => 'Recoverable Error',
+			\E_DEPRECATED => 'Deprecated',
+			\E_USER_DEPRECATED => 'User Deprecated',
+			\E_ALL => 'All',
+			default => '',
+		};
 		if ( ! (\error_reporting() & $severity)) {
 			// This error code is not included in error_reporting
 			return;
