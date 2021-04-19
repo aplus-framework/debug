@@ -1,5 +1,10 @@
+<?php
+/**
+ * @var \Framework\Debug\Exceptions $this
+ */
+?>
 <!doctype html>
-<html lang="en">
+<html lang="<?= $this->language->getCurrentLocale() ?>">
 <head>
 	<meta charset="utf-8">
 	<title><?= $this->language->render('debug', 'exceptionTitle') ?></title>

@@ -5,7 +5,7 @@
  */
 ?>
 <!doctype html>
-<html lang="en">
+<html lang="<?= $this->language->getCurrentLocale() ?>">
 <head>
 	<meta charset="utf-8">
 	<title><?= $this->language->render('debug', 'exception') ?>: <?=
@@ -169,50 +169,54 @@
 		$traces = array_reverse($traces);
 	}
 	?>
-	<?php foreach ($traces as $key => $trace) :
-		?><?php if (isset($trace['file'])) : ?><?php if (is_readable($trace['file'])) : ?>
-		<dl>
-			<dt>
-				<span><?= count($traces) - $key; ?></span>
-				<?= $trace['file']; ?>:<?= $trace['line']; ?>
-			</dt>
-			<dd>
-				<?php
-				$lines = [];
-				$pre = '';
-				$handle = fopen($trace['file'], 'rb');
-				$line = 1;
-				while ( ! feof($handle)) {
-					$code = fgets($handle);
-					if ($line > ($trace['line'] - 10) && $line < ($trace['line'] + 10)) {
-						$pre .= rtrim($code) . \PHP_EOL;
-						$lines[] = $line;
-					}
-					$line++;
-				}
-				fclose($handle);
-				?>
-				<div><?php
-					foreach ($lines as $line) {
-						if ($line === $trace['line']) {
-							echo '<span>';
-							echo $line . \PHP_EOL;
-							echo '</span>';
-						} else {
-							echo $line . \PHP_EOL;
+	<?php foreach ($traces as $key => $trace) : ?>
+		<?php if (isset($trace['file'])) : ?>
+			<?php if (is_readable($trace['file'])) : ?>
+				<dl>
+					<dt>
+						<span><?= count($traces) - $key ?></span>
+						<?= $trace['file'] ?>:<?= $trace['line'] ?>
+					</dt>
+					<dd>
+						<?php
+						$lines = [];
+						$pre = '';
+						$handle = fopen($trace['file'], 'rb');
+						$line = 1;
+						while ( ! feof($handle)) {
+							$code = fgets($handle);
+							if ($line > ($trace['line'] - 10) && $line < ($trace['line'] + 10)) {
+								$pre .= rtrim($code) . \PHP_EOL;
+								$lines[] = $line;
+							}
+							$line++;
 						}
-					}
-					?></div>
-				<pre class="code"><?= htmlentities($pre) ?></pre>
-			</dd>
-		</dl>
-	<?php else : ?>
-		<dl>
-			<dt>
-				<span><?= $key; ?></span> File <em><?= $trace['file'] ?></em> is not readable.
-			</dt>
-		</dl>
-	<?php endif ?><?php endif ?><?php endforeach ?>
+						fclose($handle);
+						?>
+						<div><?php
+							foreach ($lines as $line) {
+								if ($line === $trace['line']) {
+									echo '<span>';
+									echo $line . \PHP_EOL;
+									echo '</span>';
+								} else {
+									echo $line . \PHP_EOL;
+								}
+							}
+							?></div>
+						<pre class="code"><?= htmlentities($pre) ?></pre>
+					</dd>
+				</dl>
+			<?php else : ?>
+				<dl>
+					<dt>
+						<span><?= $key ?></span> File
+						<em><?= $trace['file'] ?></em> is not readable.
+					</dt>
+				</dl>
+			<?php endif ?>
+		<?php endif ?>
+	<?php endforeach ?>
 </section>
 <section class="input">
 	<small>Input:</small>
@@ -230,27 +234,29 @@
 	unset($item);
 	?>
 
-	<?php foreach ($input as $key => $values) : ?><?php if ($values) : ?>
-		<table>
-			<thead>
-			<tr>
-				<th colspan="2"><?= $key ?></th>
-			</tr>
-			</thead>
-			<tbody>
-			<?php foreach ($values as $field => $value) : ?>
+	<?php foreach ($input as $key => $values) : ?>
+		<?php if ($values) : ?>
+			<table>
+				<thead>
 				<tr>
-					<th><?= htmlentities(
+					<th colspan="2"><?= $key ?></th>
+				</tr>
+				</thead>
+				<tbody>
+				<?php foreach ($values as $field => $value) : ?>
+					<tr>
+						<th><?= htmlentities(
 		is_array($field) ? print_r($field, true) : $field
 	) ?></th>
-					<td><?= htmlentities(
-		is_array($value) ? print_r($value, true) : $value
-	) ?></td>
-				</tr>
-			<?php endforeach ?>
-			</tbody>
-		</table>
-	<?php endif ?><?php endforeach ?>
+						<td><?= htmlentities(
+								is_array($value) ? print_r($value, true) : $value
+							) ?></td>
+					</tr>
+				<?php endforeach ?>
+				</tbody>
+			</table>
+		<?php endif ?>
+	<?php endforeach ?>
 </section>
 </body>
 </html>
