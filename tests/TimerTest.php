@@ -24,6 +24,8 @@ class TimerTest extends TestCase
 	{
 		$this->timer->addMark('1');
 		$this->assertEquals(['memory', 'time'], \array_keys($this->timer->getMark('1')));
+		$this->timer->setMark('foo', \memory_get_usage(), \microtime(true));
+		$this->assertEquals(['memory', 'time'], \array_keys($this->timer->getMark('foo')));
 	}
 
 	public function testDiff()
