@@ -74,7 +74,11 @@ class ExceptionHandler
 		}
 		\http_response_code(500);
 		if ( ! \headers_sent()) {
-			\header('Content-Type: text/html; charset=UTF-8');
+			$this->sendHeaders();
+		}
+		if ($this->isJSON()) {
+			$this->sendJSON($exception);
+			return;
 		}
 		$file = $this->environment !== static::ENV_DEV
 			? 'exceptions/production.php'
@@ -86,6 +90,38 @@ class ExceptionHandler
 		$error = 'Debug exception view "' . $this->viewsDir . $file . '" was not found';
 		$this->log($error);
 		throw new \LogicException($error);
+	}
+
+	protected function isJSON() : bool
+	{
+		return isset($_SERVER['HTTP_CONTENT_TYPE'])
+			&& \str_starts_with($_SERVER['HTTP_CONTENT_TYPE'], 'application/json');
+	}
+
+	protected function sendJSON(\Throwable $exception) : void
+	{
+		if ($this->environment !== static::ENV_DEV) {
+			echo \json_encode([
+				'message' => $this->language->render('debug', 'exceptionDescription'),
+			]);
+			return;
+		}
+		echo \json_encode([
+			'exception' => $exception::class,
+			'message' => $exception->getMessage(),
+			'file' => $exception->getFile(),
+			'line' => $exception->getLine(),
+			'trace' => $exception->getTrace(),
+		]);
+	}
+
+	protected function sendHeaders() : void
+	{
+		$content_type = 'text/html';
+		if ($this->isJSON()) {
+			$content_type = 'application/json';
+		}
+		\header('Content-Type: ' . $content_type . '; charset=UTF-8');
 	}
 
 	protected function cliError(\Throwable $exception) : void
