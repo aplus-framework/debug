@@ -24,9 +24,11 @@ class ExceptionHandler
 	 * @param string                            $environment One of ENV_* constants
 	 * @param \Framework\Log\Logger|null        $logger
 	 * @param \Framework\Language\Language|null $language
+	 *
+	 * @throws \InvalidArgumentException if environment is invalid
 	 */
 	public function __construct(
-		$environment = self::ENV_PROD,
+		string $environment = self::ENV_PROD,
 		Logger $logger = null,
 		Language $language = null
 	) {
@@ -35,6 +37,12 @@ class ExceptionHandler
 		}
 		$this->language = $language ?: new Language('en');
 		$this->language->addDirectory(__DIR__ . '/Languages');
+		if ( ! \in_array($environment, [
+			static::ENV_DEV,
+			static::ENV_PROD,
+		], true)) {
+			throw new \InvalidArgumentException("Invalid environment '{$environment}'");
+		}
 		$this->environment = $environment;
 	}
 
