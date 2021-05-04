@@ -109,18 +109,19 @@ class ExceptionHandler
 	protected function sendJSON(\Throwable $exception) : void
 	{
 		if ($this->environment !== static::ENV_DEV) {
-			echo \json_encode([
+			$data = [
 				'message' => $this->language->render('debug', 'exceptionDescription'),
-			]);
-			return;
+			];
+		} else {
+			$data = [
+				'exception' => $exception::class,
+				'message' => $exception->getMessage(),
+				'file' => $exception->getFile(),
+				'line' => $exception->getLine(),
+				'trace' => $exception->getTrace(),
+			];
 		}
-		echo \json_encode([
-			'exception' => $exception::class,
-			'message' => $exception->getMessage(),
-			'file' => $exception->getFile(),
-			'line' => $exception->getLine(),
-			'trace' => $exception->getTrace(),
-		]);
+		echo \json_encode($data);
 	}
 
 	protected function sendHeaders() : void
