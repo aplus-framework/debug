@@ -37,10 +37,10 @@ class TimerTest extends TestCase
 
 	public function testTest()
 	{
-		$this->timer->test(10, function () {
+		$this->timer->test(10, static function () {
 			\strpos('abc', 'b');
 		});
-		$this->timer->test(10, function () {
+		$this->timer->test(10, static function () {
 			\stripos('abc', 'b');
 		});
 		$this->assertEquals([
