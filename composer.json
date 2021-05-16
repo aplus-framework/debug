@@ -15,17 +15,22 @@
 	],
 	"require": {
 		"php": ">=8.0",
-		"natanfelles/cli": "^1.5",
+		"natanfelles/cli": "^1.8",
 		"natanfelles/language": "^1.2",
 		"natanfelles/log": "^1.1"
 	},
 	"require-dev": {
 		"ext-xdebug": "*",
-		"ergebnis/composer-normalize": "^2.0",
-		"natanfelles/coding-standard": "^1.1",
-		"phpmd/phpmd": "^2.9",
+		"ergebnis/composer-normalize": "^2.13",
+		"natanfelles/coding-standard": "^1.2",
+		"phpmd/phpmd": "^2.10",
 		"phpstan/phpstan": "^0.12",
-		"phpunit/phpunit": "^9.3"
+		"phpunit/phpunit": "^9.5"
+	},
+	"config": {
+		"optimize-autoloader": true,
+		"preferred-install": "dist",
+		"sort-packages": true
 	},
 	"autoload": {
 		"psr-4": {
@@ -39,11 +44,6 @@
 	},
 	"minimum-stability": "dev",
 	"prefer-stable": true,
-	"scripts": {
-		"post-update-cmd": [
-			"composer dump-autoload"
-		]
-	},
 	"support": {
 		"email": "natanfelles@gmail.com",
 		"issues": "https://gitlab.com/the-framework/libraries/debug/issues",
