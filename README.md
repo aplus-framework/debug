@@ -1,4 +1,4 @@
-# Framework Debug Library
+# The Framework Debug Library
 
 - [Homepage](https://the-framework.gitlab.io/libraries/debug.html)
 - [API Documentation](https://the-framework.gitlab.io/libraries/debug/docs/)
