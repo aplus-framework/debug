@@ -47,6 +47,10 @@
 			background-color: lightgray;
 		}
 
+		.log {
+			background-color: white;
+		}
+
 		dl {
 			font-family: monospace;
 			font-size: 14px;
@@ -98,8 +102,13 @@
 			padding: 2px 6px;
 		}
 
-		.input {
+		.input,
+		.log {
 			border: 0;
+		}
+
+		.log {
+			border-top: 1px solid black;
 		}
 
 		table {
@@ -107,6 +116,10 @@
 			border-spacing: 0;
 			width: 100%;
 			margin: 5px 0 10px;
+		}
+
+		.log table {
+			border-top: 0;
 		}
 
 		th {
@@ -259,5 +272,18 @@
 		<?php endif ?>
 	<?php endforeach ?>
 </section>
+<?php if ($this->logger): ?>
+	<section class="log">
+		<small>Log:</small>
+		<table>
+			<?php foreach ($this->logger->getLastLog() as $key => $value): ?>
+				<tr>
+					<th><?= htmlentities($key) ?></th>
+					<td><?= htmlentities($value) ?></td>
+				</tr>
+			<?php endforeach ?>
+		</table>
+	</section>
+<?php endif ?>
 </body>
 </html>

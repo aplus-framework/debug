@@ -19,5 +19,8 @@
 <body>
 <h1><?= $this->language->render('debug', 'exceptionTitle') ?></h1>
 <p><?= $this->language->render('debug', 'exceptionDescription') ?></p>
+<?php if ($this->logger && $id = $this->logger->getLastLog()['id']): ?>
+	<p>Log Id: <?= $id ?></p>
+<?php endif ?>
 </body>
 </html>
