@@ -17,7 +17,7 @@
 		"php": ">=8.0",
 		"natanfelles/cli": "^1.8",
 		"natanfelles/language": "^1.2",
-		"natanfelles/log": "^1.2"
+		"natanfelles/log": "^2.0"
 	},
 	"require-dev": {
 		"ext-xdebug": "*",

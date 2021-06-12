@@ -272,16 +272,38 @@
 		<?php endif ?>
 	<?php endforeach ?>
 </section>
-<?php if ($this->logger): ?>
+<?php if ($this->logger && ($log = $this->logger->getLastLog())): ?>
 	<section class="log">
 		<small>Log:</small>
 		<table>
-			<?php foreach ($this->logger->getLastLog() as $key => $value): ?>
-				<tr>
-					<th><?= htmlentities($key) ?></th>
-					<td><?= htmlentities($value) ?></td>
-				</tr>
-			<?php endforeach ?>
+			<tr>
+				<th>Filename</th>
+				<td><?= htmlentities($log->filename) ?></td>
+			</tr>
+			<tr>
+				<th>Date</th>
+				<td><?= htmlentities($log->date) ?></td>
+			</tr>
+			<tr>
+				<th>Time</th>
+				<td><?= htmlentities($log->time) ?></td>
+			</tr>
+			<tr>
+				<th>Level Name</th>
+				<td><?= htmlentities($log->levelName) ?></td>
+			</tr>
+			<tr>
+				<th>ID</th>
+				<td><?= htmlentities($log->id) ?></td>
+			</tr>
+			<tr>
+				<th>Message</th>
+				<td style="white-space: pre-wrap"><?= htmlentities($log->message) ?></td>
+			</tr>
+			<tr>
+				<th>Written</th>
+				<td><?= $log->written ? 'true' : 'false' ?></td>
+			</tr>
 		</table>
 	</section>
 <?php endif ?>
