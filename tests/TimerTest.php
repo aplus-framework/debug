@@ -3,7 +3,7 @@
 use Framework\Debug\Timer;
 use PHPUnit\Framework\TestCase;
 
-class TimerTest extends TestCase
+final class TimerTest extends TestCase
 {
 	protected Timer $timer;
 
@@ -12,7 +12,7 @@ class TimerTest extends TestCase
 		$this->timer = new Timer();
 	}
 
-	public function testA()
+	public function testA() : void
 	{
 		$this->assertEquals(['debug[start]'], \array_keys($this->timer->getMarks()));
 		$this->timer->addMark('1');
@@ -20,7 +20,7 @@ class TimerTest extends TestCase
 		$this->assertEquals(['debug[start]', '1', '2'], \array_keys($this->timer->getMarks()));
 	}
 
-	public function testMark()
+	public function testMark() : void
 	{
 		$this->timer->addMark('1');
 		$this->assertEquals(['memory', 'time'], \array_keys($this->timer->getMark('1')));
@@ -28,19 +28,19 @@ class TimerTest extends TestCase
 		$this->assertEquals(['memory', 'time'], \array_keys($this->timer->getMark('foo')));
 	}
 
-	public function testDiff()
+	public function testDiff() : void
 	{
 		$this->timer->addMark('1');
 		$this->timer->addMark('2');
 		$this->assertEquals(['memory', 'time'], \array_keys($this->timer->diff('1', '2')));
 	}
 
-	public function testTest()
+	public function testTest() : void
 	{
-		$this->timer->test(10, static function () {
+		$this->timer->test(10, static function () : void {
 			\strpos('abc', 'b');
 		});
-		$this->timer->test(10, static function () {
+		$this->timer->test(10, static function () : void {
 			\stripos('abc', 'b');
 		});
 		$this->assertEquals([
