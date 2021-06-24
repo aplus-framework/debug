@@ -1,14 +1,15 @@
 <?php
 /**
- * @var Exception                         $exception
- * @var \Framework\Debug\ExceptionHandler $this
+ * @var Exception $exception
+ * @var Framework\Debug\ExceptionHandler $handler
  */
 ?>
 <!doctype html>
-<html lang="<?= $this->language->getCurrentLocale() ?>">
+<html lang="<?= $handler->getLanguage()->getCurrentLocale() ?>" dir="<?= $handler->getLanguage()
+	->getCurrentLocaleDirection() ?>">
 <head>
 	<meta charset="utf-8">
-	<title><?= $this->language->render('debug', 'exception') ?>: <?=
+	<title><?= $handler->getLanguage()->render('debug', 'exception') ?>: <?=
 		htmlentities($exception->getMessage()) ?></title>
 	<style>
 		body {
@@ -151,23 +152,23 @@
 </head>
 <body>
 <header>
-	<small><?= $this->language->render('debug', 'exception') ?>:</small>
-	<h1><?= get_class($exception) ?></h1>
-	<small><?= $this->language->render('debug', 'message') ?>:</small>
+	<small><?= $handler->getLanguage()->render('debug', 'exception') ?>:</small>
+	<h1><?= $exception::class ?></h1>
+	<small><?= $handler->getLanguage()->render('debug', 'message') ?>:</small>
 	<h2><?= htmlentities($exception->getMessage()) ?></h2>
 </header>
 <section class="file">
 	<div>
-		<small><?= $this->language->render('debug', 'file') ?>:</small>
+		<small><?= $handler->getLanguage()->render('debug', 'file') ?>:</small>
 		<h3><?= htmlentities($exception->getFile()) ?></h3>
 	</div>
 	<div>
-		<small><?= $this->language->render('debug', 'line') ?>:</small>
+		<small><?= $handler->getLanguage()->render('debug', 'line') ?>:</small>
 		<h3><?= $exception->getLine() ?></h3>
 	</div>
 </section>
 <section class="trace">
-	<small><?= $this->language->render('debug', 'trace') ?>:</small>
+	<small><?= $handler->getLanguage()->render('debug', 'trace') ?>:</small>
 	<?php
 	$traces = $exception->getTrace();
 	if ($traces
@@ -197,15 +198,17 @@
 						$pre = '';
 						$handle = fopen($trace['file'], 'rb');
 						$line = 1;
-						while ( ! feof($handle)) {
+						while ($handle && ! feof($handle)) {
 							$code = fgets($handle);
 							if ($line > ($trace['line'] - 10) && $line < ($trace['line'] + 10)) {
-								$pre .= rtrim($code) . \PHP_EOL;
+								$pre .= rtrim((string) $code) . \PHP_EOL;
 								$lines[] = $line;
 							}
 							$line++;
 						}
-						fclose($handle);
+						if ($handle) {
+							fclose($handle);
+						}
 						?>
 						<div><?php
 							foreach ($lines as $line) {
@@ -236,11 +239,11 @@
 	<small>Input:</small>
 	<?php
 	$input = [
-		'ENV' => filter_input_array(\INPUT_ENV) ?? [],
-		'SERVER' => filter_input_array(\INPUT_SERVER) ?? [],
-		'GET' => filter_input_array(\INPUT_GET) ?? [],
-		'POST' => filter_input_array(\INPUT_POST) ?? [],
-		'COOKIE' => filter_input_array(\INPUT_COOKIE) ?? [],
+		'ENV' => filter_input_array(\INPUT_ENV) ?: [],
+		'SERVER' => filter_input_array(\INPUT_SERVER) ?: [],
+		'GET' => filter_input_array(\INPUT_GET) ?: [],
+		'POST' => filter_input_array(\INPUT_POST) ?: [],
+		'COOKIE' => filter_input_array(\INPUT_COOKIE) ?: [],
 	];
 	foreach ($input as &$item) {
 		ksort($item);
@@ -249,30 +252,29 @@
 	?>
 
 	<?php foreach ($input as $key => $values) : ?>
-		<?php if ($values) : ?>
-			<table>
-				<thead>
+		<?php
+		if (empty($values)) {
+			continue;
+		}
+		?>
+		<table>
+			<thead>
+			<tr>
+				<th colspan="2"><?= $key ?></th>
+			</tr>
+			</thead>
+			<tbody>
+			<?php foreach ($values as $field => $value) : ?>
 				<tr>
-					<th colspan="2"><?= $key ?></th>
+					<th><?= htmlentities($field) ?></th>
+					<td><?= htmlentities(is_array($value) ? print_r($value, true) : $value) ?></td>
 				</tr>
-				</thead>
-				<tbody>
-				<?php foreach ($values as $field => $value) : ?>
-					<tr>
-						<th><?= htmlentities(
-		is_array($field) ? print_r($field, true) : $field
-	) ?></th>
-						<td><?= htmlentities(
-		is_array($value) ? print_r($value, true) : $value
-	) ?></td>
-					</tr>
-				<?php endforeach ?>
-				</tbody>
-			</table>
-		<?php endif ?>
+			<?php endforeach ?>
+			</tbody>
+		</table>
 	<?php endforeach ?>
 </section>
-<?php if ($this->logger && ($log = $this->logger->getLastLog())): ?>
+<?php if ($handler->getLogger() && ($log = $handler->getLogger()->getLastLog())): ?>
 	<section class="log">
 		<small>Log:</small>
 		<table>
