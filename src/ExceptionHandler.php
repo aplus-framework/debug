@@ -16,7 +16,6 @@ class ExceptionHandler
 	protected ?Logger $logger = null;
 	protected string $environment = 'production';
 	protected Language $language;
-	protected bool $handleErrors = true;
 
 	/**
 	 * ExceptionHandler constructor.
@@ -66,10 +65,10 @@ class ExceptionHandler
 		return $this;
 	}
 
-	public function initialize() : void
+	public function initialize(bool $handleErrors = true) : void
 	{
 		\set_exception_handler([$this, 'exceptionHandler']);
-		if ($this->handleErrors) {
+		if ($handleErrors) {
 			\set_error_handler([$this, 'errorHandler']);
 		}
 	}
