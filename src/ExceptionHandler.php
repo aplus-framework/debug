@@ -13,7 +13,6 @@ class ExceptionHandler
 	public const ENV_DEV = 'development';
 	public const ENV_PROD = 'production';
 	protected string $viewsDir = __DIR__ . '/Views/';
-	protected bool $cleanBuffer = true;
 	protected ?Logger $logger = null;
 	protected string $environment = 'production';
 	protected Language $language;
@@ -67,9 +66,8 @@ class ExceptionHandler
 		return $this;
 	}
 
-	public function initialize(bool $clean_buffer = true) : void
+	public function initialize() : void
 	{
-		$this->cleanBuffer = $clean_buffer;
 		\set_exception_handler([$this, 'exceptionHandler']);
 		if ($this->handleErrors) {
 			\set_error_handler([$this, 'errorHandler']);
@@ -78,7 +76,7 @@ class ExceptionHandler
 
 	public function exceptionHandler(\Throwable $exception) : void
 	{
-		if ($this->cleanBuffer && \ob_get_length()) {
+		if (\ob_get_length()) {
 			\ob_end_clean();
 		}
 		$this->log($exception);
