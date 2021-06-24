@@ -54,6 +54,22 @@ class ExceptionHandler
 		$this->language->addDirectory(__DIR__ . '/Languages');
 	}
 
+	/**
+	 * @return Logger|null
+	 */
+	public function getLogger() : ?Logger
+	{
+		return $this->logger;
+	}
+
+	/**
+	 * @return Language
+	 */
+	public function getLanguage() : Language
+	{
+		return $this->language;
+	}
+
 	public function getViewsDir() : string
 	{
 		return $this->viewsDir;
@@ -111,7 +127,10 @@ class ExceptionHandler
 			? 'development.php'
 			: 'production.php';
 		if (\is_file($this->viewsDir . $file)) {
-			require_isolated($this->viewsDir . $file, ['handler' => $this]);
+			require_isolated($this->viewsDir . $file, [
+				'handler' => $this,
+				'exception' => $exception,
+			]);
 			return;
 		}
 		$error = 'Debug exception view "' . $this->viewsDir . $file . '" was not found';
