@@ -4,45 +4,54 @@ use ErrorException;
 use Framework\CLI\CLI;
 use Framework\Language\Language;
 use Framework\Log\Logger;
+use InvalidArgumentException;
+use RuntimeException;
+use Throwable;
 
 /**
  * Class ExceptionHandler.
  */
 class ExceptionHandler
 {
-	public const ENV_DEV = 'development';
-	public const ENV_PROD = 'production';
+	/**
+	 * Development environment.
+	 */
+	public const DEVELOPMENT = 'development';
+	/**
+	 * Production environment.
+	 */
+	public const PRODUCTION = 'production';
 	protected string $viewsDir = __DIR__ . '/Views/';
 	protected ?Logger $logger = null;
-	protected string $environment = 'production';
+	protected string $environment = ExceptionHandler::PRODUCTION;
 	protected Language $language;
 
 	/**
 	 * ExceptionHandler constructor.
 	 *
-	 * @param string                            $environment One of ENV_* constants
-	 * @param \Framework\Log\Logger|null        $logger
-	 * @param \Framework\Language\Language|null $language
+	 * @param string $environment
+	 * @param Logger|null $logger
+	 * @param Language|null $language
 	 *
-	 * @throws \InvalidArgumentException if environment is invalid
+	 * @throws InvalidArgumentException if environment is invalid
 	 */
 	public function __construct(
-		string $environment = self::ENV_PROD,
+		string $environment = ExceptionHandler::PRODUCTION,
 		Logger $logger = null,
 		Language $language = null
 	) {
+		if ( ! \in_array($environment, [
+			static::DEVELOPMENT,
+			static::PRODUCTION,
+		], true)) {
+			throw new InvalidArgumentException("Invalid environment '{$environment}'");
+		}
+		$this->environment = $environment;
 		if ($logger) {
 			$this->logger = $logger;
 		}
-		$this->language = $language ?: new Language('en');
+		$this->language = $language ?? new Language('en');
 		$this->language->addDirectory(__DIR__ . '/Languages');
-		if ( ! \in_array($environment, [
-			static::ENV_DEV,
-			static::ENV_PROD,
-		], true)) {
-			throw new \InvalidArgumentException("Invalid environment '{$environment}'");
-		}
-		$this->environment = $environment;
 	}
 
 	public function getViewsDir() : string
@@ -59,9 +68,9 @@ class ExceptionHandler
 	{
 		$path = \realpath($dir);
 		if ( ! $path) {
-			throw new \InvalidArgumentException('Invalid path to view dir "' . $dir . '"');
+			throw new InvalidArgumentException('Invalid path to view dir "' . $dir . '"');
 		}
-		$this->viewsDir = \rtrim($path, '/') . \DIRECTORY_SEPARATOR;
+		$this->viewsDir = \rtrim($path, \DIRECTORY_SEPARATOR) . \DIRECTORY_SEPARATOR;
 		return $this;
 	}
 
@@ -73,7 +82,14 @@ class ExceptionHandler
 		}
 	}
 
-	public function exceptionHandler(\Throwable $exception) : void
+	/**
+	 * Exception handler.
+	 *
+	 * @param Throwable $exception The Throwable, exception, instance
+	 *
+	 * @throws RuntimeException if view file is not found
+	 */
+	public function exceptionHandler(Throwable $exception) : void
 	{
 		if (\ob_get_length()) {
 			\ob_end_clean();
@@ -91,16 +107,16 @@ class ExceptionHandler
 			$this->sendJSON($exception);
 			return;
 		}
-		$file = $this->environment !== static::ENV_DEV
-			? 'exceptions/production.php'
-			: 'exceptions/development.php';
+		$file = $this->environment === static::DEVELOPMENT
+			? 'development.php'
+			: 'production.php';
 		if (\is_file($this->viewsDir . $file)) {
 			require $this->viewsDir . $file;
 			return;
 		}
 		$error = 'Debug exception view "' . $this->viewsDir . $file . '" was not found';
 		$this->log($error);
-		throw new \LogicException($error);
+		throw new RuntimeException($error);
 	}
 
 	protected function isJSON() : bool
@@ -109,19 +125,19 @@ class ExceptionHandler
 			&& \str_starts_with($_SERVER['HTTP_CONTENT_TYPE'], 'application/json');
 	}
 
-	protected function sendJSON(\Throwable $exception) : void
+	protected function sendJSON(Throwable $exception) : void
 	{
-		if ($this->environment !== static::ENV_DEV) {
-			$data = [
-				'message' => $this->language->render('debug', 'exceptionDescription'),
-			];
-		} else {
+		if ($this->environment === static::DEVELOPMENT) {
 			$data = [
 				'exception' => $exception::class,
 				'message' => $exception->getMessage(),
 				'file' => $exception->getFile(),
 				'line' => $exception->getLine(),
 				'trace' => $exception->getTrace(),
+			];
+		} else {
+			$data = [
+				'message' => $this->language->render('debug', 'exceptionDescription'),
 			];
 		}
 		echo \json_encode($data);
@@ -136,10 +152,10 @@ class ExceptionHandler
 		\header('Content-Type: ' . $content_type . '; charset=UTF-8');
 	}
 
-	protected function cliError(\Throwable $exception) : void
+	protected function cliError(Throwable $exception) : void
 	{
 		$message = $this->language->render('debug', 'exception')
-			. ': ' . \get_class($exception) . \PHP_EOL;
+			. ': ' . $exception::class . \PHP_EOL;
 		$message .= $this->language->render('debug', 'message')
 			. ': ' . $exception->getMessage() . \PHP_EOL;
 		$message .= $this->language->render('debug', 'file')
