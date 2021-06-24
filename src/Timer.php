@@ -5,6 +5,9 @@
  */
 class Timer
 {
+	/**
+	 * @var array<string,array>
+	 */
 	protected array $marks = [];
 	protected int $tests_count = 1;
 
@@ -21,7 +24,7 @@ class Timer
 	 * @param callable $function
 	 * @param bool     $flush
 	 *
-	 * @return array Two indexes - "memory" in MB and "time" in seconds
+	 * @return array<string,string> Two keys - "memory" in MB and "time" in seconds
 	 */
 	public function test(int $times, callable $function, bool $flush = false) : array
 	{
@@ -57,6 +60,13 @@ class Timer
 		return $this;
 	}
 
+	/**
+	 * @param string $name
+	 * @param int $memory_get_usage
+	 * @param float $microtime
+	 *
+	 * @return $this
+	 */
 	public function setMark(string $name, int $memory_get_usage, float $microtime)
 	{
 		$this->marks[$name] = [
@@ -69,9 +79,9 @@ class Timer
 	/**
 	 * @param string $name
 	 *
-	 * @return array|false
+	 * @return array<string,string>|false
 	 */
-	public function getMark(string $name)
+	public function getMark(string $name) : array | bool
 	{
 		return $this->marks[$name] ?? false;
 	}
@@ -79,7 +89,7 @@ class Timer
 	/**
 	 * @var bool $format
 	 *
-	 * @return array
+	 * @return array<string,array>
 	 */
 	public function getMarks(bool $format = false) : array
 	{
@@ -97,7 +107,7 @@ class Timer
 	 * @param string $from
 	 * @param string $to
 	 *
-	 * @return array Two indexes - memory in MB and time in seconds
+	 * @return array<string,string> Two keys: memory in MB and time in seconds
 	 */
 	public function diff(string $from, string $to) : array
 	{

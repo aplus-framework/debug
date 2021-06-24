@@ -51,6 +51,11 @@ class ExceptionHandler
 		return $this->viewsDir;
 	}
 
+	/**
+	 * @param string $dir
+	 *
+	 * @return $this
+	 */
 	public function setViewsDir(string $dir)
 	{
 		$path = \realpath($dir);
@@ -156,15 +161,17 @@ class ExceptionHandler
 	}
 
 	/**
-	 * @param int         $severity
-	 * @param string      $message
+	 * @param int $severity
+	 * @param string $message
 	 * @param string|null $file
-	 * @param int|null    $line
-	 * @param null        $context
+	 * @param int|null $line
+	 * @param null $context
 	 *
 	 * @see http://php.net/manual/en/function.set-error-handler.php
 	 *
 	 * @throws \ErrorException
+	 *
+	 * @return bool
 	 */
 	public function errorHandler(
 		int $severity,
@@ -172,7 +179,7 @@ class ExceptionHandler
 		string $file = null,
 		int $line = null,
 		$context = null
-	) : void {
+	) : bool {
 		$type = match ($severity) {
 			\E_ERROR => 'Error',
 			\E_WARNING => 'Warning',
@@ -194,7 +201,7 @@ class ExceptionHandler
 		};
 		if ( ! (\error_reporting() & $severity)) {
 			// This error code is not included in error_reporting
-			return;
+			return true;
 		}
 		// http://php.net/manual/en/function.set-exception-handler.php#95170
 		throw new \ErrorException(

@@ -23,8 +23,10 @@ final class TimerTest extends TestCase
 	public function testMark() : void
 	{
 		$this->timer->addMark('1');
+		// @phpstan-ignore-next-line
 		$this->assertEquals(['memory', 'time'], \array_keys($this->timer->getMark('1')));
 		$this->timer->setMark('foo', \memory_get_usage(), \microtime(true));
+		// @phpstan-ignore-next-line
 		$this->assertEquals(['memory', 'time'], \array_keys($this->timer->getMark('foo')));
 	}
 
@@ -38,10 +40,10 @@ final class TimerTest extends TestCase
 	public function testTest() : void
 	{
 		$this->timer->test(10, static function () : void {
-			\strpos('abc', 'b');
+			\strpos('abc', 'b'); // @phpstan-ignore-line
 		});
 		$this->timer->test(10, static function () : void {
-			\stripos('abc', 'b');
+			\stripos('abc', 'b'); // @phpstan-ignore-line
 		});
 		$this->assertEquals([
 			'debug[start]',
