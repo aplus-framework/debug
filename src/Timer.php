@@ -9,7 +9,7 @@ class Timer
 	 * @var array<string,array>
 	 */
 	protected array $marks = [];
-	protected int $tests_count = 1;
+	protected int $testsCount = 1;
 
 	/**
 	 * Timer constructor.
@@ -20,9 +20,9 @@ class Timer
 	}
 
 	/**
-	 * @param int      $times
+	 * @param int $times
 	 * @param callable $function
-	 * @param bool     $flush
+	 * @param bool $flush
 	 *
 	 * @return array<string,string> Two keys - "memory" in MB and "time" in seconds
 	 */
@@ -31,18 +31,18 @@ class Timer
 		if ( ! $flush) {
 			\ob_start();
 		}
-		$this->tests_count++;
-		$this->addMark('test[' . $this->tests_count . '][start]');
+		$this->testsCount++;
+		$this->addMark('test[' . $this->testsCount . '][start]');
 		for ($i = 0; $i < $times; $i++) {
 			$function();
 		}
-		$this->addMark('test[' . ($this->tests_count) . '][end]');
+		$this->addMark('test[' . ($this->testsCount) . '][end]');
 		if ( ! $flush) {
 			\ob_end_clean();
 		}
 		return $this->diff(
-			'test[' . $this->tests_count . '][start]',
-			'test[' . $this->tests_count . '][end]'
+			'test[' . $this->testsCount . '][start]',
+			'test[' . $this->testsCount . '][end]'
 		);
 	}
 
@@ -54,7 +54,7 @@ class Timer
 	public function addMark(string $name)
 	{
 		$this->marks[$name] = [
-			'memory' => \memory_get_usage(), // / 1024 / 1024,
+			'memory' => \memory_get_usage(),
 			'time' => \microtime(true),
 		];
 		return $this;
@@ -62,15 +62,15 @@ class Timer
 
 	/**
 	 * @param string $name
-	 * @param int $memory_get_usage
+	 * @param int $memoryUsage
 	 * @param float $microtime
 	 *
 	 * @return $this
 	 */
-	public function setMark(string $name, int $memory_get_usage, float $microtime)
+	public function setMark(string $name, int $memoryUsage, float $microtime)
 	{
 		$this->marks[$name] = [
-			'memory' => $memory_get_usage, // / 1024 / 1024,
+			'memory' => $memoryUsage,
 			'time' => $microtime,
 		];
 		return $this;
@@ -81,7 +81,7 @@ class Timer
 	 *
 	 * @return array<string,string>|false
 	 */
-	public function getMark(string $name) : array | bool
+	public function getMark(string $name) : array | false
 	{
 		return $this->marks[$name] ?? false;
 	}
@@ -96,7 +96,7 @@ class Timer
 		$marks = $this->marks;
 		if ($format) {
 			foreach ($marks as &$mark) {
-				$mark['memory'] = \number_format(($mark['memory']) / 1024 / 1024, 3) . ' MB';
+				$mark['memory'] = \number_format($mark['memory'] / 1024 / 1024, 3) . ' MB';
 				$mark['time'] = \number_format($mark['time'], 3) . ' s';
 			}
 		}
@@ -111,17 +111,12 @@ class Timer
 	 */
 	public function diff(string $from, string $to) : array
 	{
-		return [
-			'memory' => \number_format(
-				(
-					$this->marks[$to]['memory'] - $this->marks[$from]['memory']
-				) / 1024 / 1024,
-				3
-			) . ' MB',
-			'time' => \number_format(
-				$this->marks[$to]['time'] - $this->marks[$from]['time'],
-				3
-			) . ' s',
-		];
+		$number = $this->marks[$to]['memory'] - $this->marks[$from]['memory'];
+		$number = \number_format($number / 1024 / 1024, 3);
+		$diff['memory'] = $number . ' MB';
+		$number = $this->marks[$to]['time'] - $this->marks[$from]['time'];
+		$number = \number_format($number, 3);
+		$diff['time'] = $number . ' s';
+		return $diff;
 	}
 }
