@@ -111,7 +111,7 @@ class ExceptionHandler
 			? 'development.php'
 			: 'production.php';
 		if (\is_file($this->viewsDir . $file)) {
-			require $this->viewsDir . $file;
+			require_isolated($this->viewsDir . $file, ['handler' => $this]);
 			return;
 		}
 		$error = 'Debug exception view "' . $this->viewsDir . $file . '" was not found';

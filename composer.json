@@ -20,6 +20,7 @@
 	"require": {
 		"php": ">=8.0",
 		"natanfelles/cli": "^1.12",
+		"natanfelles/isolation": "^1.0",
 		"natanfelles/language": "^1.3",
 		"natanfelles/log": "^2.0"
 	},
