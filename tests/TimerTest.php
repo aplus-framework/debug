@@ -14,27 +14,27 @@ final class TimerTest extends TestCase
 
 	public function testA() : void
 	{
-		$this->assertEquals(['debug[start]'], \array_keys($this->timer->getMarks()));
-		$this->timer->addMark('1');
-		$this->timer->addMark('2');
-		$this->assertEquals(['debug[start]', '1', '2'], \array_keys($this->timer->getMarks()));
+		self::assertSame(['debug[start]'], \array_keys($this->timer->getMarks()));
+		$this->timer->addMark('a');
+		$this->timer->addMark('b');
+		self::assertSame(['debug[start]', 'a', 'b'], \array_keys($this->timer->getMarks()));
 	}
 
 	public function testMark() : void
 	{
 		$this->timer->addMark('1');
 		// @phpstan-ignore-next-line
-		$this->assertEquals(['memory', 'time'], \array_keys($this->timer->getMark('1')));
+		self::assertSame(['memory', 'time'], \array_keys($this->timer->getMark('1')));
 		$this->timer->setMark('foo', \memory_get_usage(), \microtime(true));
 		// @phpstan-ignore-next-line
-		$this->assertEquals(['memory', 'time'], \array_keys($this->timer->getMark('foo')));
+		self::assertSame(['memory', 'time'], \array_keys($this->timer->getMark('foo')));
 	}
 
 	public function testDiff() : void
 	{
 		$this->timer->addMark('1');
 		$this->timer->addMark('2');
-		$this->assertEquals(['memory', 'time'], \array_keys($this->timer->diff('1', '2')));
+		self::assertSame(['memory', 'time'], \array_keys($this->timer->diff('1', '2')));
 	}
 
 	public function testTest() : void
@@ -45,7 +45,7 @@ final class TimerTest extends TestCase
 		$this->timer->test(10, static function () : void {
 			\stripos('abc', 'b'); // @phpstan-ignore-line
 		});
-		$this->assertEquals([
+		self::assertSame([
 			'debug[start]',
 			'test[2][start]',
 			'test[2][end]',

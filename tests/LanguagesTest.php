@@ -32,7 +32,7 @@ final class LanguagesTest extends TestCase
 			$lines = require $this->langDir . $code . '/debug.php';
 			$lines = \array_keys($lines);
 			\sort($lines);
-			$this->assertEquals($rules, $lines, 'Language: ' . $code);
+			self::assertSame($rules, $lines, 'Language: ' . $code);
 		}
 	}
 }
