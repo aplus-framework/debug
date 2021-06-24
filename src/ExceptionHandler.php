@@ -1,5 +1,6 @@
 <?php namespace Framework\Debug;
 
+use ErrorException;
 use Framework\CLI\CLI;
 use Framework\Language\Language;
 use Framework\Log\Logger;
@@ -161,26 +162,29 @@ class ExceptionHandler
 	}
 
 	/**
-	 * @param int $severity
-	 * @param string $message
-	 * @param string|null $file
-	 * @param int|null $line
-	 * @param null $context
+	 * Error handler.
+	 *
+	 * @param int $errno The level of the error raised
+	 * @param string $errstr The error message
+	 * @param string|null $errfile The filename that the error was raised in
+	 * @param int|null $errline The line number where the error was raised
 	 *
 	 * @see http://php.net/manual/en/function.set-error-handler.php
 	 *
-	 * @throws \ErrorException
+	 * @throws ErrorException if the error is included in the error_reporting
 	 *
 	 * @return bool
 	 */
 	public function errorHandler(
-		int $severity,
-		string $message,
-		string $file = null,
-		int $line = null,
-		$context = null
+		int $errno,
+		string $errstr,
+		string $errfile = null,
+		int $errline = null
 	) : bool {
-		$type = match ($severity) {
+		if ( ! (\error_reporting() & $errno)) {
+			return true;
+		}
+		$type = match ($errno) {
 			\E_ERROR => 'Error',
 			\E_WARNING => 'Warning',
 			\E_PARSE => 'Parse',
@@ -199,17 +203,12 @@ class ExceptionHandler
 			\E_ALL => 'All',
 			default => '',
 		};
-		if ( ! (\error_reporting() & $severity)) {
-			// This error code is not included in error_reporting
-			return true;
-		}
-		// http://php.net/manual/en/function.set-exception-handler.php#95170
-		throw new \ErrorException(
-			($type ? $type . ': ' : '') . $message,
+		throw new ErrorException(
+			($type ? $type . ': ' : '') . $errstr,
 			0,
-			$severity,
-			$file,
-			$line
+			$errno,
+			$errfile,
+			$errline
 		);
 	}
 }
