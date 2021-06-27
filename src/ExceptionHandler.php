@@ -87,9 +87,9 @@ class ExceptionHandler
 	/**
 	 * @param string $dir
 	 *
-	 * @return $this
+	 * @return static
 	 */
-	public function setViewsDir(string $dir)
+	public function setViewsDir(string $dir) : static
 	{
 		$path = \realpath($dir);
 		if ( ! $path) {

@@ -58,9 +58,9 @@ class Timer
 	/**
 	 * @param string $name
 	 *
-	 * @return $this
+	 * @return static
 	 */
-	public function addMark(string $name)
+	public function addMark(string $name) : static
 	{
 		$this->marks[$name] = [
 			'memory' => \memory_get_usage(),
@@ -74,9 +74,9 @@ class Timer
 	 * @param int $memoryUsage
 	 * @param float $microtime
 	 *
-	 * @return $this
+	 * @return static
 	 */
-	public function setMark(string $name, int $memoryUsage, float $microtime)
+	public function setMark(string $name, int $memoryUsage, float $microtime) : static
 	{
 		$this->marks[$name] = [
 			'memory' => $memoryUsage,
