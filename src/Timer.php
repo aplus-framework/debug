@@ -9,6 +9,8 @@
  */
 namespace Framework\Debug;
 
+use JetBrains\PhpStorm\ArrayShape;
+
 /**
  * Class Timer.
  */
@@ -35,6 +37,7 @@ class Timer
 	 *
 	 * @return array<string,string> Two keys - "memory" in MB and "time" in seconds
 	 */
+	#[ArrayShape(['memory' => 'string', 'time' => 'string'])]
 	public function test(int $times, callable $function, bool $flush = false) : array
 	{
 		if ( ! $flush) {
@@ -118,6 +121,7 @@ class Timer
 	 *
 	 * @return array<string,string> Two keys: memory in MB and time in seconds
 	 */
+	#[ArrayShape(['memory' => 'string', 'time' => 'string'])]
 	public function diff(string $from, string $to) : array
 	{
 		$number = $this->marks[$to]['memory'] - $this->marks[$from]['memory'];
