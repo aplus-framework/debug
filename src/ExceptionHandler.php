@@ -119,7 +119,7 @@ class ExceptionHandler
 		if (\ob_get_length()) {
 			\ob_end_clean();
 		}
-		$this->log($exception);
+		$this->log((string) $exception);
 		if (\PHP_SAPI === 'cli') {
 			$this->cliError($exception);
 			return;
