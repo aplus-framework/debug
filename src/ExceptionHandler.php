@@ -11,6 +11,7 @@ namespace Framework\Debug;
 
 use ErrorException;
 use Framework\CLI\CLI;
+use Framework\Helpers\Isolation;
 use Framework\Language\Language;
 use Framework\Log\Logger;
 use InvalidArgumentException;
@@ -135,14 +136,15 @@ class ExceptionHandler
 		$file = $this->environment === static::DEVELOPMENT
 			? 'development.php'
 			: 'production.php';
-		if (\is_file($this->viewsDir . $file)) {
-			require_isolated($this->viewsDir . $file, [
+		$file = $this->viewsDir . $file;
+		if (\is_file($file)) {
+			Isolation::require($file, [
 				'handler' => $this,
 				'exception' => $exception,
 			]);
 			return;
 		}
-		$error = 'Debug exception view "' . $this->viewsDir . $file . '" was not found';
+		$error = 'Debug exception view "' . $file . '" was not found';
 		$this->log($error);
 		throw new RuntimeException($error);
 	}
