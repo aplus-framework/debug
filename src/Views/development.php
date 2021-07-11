@@ -6,11 +6,11 @@
 ?>
 <!doctype html>
 <html lang="<?= $handler->getLanguage()->getCurrentLocale() ?>" dir="<?= $handler->getLanguage()
-	->getCurrentLocaleDirection() ?>">
+    ->getCurrentLocaleDirection() ?>">
 <head>
 	<meta charset="utf-8">
 	<title><?= $handler->getLanguage()->render('debug', 'exception') ?>: <?=
-		htmlentities($exception->getMessage()) ?></title>
+        htmlentities($exception->getMessage()) ?></title>
 	<style>
 		body {
 			margin: 0 0 20px;
@@ -170,20 +170,20 @@
 <section class="trace">
 	<small><?= $handler->getLanguage()->render('debug', 'trace') ?>:</small>
 	<?php
-	$traces = $exception->getTrace();
-	if ($traces
-		&& isset($traces[0]['file'])
-		&& ($traces[0]['file'] !== $exception->getFile()
-			|| $traces[0]['line'] !== $exception->getLine())
-	) {
-		$traces = array_reverse($traces);
-		$traces[] = [
-			'file' => $exception->getFile(),
-			'line' => $exception->getLine(),
-		];
-		$traces = array_reverse($traces);
-	}
-	?>
+    $traces = $exception->getTrace();
+    if ($traces
+        && isset($traces[0]['file'])
+        && ($traces[0]['file'] !== $exception->getFile()
+            || $traces[0]['line'] !== $exception->getLine())
+    ) {
+        $traces = array_reverse($traces);
+        $traces[] = [
+            'file' => $exception->getFile(),
+            'line' => $exception->getLine(),
+        ];
+        $traces = array_reverse($traces);
+    }
+    ?>
 	<?php foreach ($traces as $key => $trace) : ?>
 		<?php if (isset($trace['file'])) : ?>
 			<?php if (is_readable($trace['file'])) : ?>
@@ -194,33 +194,33 @@
 					</dt>
 					<dd>
 						<?php
-						$lines = [];
-						$pre = '';
-						$handle = fopen($trace['file'], 'rb');
-						$line = 1;
-						while ($handle && ! feof($handle)) {
-							$code = fgets($handle);
-							if ($line > ($trace['line'] - 10) && $line < ($trace['line'] + 10)) {
-								$pre .= rtrim((string) $code) . \PHP_EOL;
-								$lines[] = $line;
-							}
-							$line++;
-						}
-						if ($handle) {
-							fclose($handle);
-						}
-						?>
+                        $lines = [];
+                        $pre = '';
+                        $handle = fopen($trace['file'], 'rb');
+                        $line = 1;
+                        while ($handle && ! feof($handle)) {
+                            $code = fgets($handle);
+                            if ($line > ($trace['line'] - 10) && $line < ($trace['line'] + 10)) {
+                                $pre .= rtrim((string) $code) . \PHP_EOL;
+                                $lines[] = $line;
+                            }
+                            $line++;
+                        }
+                        if ($handle) {
+                            fclose($handle);
+                        }
+                        ?>
 						<div><?php
-							foreach ($lines as $line) {
-								if ($line === $trace['line']) {
-									echo '<span>';
-									echo $line . \PHP_EOL;
-									echo '</span>';
-								} else {
-									echo $line . \PHP_EOL;
-								}
-							}
-							?></div>
+                            foreach ($lines as $line) {
+                                if ($line === $trace['line']) {
+                                    echo '<span>';
+                                    echo $line . \PHP_EOL;
+                                    echo '</span>';
+                                } else {
+                                    echo $line . \PHP_EOL;
+                                }
+                            }
+                            ?></div>
 						<pre class="code"><?= htmlentities($pre) ?></pre>
 					</dd>
 				</dl>
@@ -238,25 +238,25 @@
 <section class="input">
 	<small>Input:</small>
 	<?php
-	$input = [
-		'ENV' => filter_input_array(\INPUT_ENV) ?: [],
-		'SERVER' => filter_input_array(\INPUT_SERVER) ?: [],
-		'GET' => filter_input_array(\INPUT_GET) ?: [],
-		'POST' => filter_input_array(\INPUT_POST) ?: [],
-		'COOKIE' => filter_input_array(\INPUT_COOKIE) ?: [],
-	];
-	foreach ($input as &$item) {
-		ksort($item);
-	}
-	unset($item);
-	?>
+    $input = [
+        'ENV' => filter_input_array(\INPUT_ENV) ?: [],
+        'SERVER' => filter_input_array(\INPUT_SERVER) ?: [],
+        'GET' => filter_input_array(\INPUT_GET) ?: [],
+        'POST' => filter_input_array(\INPUT_POST) ?: [],
+        'COOKIE' => filter_input_array(\INPUT_COOKIE) ?: [],
+    ];
+    foreach ($input as &$item) {
+        ksort($item);
+    }
+    unset($item);
+    ?>
 
 	<?php foreach ($input as $key => $values) : ?>
 		<?php
-		if (empty($values)) {
-			continue;
-		}
-		?>
+        if (empty($values)) {
+            continue;
+        }
+        ?>
 		<table>
 			<thead>
 			<tr>

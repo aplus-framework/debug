@@ -5,7 +5,7 @@
 ?>
 <!doctype html>
 <html lang="<?= $handler->getLanguage()->getCurrentLocale() ?>" dir="<?= $handler->getLanguage()
-	->getCurrentLocaleDirection() ?>">
+    ->getCurrentLocaleDirection() ?>">
 <head>
 	<meta charset="utf-8">
 	<title><?= $handler->getLanguage()->render('debug', 'exceptionTitle') ?></title>

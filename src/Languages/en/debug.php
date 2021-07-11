@@ -8,11 +8,11 @@
  * file that was distributed with this source code.
  */
 return [
-	'exception' => 'Exception',
-	'message' => 'Message',
-	'file' => 'File',
-	'line' => 'Line',
-	'trace' => 'Trace',
-	'exceptionTitle' => 'Error 500 - Internal Server Error',
-	'exceptionDescription' => 'Something is wrong. Please, back later.',
+    'exception' => 'Exception',
+    'message' => 'Message',
+    'file' => 'File',
+    'line' => 'Line',
+    'trace' => 'Trace',
+    'exceptionTitle' => 'Error 500 - Internal Server Error',
+    'exceptionDescription' => 'Something is wrong. Please, back later.',
 ];
