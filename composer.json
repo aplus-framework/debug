@@ -5,8 +5,14 @@
     "keywords": [
         "debug",
         "timer",
-        "error_handler",
-        "exception_handler"
+        "error",
+        "handler",
+        "error-handling",
+        "exception-handling",
+        "exception",
+        "log",
+        "error-reporting",
+        "view"
     ],
     "homepage": "https://the-framework.gitlab.io/libraries/debug.html",
     "license": "MIT",
