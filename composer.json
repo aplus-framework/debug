@@ -1,7 +1,7 @@
 {
-    "name": "natanfelles/debug",
+    "name": "aplus/debug",
     "type": "library",
-    "description": "The Framework Debug Library",
+    "description": "Aplus Framework Debug Library",
     "keywords": [
         "debug",
         "timer",
@@ -14,7 +14,7 @@
         "error-reporting",
         "view"
     ],
-    "homepage": "https://the-framework.gitlab.io/libraries/debug.html",
+    "homepage": "https://aplus-framework.com/docs/debug",
     "license": "MIT",
     "authors": [
         {
@@ -58,9 +58,9 @@
     "prefer-stable": true,
     "support": {
         "email": "natanfelles@gmail.com",
-        "issues": "https://gitlab.com/the-framework/libraries/debug/issues",
-        "wiki": "https://gitlab.com/the-framework/libraries/debug/wikis/home",
-        "source": "https://gitlab.com/the-framework/libraries/debug",
-        "docs": "https://the-framework.gitlab.io/libraries/debug/docs/"
+        "issues": "https://gitlab.com/aplus-framework/libraries/debug/issues",
+        "wiki": "https://gitlab.com/aplus-framework/libraries/debug/wikis/home",
+        "source": "https://gitlab.com/aplus-framework/libraries/debug",
+        "docs": "https://aplus-framework.gitlab.io/libraries/debug/docs/"
     }
 }
