@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of The Framework Debug Library.
+ * This file is part of Aplus Framework Debug Library.
  *
  * (c) Natan Felles <natanfelles@gmail.com>
  *
