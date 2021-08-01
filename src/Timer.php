@@ -126,6 +126,7 @@ class Timer
     {
         $number = $this->marks[$to]['memory'] - $this->marks[$from]['memory'];
         $number = \number_format($number / 1024 / 1024, 3);
+        $diff = [];
         $diff['memory'] = $number . ' MB';
         $number = $this->marks[$to]['time'] - $this->marks[$from]['time'];
         $number = \number_format($number, 3);
