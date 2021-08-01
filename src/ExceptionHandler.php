@@ -129,8 +129,8 @@ class ExceptionHandler
         if ( ! \headers_sent()) {
             $this->sendHeaders();
         }
-        if ($this->isJSON()) {
-            $this->sendJSON($exception);
+        if ($this->isJson()) {
+            $this->sendJson($exception);
             return;
         }
         $file = $this->environment === static::DEVELOPMENT
@@ -149,13 +149,13 @@ class ExceptionHandler
         throw new RuntimeException($error);
     }
 
-    protected function isJSON() : bool
+    protected function isJson() : bool
     {
         return isset($_SERVER['HTTP_CONTENT_TYPE'])
             && \str_starts_with($_SERVER['HTTP_CONTENT_TYPE'], 'application/json');
     }
 
-    protected function sendJSON(Throwable $exception) : void
+    protected function sendJson(Throwable $exception) : void
     {
         if ($this->environment === static::DEVELOPMENT) {
             $data = [
@@ -175,11 +175,11 @@ class ExceptionHandler
 
     protected function sendHeaders() : void
     {
-        $content_type = 'text/html';
-        if ($this->isJSON()) {
-            $content_type = 'application/json';
+        $contentType = 'text/html';
+        if ($this->isJson()) {
+            $contentType = 'application/json';
         }
-        \header('Content-Type: ' . $content_type . '; charset=UTF-8');
+        \header('Content-Type: ' . $contentType . '; charset=UTF-8');
     }
 
     protected function cliError(Throwable $exception) : void
