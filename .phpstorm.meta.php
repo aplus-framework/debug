@@ -11,8 +11,8 @@ namespace PHPSTORM_META;
 
 registerArgumentsSet(
     'eh_env',
-    \Framework\Debug\ExceptionHandler::ENV_DEV,
-    \Framework\Debug\ExceptionHandler::ENV_PROD,
+    \Framework\Debug\ExceptionHandler::DEVELOPMENT,
+    \Framework\Debug\ExceptionHandler::PRODUCTION,
 );
 expectedArguments(
     \Framework\Debug\ExceptionHandler::__construct(),
