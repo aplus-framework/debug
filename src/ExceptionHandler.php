@@ -157,19 +157,17 @@ class ExceptionHandler
 
     protected function sendJson(Throwable $exception) : void
     {
-        if ($this->environment === static::DEVELOPMENT) {
-            $data = [
+        $data = $this->environment === static::DEVELOPMENT
+            ? [
                 'exception' => $exception::class,
                 'message' => $exception->getMessage(),
                 'file' => $exception->getFile(),
                 'line' => $exception->getLine(),
                 'trace' => $exception->getTrace(),
-            ];
-        } else {
-            $data = [
+            ]
+            : [
                 'message' => $this->language->render('debug', 'exceptionDescription'),
             ];
-        }
         echo \json_encode($data);
     }
 
