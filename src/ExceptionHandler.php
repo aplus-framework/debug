@@ -168,7 +168,13 @@ class ExceptionHandler
             : [
                 'message' => $this->language->render('debug', 'exceptionDescription'),
             ];
-        echo \json_encode($data);
+        echo \json_encode([
+            'status' => [
+                'code' => 500,
+                'reason' => 'Internal Server Error',
+            ],
+            'data' => $data,
+        ], \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE);
     }
 
     protected function sendHeaders() : void
