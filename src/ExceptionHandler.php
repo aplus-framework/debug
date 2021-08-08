@@ -20,6 +20,8 @@ use Throwable;
 
 /**
  * Class ExceptionHandler.
+ *
+ * @package debug
  */
 class ExceptionHandler
 {

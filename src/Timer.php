@@ -13,6 +13,8 @@ use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * Class Timer.
+ *
+ * @package debug
  */
 class Timer
 {
