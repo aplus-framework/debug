@@ -1,7 +1,6 @@
 # Aplus Framework Debug Library
 
-- [Homepage](https://aplus-framework.com/docs/debug)
-- [API Documentation](https://aplus-framework.gitlab.io/libraries/debug/docs/)
+- [Documentation](https://docs.aplus-framework.com/guides/libraries/debug/)
 
 [![Pipeline](https://gitlab.com/aplus-framework/libraries/debug/badges/master/pipeline.svg)](https://gitlab.com/aplus-framework/libraries/debug/-/pipelines?scope=branches)
 [![Coverage](https://gitlab.com/aplus-framework/libraries/debug/badges/master/coverage.svg?job=test:php)](https://aplus-framework.gitlab.io/libraries/debug/coverage/)
