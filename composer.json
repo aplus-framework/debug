@@ -14,7 +14,7 @@
         "error-reporting",
         "view"
     ],
-    "homepage": "https://aplus-framework.com/docs/debug",
+    "homepage": "https://docs.aplus-framework.com/guides/libraries/debug/",
     "license": "MIT",
     "authors": [
         {
@@ -61,6 +61,6 @@
         "issues": "https://gitlab.com/aplus-framework/libraries/debug/issues",
         "wiki": "https://gitlab.com/aplus-framework/libraries/debug/wikis/home",
         "source": "https://gitlab.com/aplus-framework/libraries/debug",
-        "docs": "https://aplus-framework.gitlab.io/libraries/debug/docs/"
+        "docs": "https://docs.aplus-framework.com/guides/libraries/debug/"
     }
 }
