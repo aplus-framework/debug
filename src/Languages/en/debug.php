@@ -14,5 +14,5 @@ return [
     'line' => 'Line',
     'trace' => 'Trace',
     'exceptionTitle' => 'Error 500 - Internal Server Error',
-    'exceptionDescription' => 'Something is wrong. Please, back later.',
+    'exceptionDescription' => 'Something went wrong. Please, back later.',
 ];

@@ -13,6 +13,6 @@ return [
     'file' => 'Archivo',
     'line' => 'Línea',
     'trace' => 'Trace',
-    'exceptionTitle' => 'Error 500 - Error interno del servidor',
-    'exceptionDescription' => 'Algo está mal. Por favor vuelve más tarde.',
+    'exceptionTitle' => 'Error 500 - Error Interno del Servidor',
+    'exceptionDescription' => 'Algo salió mal. Por favor vuelve más tarde.',
 ];
