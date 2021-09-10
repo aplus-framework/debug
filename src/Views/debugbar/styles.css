@@ -1,0 +1,166 @@
+#debugbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    font-size: 15px;
+    color: #bbb;
+    font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+}
+
+#debugbar *,
+#debugbar ::after,
+#debugbar ::before {
+    box-sizing: unset;
+}
+
+#debugbar a {
+    color: #8892bf;
+    text-decoration: none;
+}
+
+#debugbar p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+#debugbar pre {
+    background: #282c34;
+    color: #abb2bf;
+    padding: 1em;
+    margin: .5em 0;
+    overflow: auto;
+    border: 1px solid #000;
+    border-radius: 4px;
+}
+
+#debugbar button {
+    background-color: transparent;
+    color: #fff;
+    border: 1px solid transparent;
+    font-size: 15px;
+    border-radius: 4px;
+    padding: 5px;
+    height: 22px;
+    line-height: 22px;
+}
+
+#debugbar button:hover {
+    background-color: #8892bf;
+    color: #000;
+    border: 1px solid #8892bf;
+    cursor: pointer;
+}
+
+#debugbar button.active {
+    background-color: #4f5b93;
+    color: #000;
+    border: 1px solid #4f5b93;
+}
+
+#debugbar ul {
+    padding-left: 15px;
+}
+
+#debugbar .panels {
+    background: #191a1c;
+    position: fixed;
+    bottom: 43px;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+#debugbar .panels .panel {
+    display: none;
+}
+
+#debugbar table {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    border-collapse: collapse;
+    color: #bbb;
+    width: 100%;
+    text-align: left;
+    table-layout: fixed;
+}
+
+#debugbar table,
+#debugbar th,
+#debugbar td {
+    border: 1px solid #000;
+}
+
+#debugbar td,
+#debugbar th {
+    padding: 5px;
+}
+
+#debugbar th {
+    color: #fff;
+    background: #111;
+}
+
+#debugbar tr:hover {
+    background: #141516;
+}
+
+#debugbar .panels header {
+    background-color: #141414;
+    border-bottom: 1px solid #000;
+    border-top: 1px solid #000;
+    box-shadow: rgba(0, 0, 0, .25) 0 2px 5px 0;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 10px 0 10px;
+    display: flex;
+    align-items: center;
+}
+
+#debugbar .panels header .title {
+    float: left;
+    color: #fff;
+    font-weight: bold;
+}
+
+#debugbar .panels header .actions {
+    margin-left: auto;
+}
+
+#debugbar .panels .contents {
+    height: 250px;
+    padding: 10px;
+    overflow: auto;
+}
+
+#debugbar .toolbar {
+    background-color: #141414;
+    border-top: 1px solid #000;
+    border-right: 1px solid #000;
+    box-shadow: rgba(0, 0, 0, .25) 0 2px 5px 0;
+    height: 42px;
+    line-height: 42px;
+    padding: 0 5px 0 5px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+}
+
+#debugbar .toolbar .icon {
+    display: inline;
+    cursor: pointer;
+}
+
+#debugbar .toolbar .collectors {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+#debugbar .toolbar .collectors .collector {
+    margin-left: 5px;
+}
+
+#debugbar .toolbar .collectors .info {
+    margin-left: auto;
+}
