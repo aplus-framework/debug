@@ -3,9 +3,9 @@ let Debugbar = {
     collectors: null,
     panels: null,
     init: function () {
-        Debugbar.icon = document.querySelector('.icon');
-        Debugbar.collectors = document.querySelectorAll('.collector');
-        Debugbar.panels = document.querySelectorAll('.panel');
+        Debugbar.icon = document.querySelector('#debugbar .icon');
+        Debugbar.collectors = document.querySelectorAll('#debugbar .collector');
+        Debugbar.panels = document.querySelectorAll('#debugbar .panel');
         if (Debugbar.isWide()) {
             Debugbar.showWide();
         } else {
@@ -40,6 +40,7 @@ let Debugbar = {
                     return;
                 }
                 Debugbar.setActivePanel(this.id);
+                Debugbar.activeInstance(this.id);
                 let panel = document.querySelector('.' + this.id);
                 panel.style.display = 'block';
                 if (!wasActive) {
@@ -56,8 +57,8 @@ let Debugbar = {
     },
     showWide: function () {
         let toolbar = document.querySelector('#debugbar');
-        let panelsDiv = document.querySelector('.panels');
-        let collectorsDiv = document.querySelector('.collectors');
+        let panelsDiv = document.querySelector('#debugbar .panels');
+        let collectorsDiv = document.querySelector('#debugbar .collectors');
         toolbar.style.width = '100%';
         panelsDiv.style.display = 'block';
         collectorsDiv.style.display = 'flex';
@@ -65,8 +66,8 @@ let Debugbar = {
     },
     hideWide: function () {
         let toolbar = document.querySelector('#debugbar');
-        let panelsDiv = document.querySelector('.panels');
-        let collectorsDiv = document.querySelector('.collectors');
+        let panelsDiv = document.querySelector('#debugbar .panels');
+        let collectorsDiv = document.querySelector('#debugbar .collectors');
         toolbar.style.width = 'auto';
         panelsDiv.style.display = 'none';
         collectorsDiv.style.display = 'none';
@@ -77,6 +78,7 @@ let Debugbar = {
             let collector = document.querySelector('#' + id);
             let panel = document.querySelector('.' + id);
             collector.classList.add('active');
+            Debugbar.activeInstance(id);
             panel.style.display = 'block';
         }
     },
@@ -88,5 +90,20 @@ let Debugbar = {
     },
     removeActivePanel: function () {
         localStorage.removeItem('debugbar-panel')
+    },
+    activeInstance: function (collector) {
+        Debugbar.setupInstances(collector);
+        let contents = document.querySelector('.' + collector + ' .contents');
+        for (let i = 0; i < contents.children.length; i++) {
+            contents.children[i].style.display = 'none';
+        }
+        let select = document.querySelector('.' + collector + ' .instances select');
+        document.querySelector('.' + collector + ' .instance-' + select.value).style.display = 'block';
+    },
+    setupInstances: function (collector) {
+        let select = document.querySelector('.' + collector + ' .instances select');
+        select.onchange = function () {
+            Debugbar.activeInstance(collector);
+        };
     },
 };
