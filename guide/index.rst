@@ -1,6 +1,9 @@
 Debug
 =====
 
+.. image:: image.png
+    :alt: Aplus Framework Debug Library
+
 Aplus Framework Debug Library.
 
 - `Installation`_
