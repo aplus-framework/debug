@@ -21,7 +21,7 @@ class Toolbar extends CollectorManager
         $content = '<div>';
         $content .= '<h1>Toolbar</h1>';
         $content .= '<div>';
-        foreach ($this->getCollectors() as $class => $collector) {
+        foreach ($this->getCollectors() as $collector) {
             $content .= '<div>';
             $content .= $collector::render();
             $content .= '</div>';

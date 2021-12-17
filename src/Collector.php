@@ -16,17 +16,26 @@ namespace Framework\Debug;
  */
 abstract class Collector
 {
+    /**
+     * @var array<mixed>
+     */
     protected static array $data = [];
 
+    /**
+     * @param array<mixed> $item
+     */
     public static function add(array $item) : void
     {
         static::$data[] = [
-            'microtime' => microtime(true),
-            'memory' => memory_get_usage(),
+            'microtime' => \microtime(true),
+            'memory' => \memory_get_usage(),
             'item' => $item,
         ];
     }
 
+    /**
+     * @return array<mixed>
+     */
     public static function getData() : array
     {
         return static::$data;
@@ -34,22 +43,22 @@ abstract class Collector
 
     public static function render() : string
     {
-        return <<<EOL
-<h2>Database</h2>
-<div>
-<table>
-<thead>
-<tr>
-<th>Query</th>
-</tr>
-<tbody>
-<tr>
-<td><pre><code class="language-sql">SELECT * FROM `foo`</code></pre></td>
-</tr>
-</tbody>
-</thead>
-</table>
-</div>
-EOL;
+        return <<<'EOL'
+            <h2>Database</h2>
+            <div>
+            <table>
+            <thead>
+            <tr>
+            <th>Query</th>
+            </tr>
+            <tbody>
+            <tr>
+            <td><pre><code class="language-sql">SELECT * FROM `foo`</code></pre></td>
+            </tr>
+            </tbody>
+            </thead>
+            </table>
+            </div>
+            EOL;
     }
 }

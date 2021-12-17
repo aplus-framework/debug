@@ -21,9 +21,9 @@ class CollectorManager
      */
     protected array $collectors = [];
 
-    public function addCollector( $collector) : static
+    public function addCollector(string $collector) : static
     {
-        $this->collectors[$collector] = new $collector;
+        $this->collectors[$collector] = new $collector();
         return $this;
     }
 
