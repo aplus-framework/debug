@@ -1,7 +1,8 @@
 {
     "name": "aplus/debug",
-    "type": "library",
     "description": "Aplus Framework Debug Library",
+    "license": "MIT",
+    "type": "library",
     "keywords": [
         "debug",
         "timer",
@@ -14,8 +15,6 @@
         "error-reporting",
         "view"
     ],
-    "homepage": "https://docs.aplus-framework.com/guides/libraries/debug/",
-    "license": "MIT",
     "authors": [
         {
             "name": "Natan Felles",
@@ -23,27 +22,38 @@
             "homepage": "https://natanfelles.github.io"
         }
     ],
+    "homepage": "https://aplus-framework.com/packages/debug",
+    "support": {
+        "email": "support@aplus-framework.com",
+        "issues": "https://gitlab.com/aplus-framework/libraries/debug/issues",
+        "forum": "https://aplus-framework.com/forum",
+        "source": "https://gitlab.com/aplus-framework/libraries/debug",
+        "docs": "https://docs.aplus-framework.com/guides/libraries/debug/"
+    },
+    "funding": [
+        {
+            "type": "Aplus Sponsor",
+            "url": "https://aplus-framework.com/sponsor"
+        }
+    ],
     "require": {
         "php": ">=8.0",
-        "aplus/cli": "^1.14",
-        "aplus/helpers": "^2.2",
-        "aplus/language": "^1.5",
+        "aplus/cli": "^1.17",
+        "aplus/helpers": "^2.3",
+        "aplus/language": "^1.6",
         "aplus/log": "^2.2"
     },
     "require-dev": {
         "ext-xdebug": "*",
-        "aplus/coding-standard": "^1.9",
-        "ergebnis/composer-normalize": "^2.15",
+        "aplus/coding-standard": "^1.12",
+        "ergebnis/composer-normalize": "^2.18",
         "jetbrains/phpstorm-attributes": "^1.0",
-        "phpmd/phpmd": "^2.10",
+        "phpmd/phpmd": "^2.11",
         "phpstan/phpstan": "^0.12",
         "phpunit/phpunit": "^9.5"
     },
-    "config": {
-        "optimize-autoloader": true,
-        "preferred-install": "dist",
-        "sort-packages": true
-    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Framework\\Debug\\": "src/"
@@ -54,13 +64,9 @@
             "Tests\\Debug\\": "tests/"
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "support": {
-        "email": "support@aplus-framework.com",
-        "issues": "https://gitlab.com/aplus-framework/libraries/debug/issues",
-        "wiki": "https://gitlab.com/aplus-framework/libraries/debug/wikis/home",
-        "source": "https://gitlab.com/aplus-framework/libraries/debug",
-        "docs": "https://docs.aplus-framework.com/guides/libraries/debug/"
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
     }
 }
