@@ -9,18 +9,22 @@
                 <div class="title">Info</div>
             </header>
             <div class="contents">
-                <p>Running<?= class_exists('Aplus') ? ' ' . Aplus::DESCRIPTION
-                        : '' ?> on <?= PHP_OS_FAMILY ?> with PHP <?= PHP_VERSION ?></p>
-                <h3>Links</h3>
-                <ul>
-                    <li><a href="https://docs.aplus-framework.com" target="_blank">Docs</a></li>
-                    <li><a href="https://packages.aplus-framework.com" target="_blank">Packages</a>
-                    </li>
-                    <li><a href="https://status.aplus-framework.com" target="_blank">Status</a></li>
-                    <li>
-                        <a href="https://aplus-framework.com" target="_blank">aplus-framework.com</a>
-                    </li>
-                </ul>
+                <div class="instance-default">
+                    <p>Running<?= class_exists('Aplus') ? ' ' . Aplus::DESCRIPTION
+                            : '' ?> on <?= PHP_OS_FAMILY ?> with PHP <?= PHP_VERSION ?></p>
+                    <h3>Links</h3>
+                    <ul>
+                        <li><a href="https://docs.aplus-framework.com" target="_blank">Docs</a></li>
+                        <li>
+                            <a href="https://packages.aplus-framework.com" target="_blank">Packages</a>
+                        </li>
+                        <li><a href="https://status.aplus-framework.com" target="_blank">Status</a>
+                        </li>
+                        <li>
+                            <a href="https://aplus-framework.com" target="_blank">aplus-framework.com</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="panel cache-collector">

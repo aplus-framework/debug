@@ -92,18 +92,18 @@ let Debugbar = {
         localStorage.removeItem('debugbar-panel')
     },
     activeInstance: function (collector) {
-        Debugbar.setupInstances(collector);
         let contents = document.querySelector('.' + collector + ' .contents');
         for (let i = 0; i < contents.children.length; i++) {
             contents.children[i].style.display = 'none';
         }
+        let instance = 'default';
         let select = document.querySelector('.' + collector + ' .instances select');
-        document.querySelector('.' + collector + ' .instance-' + select.value).style.display = 'block';
-    },
-    setupInstances: function (collector) {
-        let select = document.querySelector('.' + collector + ' .instances select');
-        select.onchange = function () {
-            Debugbar.activeInstance(collector);
-        };
+        if (select) {
+            select.onchange = function () {
+                Debugbar.activeInstance(collector);
+            };
+            instance = select.value;
+        }
+        document.querySelector('.' + collector + ' .instance-' + instance).style.display = 'block';
     },
 };
