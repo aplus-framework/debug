@@ -16,49 +16,22 @@ namespace Framework\Debug;
  */
 abstract class Collector
 {
-    /**
-     * @var array<mixed>
-     */
-    protected static array $data = [];
+    protected string $name;
 
-    /**
-     * @param array<mixed> $item
-     */
-    public static function add(array $item) : void
+    public function __construct(string $name = 'default')
     {
-        static::$data[] = [
-            'microtime' => \microtime(true),
-            'memory' => \memory_get_usage(),
-            'item' => $item,
-        ];
+        $this->name = $name;
     }
 
-    /**
-     * @return array<mixed>
-     */
-    public static function getData() : array
+    public function getName() : string
     {
-        return static::$data;
+        return $this->name;
     }
 
-    public static function render() : string
+    public function getSafeName() : string
     {
-        return <<<'EOL'
-            <h2>Database</h2>
-            <div>
-            <table>
-            <thead>
-            <tr>
-            <th>Query</th>
-            </tr>
-            <tbody>
-            <tr>
-            <td><pre><code class="language-sql">SELECT * FROM `foo`</code></pre></td>
-            </tr>
-            </tbody>
-            </thead>
-            </table>
-            </div>
-            EOL;
+        return Debugger::makeSafeName($this->getName());
     }
+
+    abstract public function getContents() : string;
 }
