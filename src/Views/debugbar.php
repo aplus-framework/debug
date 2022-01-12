@@ -10,6 +10,7 @@
 <div id="debugbar">
     <div class="panels">
         <div class="panel info-collector">
+            <div class="resize"></div>
             <header>
                 <div class="title">Info</div>
             </header>
@@ -35,6 +36,7 @@
         <?php foreach ($collections as $collection): ?>
             <?php if ($collection->hasCollectors()): ?>
                 <div class="panel <?= $collection->getSafeName() ?>-collector">
+                    <div class="resize"></div>
                     <header>
                         <div class="title"><?= $collection->getName() ?></div>
                         <div class="actions"><?= implode(' ', $collection->getActions()) ?></div>

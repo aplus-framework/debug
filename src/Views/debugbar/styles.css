@@ -14,6 +14,15 @@
     box-sizing: unset;
 }
 
+#debugbar h1,
+#debugbar h2,
+#debugbar h3,
+#debugbar h4,
+#debugbar h5,
+#debugbar h6 {
+    margin: 0 0 10px 0;
+}
+
 #debugbar a {
     color: magenta;
     text-decoration: none;
@@ -28,9 +37,15 @@
     background: #000;
     color: #eee;
     padding: 1em;
-    margin: .5em 0;
+    margin: 0;
     overflow: auto;
     border: 1px solid #222;
+    border-radius: 4px;
+}
+
+#debugbar :not(pre) > code {
+    background: #222;
+    padding: 3px;
     border-radius: 4px;
 }
 
@@ -61,7 +76,7 @@
 #debugbar select {
     background-color: transparent;
     color: #fff;
-    border: 1px solid #111;
+    border: 1px solid #222;
     font-size: 14px;
     padding: 3px 5px;
     height: 16px;
@@ -93,6 +108,13 @@
     display: none;
 }
 
+#debugbar .panels .panel .resize {
+    cursor: ns-resize;
+    width: 100%;
+    height: 1px;
+    background: #222;
+}
+
 #debugbar table {
     margin-top: 0;
     margin-bottom: 1rem;
@@ -100,33 +122,38 @@
     color: #eee;
     width: 100%;
     text-align: left;
-    table-layout: fixed;
+    table-layout: auto;
 }
 
 #debugbar table,
 #debugbar th,
 #debugbar td {
-    border: 1px solid #111;
+    border: 1px solid #222;
 }
 
 #debugbar td,
 #debugbar th {
-    padding: 5px;
+    padding: .5em;
 }
 
 #debugbar th {
     color: #fff;
     background: #000;
+    border-bottom: 2px solid #222;
 }
 
 #debugbar tr:hover {
     background: #111;
 }
 
+#debugbar tr.active {
+    background: #333;
+}
+
 #debugbar .panels header {
     background-color: #000;
-    border-bottom: 1px solid #111;
-    border-top: 1px solid #111;
+    border-bottom: 1px solid #222;
+    border-top: 1px solid #222;
     height: 40px;
     line-height: 40px;
     padding: 0 10px 0 10px;
@@ -160,8 +187,8 @@
 
 #debugbar .toolbar {
     background-color: #000;
-    border-top: 1px solid #111;
-    border-right: 1px solid #111;
+    border-top: 1px solid #222;
+    border-right: 1px solid #222;
     box-shadow: rgba(255, 255, 255, .25) 0 2px 5px 0;
     height: 42px;
     line-height: 0;
