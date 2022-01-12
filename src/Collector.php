@@ -17,6 +17,10 @@ namespace Framework\Debug;
 abstract class Collector
 {
     protected string $name;
+    /**
+     * @var array<mixed>
+     */
+    protected array $data = [];
 
     public function __construct(string $name = 'default')
     {
@@ -31,6 +35,30 @@ abstract class Collector
     public function getSafeName() : string
     {
         return Debugger::makeSafeName($this->getName());
+    }
+
+    /**
+     * @param array<mixed> $data
+     *
+     * @return static
+     */
+    public function addData(array $data) : static
+    {
+        $this->data[] = $data;
+        return $this;
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public function getData() : array
+    {
+        return $this->data;
+    }
+
+    public function hasData() : bool
+    {
+        return ! empty($this->data);
     }
 
     abstract public function getContents() : string;
