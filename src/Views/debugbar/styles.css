@@ -64,8 +64,8 @@
     border: 1px solid #111;
     font-size: 14px;
     padding: 3px 5px;
-    height: 14px;
-    line-height: 14px;
+    height: 16px;
+    line-height: 16px;
 }
 
 #debugbar select:hover {
@@ -164,7 +164,7 @@
     border-right: 1px solid #111;
     box-shadow: rgba(255, 255, 255, .25) 0 2px 5px 0;
     height: 42px;
-    line-height: 42px;
+    line-height: 0;
     padding: 0 5px 0 5px;
     z-index: 1000;
     display: flex;
