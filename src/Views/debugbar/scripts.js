@@ -77,6 +77,9 @@ let Debugbar = {
         if (id) {
             let collector = document.querySelector('#' + id);
             let panel = document.querySelector('.' + id);
+            if ( ! collector || ! panel) {
+                return;
+            }
             collector.classList.add('active');
             Debugbar.activeInstance(id);
             panel.style.display = 'block';
