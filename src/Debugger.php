@@ -18,20 +18,14 @@ use Framework\Helpers\Isolation;
  */
 class Debugger
 {
-    protected string $name;
     /**
-     * @var array<Collection>
+     * @var array<string,Collection>
      */
     protected array $collections = [];
 
-    public function getName() : string
-    {
-        return $this->name;
-    }
-
     public function addCollection(Collection $collection) : static
     {
-        $this->collections[] = $collection;
+        $this->collections[$collection->getName()] = $collection;
         return $this;
     }
 
@@ -41,6 +35,22 @@ class Debugger
     public function getCollections() : array
     {
         return $this->collections;
+    }
+
+    public function getCollection(string $name) : ?Collection
+    {
+        return $this->getCollections()[$name] ?? null;
+    }
+
+    public function addCollector(Collector $collector, string $collectionName) : static
+    {
+        $collection = $this->getCollection($collectionName);
+        if ($collection === null) {
+            $collection = new Collection($collectionName);
+            $this->addCollection($collection);
+        }
+        $collection->addCollector($collector);
+        return $this;
     }
 
     public function renderDebugbar() : string
