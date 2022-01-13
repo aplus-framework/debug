@@ -140,7 +140,14 @@
 #debugbar th {
     color: #fff;
     background: #000;
+}
+
+#debugbar thead th {
     border-bottom: 2px solid #222;
+}
+
+#debugbar tbody th {
+    border-right: 2px solid #222;
 }
 
 #debugbar tr:hover {
