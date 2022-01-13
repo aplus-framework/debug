@@ -1,6 +1,6 @@
 <?php
 /**
- * @var array<int,\Framework\Debug\Collection> $collections
+ * @var array<string,\Framework\Debug\Collection> $collections
  */
 ?>
 <!-- Aplus Framework Debugbar start -->
@@ -9,13 +9,13 @@
 </style>
 <div id="debugbar">
     <div class="panels">
-        <div class="panel info-collector">
+        <div class="panel info-collection">
             <div class="resize"></div>
             <header>
                 <div class="title">Info</div>
             </header>
             <div class="contents">
-                <div class="instance-default">
+                <div class="collector-default">
                     <p>Running<?= class_exists('Aplus') ? ' ' . Aplus::DESCRIPTION
                             : '' ?> on <?= \PHP_OS_FAMILY ?> with PHP <?= \PHP_VERSION ?></p>
                     <h3>Links</h3>
@@ -35,13 +35,13 @@
         </div>
         <?php foreach ($collections as $collection): ?>
             <?php if ($collection->hasCollectors()): ?>
-                <div class="panel <?= $collection->getSafeName() ?>-collector">
+                <div class="panel <?= $collection->getSafeName() ?>-collection">
                     <div class="resize"></div>
                     <header>
                         <div class="title"><?= $collection->getName() ?></div>
                         <div class="actions"><?= implode(' ', $collection->getActions()) ?></div>
-                        <div class="instances">
-                            <select title="<?= $collection->getSafeName() ?> instances">
+                        <div class="collectors">
+                            <select title="<?= $collection->getSafeName() ?> collectors">
                                 <?php foreach ($collection->getCollectors() as $collector): ?>
                                     <option value="<?= $collector->getSafeName() ?>"><?= $collector->getName() ?></option>
                                 <?php endforeach ?>
@@ -50,7 +50,7 @@
                     </header>
                     <div class="contents">
                         <?php foreach ($collection->getCollectors() as $collector): ?>
-                            <div class="instance-<?= $collector->getSafeName() ?>"><?= $collector->getContents() ?></div>
+                            <div class="collector-<?= $collector->getSafeName() ?>"><?= $collector->getContents() ?></div>
                         <?php endforeach ?>
                     </div>
                 </div>
@@ -61,14 +61,14 @@
         <div class="icon">
             <img src="data:image/png;base64,<?= base64_encode((string) file_get_contents(__DIR__ . '/debugbar/icon.png')) ?>" alt="A+" width="32">
         </div>
-        <div class="collectors">
+        <div class="collections">
             <?php foreach ($collections as $collection): ?>
                 <?php if ($collection->hasCollectors()): ?>
-                    <button class="collector" id="<?= $collection->getSafeName() ?>-collector"><?= $collection->getName() ?></button>
+                    <button class="collection" id="<?= $collection->getSafeName() ?>-collection"><?= $collection->getName() ?></button>
                 <?php endif ?>
             <?php endforeach ?>
             <div class="info">
-                <button class="collector" id="info-collector">Info</button>
+                <button class="collection" id="info-collection">Info</button>
             </div>
         </div>
     </div>

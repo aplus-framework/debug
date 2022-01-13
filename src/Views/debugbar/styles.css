@@ -20,6 +20,7 @@
 #debugbar h4,
 #debugbar h5,
 #debugbar h6 {
+    color: #fff;
     margin: 0 0 10px 0;
 }
 
@@ -30,13 +31,13 @@
 
 #debugbar p {
     margin-top: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 10px;
 }
 
 #debugbar pre {
     background: #000;
     color: #eee;
-    padding: 1em;
+    padding: 16px;
     margin: 0;
     overflow: auto;
     border: 1px solid #222;
@@ -133,7 +134,7 @@
 
 #debugbar td,
 #debugbar th {
-    padding: .5em;
+    padding: 8px;
 }
 
 #debugbar th {
@@ -171,7 +172,7 @@
     margin-left: auto;
 }
 
-#debugbar .panels header .instances {
+#debugbar .panels header .collectors {
     margin-left: 5px;
 }
 
@@ -204,16 +205,16 @@
     cursor: pointer;
 }
 
-#debugbar .toolbar .collectors {
+#debugbar .toolbar .collections {
     display: flex;
     align-items: center;
     width: 100%;
 }
 
-#debugbar .toolbar .collectors .collector {
+#debugbar .toolbar .collections .collection {
     margin-left: 5px;
 }
 
-#debugbar .toolbar .collectors .info {
+#debugbar .toolbar .collections .info {
     margin-left: auto;
 }
