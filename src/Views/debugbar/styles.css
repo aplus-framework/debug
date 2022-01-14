@@ -34,6 +34,14 @@
     margin-bottom: 10px;
 }
 
+#debugbar hr {
+    background: #222;
+    border: 0;
+    height: 1px;
+    margin-block-start: 10px;
+    margin-block-end: 10px;
+}
+
 #debugbar pre {
     background: #000;
     color: #eee;
@@ -42,6 +50,10 @@
     overflow: auto;
     border: 1px solid #222;
     border-radius: 4px;
+}
+
+#debugbar :not(td) > pre {
+    margin-bottom: 10px;
 }
 
 #debugbar :not(pre) > code {
@@ -118,7 +130,7 @@
 
 #debugbar table {
     margin-top: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 10px;
     border-collapse: collapse;
     color: #eee;
     width: 100%;
@@ -224,4 +236,8 @@
 
 #debugbar .toolbar .collections .info {
     margin-left: auto;
+}
+
+#debugbar.inverted {
+    filter: invert(1);
 }
