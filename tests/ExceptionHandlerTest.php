@@ -169,12 +169,24 @@ final class ExceptionHandlerTest extends TestCase
     }
 
     /**
-     * @runInSeparateProcess
+     * @return array<array<string>>
      */
-    public function testExceptionWithLogger() : void
+    public function environmentsProvider() : array
+    {
+        return [
+            [ExceptionHandler::DEVELOPMENT],
+            [ExceptionHandler::PRODUCTION],
+        ];
+    }
+
+    /**
+     * @runInSeparateProcess
+     * @dataProvider environmentsProvider
+     */
+    public function testExceptionWithLogger(string $environment) : void
     {
         $logger = new Logger(\sys_get_temp_dir());
-        $exceptions = new ExceptionHandlerMock(logger: $logger);
+        $exceptions = new ExceptionHandlerMock($environment, $logger);
         $exceptions->cli = false;
         \ob_start();
         $exceptions->exceptionHandler(new \Exception('Foo'));
