@@ -64,6 +64,6 @@ class Debugger
 
     public static function makeSafeName(string $name) : string
     {
-        return \strtr(\strip_tags(\strtolower($name)), [' ' => '-']);
+        return \strtr(\trim(\strip_tags(\strtolower($name))), [' ' => '-']);
     }
 }
