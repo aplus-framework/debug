@@ -41,6 +41,7 @@ class ExceptionHandler
     protected ?Logger $logger = null;
     protected string $environment = ExceptionHandler::PRODUCTION;
     protected Language $language;
+    protected bool $testing = false;
 
     /**
      * ExceptionHandler constructor.
@@ -132,7 +133,7 @@ class ExceptionHandler
             \ob_end_clean();
         }
         $this->log((string) $exception);
-        if (\PHP_SAPI === 'cli') {
+        if ($this->isCli()) {
             $this->cliError($exception);
             return;
         }
@@ -158,6 +159,11 @@ class ExceptionHandler
         $error = 'Debug exception view "' . $file . '" was not found';
         $this->log($error);
         throw new RuntimeException($error);
+    }
+
+    protected function isCli() : bool
+    {
+        return \PHP_SAPI === 'cli' || \defined('STDIN');
     }
 
     protected function isJson() : bool
@@ -209,7 +215,7 @@ class ExceptionHandler
             . ': ' . $exception->getLine() . \PHP_EOL;
         $message .= $this->language->render('debug', 'trace')
             . ': ' . $exception->getTraceAsString();
-        CLI::error($message);
+        CLI::error($message, $this->testing ? null : 1);
     }
 
     protected function log(string $message) : void
