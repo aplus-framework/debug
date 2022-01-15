@@ -27,10 +27,14 @@ class ExceptionHandler
 {
     /**
      * Development environment.
+     *
+     * @var string
      */
     public const DEVELOPMENT = 'development';
     /**
      * Production environment.
+     *
+     * @var string
      */
     public const PRODUCTION = 'production';
     protected string $viewsDir = __DIR__ . '/Views/';
@@ -64,6 +68,11 @@ class ExceptionHandler
         }
         $this->language = $language ?? new Language('en');
         $this->language->addDirectory(__DIR__ . '/Languages');
+    }
+
+    public function getEnvironment() : string
+    {
+        return $this->environment;
     }
 
     /**
