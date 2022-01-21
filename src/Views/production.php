@@ -14,10 +14,10 @@
         body {
             background: #000;
             color: #eee;
-            font-family: monospace, sans-serif;
-            font-size: 1rem;
-            line-height: 1.5rem;
-            margin: 1rem;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 16px;
+            line-height: 24px;
+            margin: 16px;
         }
 
         h1 {
