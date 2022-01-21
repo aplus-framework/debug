@@ -5,6 +5,9 @@
 ?>
 <!-- Aplus Framework Debugbar start -->
 <style>
+    <?= file_get_contents(__DIR__ . '/assets/prism-aplus.css') ?>
+</style>
+<style>
     <?= file_get_contents(__DIR__ . '/debugbar/styles.css') ?>
 </style>
 <div id="debugbar">
@@ -73,6 +76,9 @@
         </div>
     </div>
 </div>
+<script>
+    <?= file_get_contents(__DIR__ . '/assets/prism.js') ?>
+</script>
 <script>
     <?= file_get_contents(__DIR__ . '/debugbar/scripts.js') ?>
     Debugbar.init();

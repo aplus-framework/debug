@@ -16,6 +16,9 @@ use Framework\Helpers\ArraySimple;
     <title><?= $handler->getLanguage()->render('debug', 'exception') ?>: <?=
         htmlentities($exception->getMessage()) ?></title>
     <style>
+        <?= file_get_contents(__DIR__ . '/assets/prism-aplus.css') ?>
+    </style>
+    <style>
         body {
             background-color: #000;
             color: #fff;
@@ -139,9 +142,9 @@ use Framework\Helpers\ArraySimple;
             padding: 5px;
         }
 
-        td pre {
+        td pre code {
             margin: 0;
-            white-space: pre-wrap;
+            white-space: pre-wrap !important;
         }
 
         tr:hover {
@@ -325,10 +328,8 @@ use Framework\Helpers\ArraySimple;
         </table>
     </section>
 <?php endif ?>
-
-<!--<link rel="stylesheet" href="https://docs.aplus-framework.com/css/template.css">-->
-<!--<script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/prism.min.js"></script>-->
-<!--<script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>-->
-
+<script>
+    <?= file_get_contents(__DIR__ . '/assets/prism.js') ?>
+</script>
 </body>
 </html>
