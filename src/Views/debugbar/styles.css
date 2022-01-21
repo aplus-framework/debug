@@ -1,4 +1,4 @@
-#debugbar {
+.aplus-debug {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -8,33 +8,33 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-#debugbar *,
-#debugbar ::after,
-#debugbar ::before {
+.aplus-debug *,
+.aplus-debug ::after,
+.aplus-debug ::before {
     box-sizing: unset;
 }
 
-#debugbar h1,
-#debugbar h2,
-#debugbar h3,
-#debugbar h4,
-#debugbar h5,
-#debugbar h6 {
+.aplus-debug h1,
+.aplus-debug h2,
+.aplus-debug h3,
+.aplus-debug h4,
+.aplus-debug h5,
+.aplus-debug h6 {
     color: #fff;
     margin: 0 0 10px 0;
 }
 
-#debugbar a {
+.aplus-debug a {
     color: magenta;
     text-decoration: none;
 }
 
-#debugbar p {
+.aplus-debug p {
     margin-top: 0;
     margin-bottom: 10px;
 }
 
-#debugbar hr {
+.aplus-debug hr {
     background: #222;
     border: 0;
     height: 1px;
@@ -42,7 +42,7 @@
     margin-block-end: 10px;
 }
 
-#debugbar pre {
+.aplus-debug pre {
     background: #000;
     color: #eee;
     padding: 16px;
@@ -52,18 +52,18 @@
     border-radius: 4px;
 }
 
-#debugbar :not(td) > pre {
+.aplus-debug :not(td) > pre {
     margin-bottom: 10px;
 }
 
-#debugbar :not(pre) > code {
+.aplus-debug :not(pre) > code {
     background: #222;
     color: inherit;
     padding: 3px;
     border-radius: 4px;
 }
 
-#debugbar button {
+.aplus-debug button {
     background-color: transparent;
     color: #fff;
     border: 1px solid transparent;
@@ -74,20 +74,20 @@
     line-height: 11px;
 }
 
-#debugbar button:hover {
+.aplus-debug button:hover {
     background-color: #eee;
     color: #000;
     border: 1px solid #eee;
     cursor: pointer;
 }
 
-#debugbar button.active {
+.aplus-debug button.active {
     background-color: #fff;
     color: #000;
     border: 1px solid #fff;
 }
 
-#debugbar select {
+.aplus-debug select {
     background-color: transparent;
     color: #fff;
     border: 1px solid #222;
@@ -97,15 +97,15 @@
     line-height: 16px;
 }
 
-#debugbar select:hover {
+.aplus-debug select:hover {
     cursor: pointer;
 }
 
-#debugbar ul {
+.aplus-debug ul {
     padding-left: 15px;
 }
 
-#debugbar .panels {
+.aplus-debug .panels {
     background: #000;
     position: fixed;
     bottom: 43px;
@@ -114,22 +114,22 @@
     z-index: 999;
 }
 
-#debugbar .panels .panel {
+.aplus-debug .panels .panel {
     display: none;
 }
 
-#debugbar .panels .panel .contents > * {
+.aplus-debug .panels .panel .contents > * {
     display: none;
 }
 
-#debugbar .panels .panel .resize {
+.aplus-debug .panels .panel .resize {
     cursor: ns-resize;
     width: 100%;
     height: 1px;
     background: #222;
 }
 
-#debugbar table {
+.aplus-debug table {
     margin-top: 0;
     margin-bottom: 10px;
     border-collapse: collapse;
@@ -139,39 +139,39 @@
     table-layout: auto;
 }
 
-#debugbar table,
-#debugbar th,
-#debugbar td {
+.aplus-debug table,
+.aplus-debug th,
+.aplus-debug td {
     border: 1px solid #222;
 }
 
-#debugbar td,
-#debugbar th {
+.aplus-debug td,
+.aplus-debug th {
     padding: 8px;
 }
 
-#debugbar th {
+.aplus-debug th {
     color: #fff;
     background: #000;
 }
 
-#debugbar thead th {
+.aplus-debug thead th {
     border-bottom: 2px solid #222;
 }
 
-#debugbar tbody th {
+.aplus-debug tbody th {
     border-right: 2px solid #222;
 }
 
-#debugbar tr:hover {
+.aplus-debug tr:hover {
     background: #111;
 }
 
-#debugbar tr.active {
+.aplus-debug tr.active {
     background: #333;
 }
 
-#debugbar .panels header {
+.aplus-debug .panels header {
     background-color: #000;
     border-bottom: 1px solid #222;
     border-top: 1px solid #222;
@@ -182,31 +182,31 @@
     align-items: center;
 }
 
-#debugbar .panels header .title {
+.aplus-debug .panels header .title {
     float: left;
     color: #fff;
     font-weight: bold;
 }
 
-#debugbar .panels header .actions {
+.aplus-debug .panels header .actions {
     margin-left: auto;
 }
 
-#debugbar .panels header .collectors {
+.aplus-debug .panels header .collectors {
     margin-left: 5px;
 }
 
-#debugbar .panels .contents {
+.aplus-debug .panels .contents {
     height: 250px;
     padding: 10px;
     overflow: auto;
 }
 
-#debugbar .panels .contents a:hover {
+.aplus-debug .panels .contents a:hover {
     text-decoration: underline;
 }
 
-#debugbar .toolbar {
+.aplus-debug .toolbar {
     background-color: #000;
     border-top: 1px solid #222;
     border-right: 1px solid #222;
@@ -220,25 +220,25 @@
     position: sticky;
 }
 
-#debugbar .toolbar .icon {
+.aplus-debug .toolbar .icon {
     display: inline;
     cursor: pointer;
 }
 
-#debugbar .toolbar .collections {
+.aplus-debug .toolbar .collections {
     display: flex;
     align-items: center;
     width: 100%;
 }
 
-#debugbar .toolbar .collections .collection {
+.aplus-debug .toolbar .collections .collection {
     margin-left: 5px;
 }
 
-#debugbar .toolbar .collections .info {
+.aplus-debug .toolbar .collections .info {
     margin-left: auto;
 }
 
-#debugbar.inverted {
+.aplus-debug.inverted {
     filter: invert(1);
 }

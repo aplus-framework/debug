@@ -10,7 +10,7 @@
 <style>
     <?= file_get_contents(__DIR__ . '/debugbar/styles.css') ?>
 </style>
-<div id="debugbar">
+<div id="debugbar" class="aplus-debug">
     <div class="panels">
         <div class="panel info-collection">
             <div class="resize"></div>

@@ -167,7 +167,7 @@ use Framework\Helpers\ArraySimple;
         }
     </style>
 </head>
-<body>
+<body class="aplus-debug">
 <header class="top">
     <small><?= $handler->getLanguage()->render('debug', 'exception') ?>:</small>
     <h1><?= $exception::class ?></h1>
