@@ -56,17 +56,21 @@
 .aplus-debug .token.name,
 .aplus-debug .token.number,
 .aplus-debug .token.selector,
-.aplus-debug .token.symbol {
+.aplus-debug .token.symbol,
+.aplus-debug .token.char-class-punctuation.punctuation {
     color: #d19a66
 }
 
+.aplus-debug code.language-regex,
 .aplus-debug .language-css .token.string,
 .aplus-debug .style .token.string,
 .aplus-debug .token.argument-delimiter.operator,
 .aplus-debug .token.attr-value,
 .aplus-debug .token.builtin,
 .aplus-debug .token.char,
+.aplus-debug .token.char-class,
 .aplus-debug .token.inserted,
+.aplus-debug .token.range,
 .aplus-debug .token.regex,
 .aplus-debug .token.string,
 .aplus-debug .token.string.url,
@@ -99,7 +103,8 @@
 
 .aplus-debug .token.atrule,
 .aplus-debug .token.key.attr-name,
-.aplus-debug .token.keyword {
+.aplus-debug .token.keyword,
+.aplus-debug .token.range-punctuation {
     color: #c678dd
 }
 
