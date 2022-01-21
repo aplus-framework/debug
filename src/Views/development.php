@@ -3,6 +3,9 @@
  * @var Exception $exception
  * @var Framework\Debug\ExceptionHandler $handler
  */
+
+use Framework\Helpers\ArraySimple;
+
 ?>
 <!doctype html>
 <html lang="<?= $handler->getLanguage()->getCurrentLocale() ?>" dir="<?= $handler->getLanguage()
@@ -14,16 +17,18 @@
         htmlentities($exception->getMessage()) ?></title>
     <style>
         body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 16px;
             margin: 0 0 20px;
-            font-family: sans-serif;
-            background-color: whitesmoke;
         }
 
         header {
-            background: red;
-            color: white;
-            border: solid black;
+            background: #f00;
+            border: solid #222;
             border-width: 1px 0;
+            color: #fff;
             padding: 20px 20px;
         }
 
@@ -32,134 +37,135 @@
         }
 
         section {
-            padding: 10px 20px 5px;
-            border-bottom: 1px solid black;
+            border-bottom: 1px solid #222;
+            padding: 10px 20px;
+        }
+
+        section:last-of-type {
+            border-bottom: 0;
         }
 
         section .header {
-            background: red;
+            background: #f00;
+            border: 1px solid red;
             color: #fff;
             font-weight: bold;
-            border: 1px solid #000;
             padding: 10px;
         }
 
+        .top {
+            border-top: 0;
+        }
+
         .file {
-            background: darkgray;
+            background: #111;
         }
 
         .file div {
             display: inline-block;
         }
 
-        .trace {
-            background-color: lightgray;
-        }
-
-        .log {
-            background-color: white;
+        .file div.line {
+            margin-left: 10px;
         }
 
         dl {
+            background-color: #000;
+            border: 1px solid #222;
             font-family: monospace;
             font-size: 14px;
-            margin: 5px 0 10px;
-            border: 1px solid black;
+            margin: 10px 0 0;
         }
 
         dt {
-            border-bottom: 1px solid black;
-            background: black;
-            color: white;
+            background: #111;
+            border-bottom: 1px solid #222;
+            color: #fff;
             padding: 1%;
             width: 98%;
         }
 
         dd {
-            background: whitesmoke;
+            background: #000;
             margin: 0;
             overflow-x: auto;
         }
 
         pre.code {
-            line-height: 1.2rem;
             display: inline-block;
-            width: 80%;
+            float: left;
+            line-height: 20px;
             margin: 0;
             padding: 5px;
-            float: left;
+            width: 80%;
         }
 
         dd div {
-            min-width: 25px;
+            background: #111;
+            border-right: 1px solid #222;
             display: inline-block;
-            line-height: 1.2rem;
-            white-space: pre;
-            text-align: right;
-            padding: 5px;
             float: left;
-            background: #fff;
-            border-right: 1px #ddd solid;
+            line-height: 20px;
+            min-width: 25px;
+            padding: 5px;
+            text-align: right;
+            white-space: pre;
         }
 
         dd div span {
-            color: red;
+            color: #f00;
+            font-weight: bold;
         }
 
         dt span {
-            background: red;
+            background: #f00;
             padding: 2px 6px;
         }
 
-        .input,
-        .log {
-            border: 0;
-        }
-
-        .log {
-            border-top: 1px solid black;
-        }
-
         table {
-            border: 1px black solid;
+            border: 1px solid #222;
+            border-bottom: 0;
             border-spacing: 0;
+            margin-top: 10px;
             width: 100%;
-            margin: 5px 0 10px;
-        }
-
-        .log table {
-            border-top: 0;
         }
 
         th {
-            border-right: 1px black solid;
+            border-right: 2px solid #222;
         }
 
         th, td {
-            border-top: 1px black solid;
-            padding: 3px;
+            border-bottom: 1px solid #222;
+            padding: 5px;
+        }
+
+        td pre {
+            margin: 0;
+            white-space: pre-wrap;
         }
 
         tr:hover {
-            background: lightgray;
+            background: #111;
         }
 
         thead th {
-            text-align: left;
-            background: black;
-            color: white;
+            background: #111;
+            border-bottom: 2px solid #222;
+            border-right: 0;
+            color: #fff;
             font-size: 110%;
+            text-align: left;
         }
 
         tbody th {
-            text-align: right;
-            background: darkgray;
+            background: #111;
             min-width: 40%;
+            text-align: right;
         }
     </style>
 </head>
 <body>
-<header>
+<header class="top">
     <small><?= $handler->getLanguage()->render('debug', 'exception') ?>:</small>
     <h1><?= $exception::class ?></h1>
     <small><?= $handler->getLanguage()->render('debug', 'message') ?>:</small>
@@ -170,7 +176,7 @@
         <small><?= $handler->getLanguage()->render('debug', 'file') ?>:</small>
         <h3><?= htmlentities($exception->getFile()) ?></h3>
     </div>
-    <div>
+    <div class="line">
         <small><?= $handler->getLanguage()->render('debug', 'line') ?>:</small>
         <h3><?= $exception->getLine() ?></h3>
     </div>
@@ -229,7 +235,7 @@
                                 }
                             }
                             ?></div>
-                        <pre class="code"><?= htmlentities($pre) ?></pre>
+                        <pre class="code"><code class="language-php"><?= htmlentities($pre) ?></code></pre>
                     </dd>
                 </dl>
             <?php else : ?>
@@ -249,8 +255,8 @@
     $input = [
         'ENV' => filter_input_array(\INPUT_ENV) ?: [],
         'SERVER' => filter_input_array(\INPUT_SERVER) ?: [],
-        'GET' => filter_input_array(\INPUT_GET) ?: [],
-        'POST' => filter_input_array(\INPUT_POST) ?: [],
+        'GET' => ArraySimple::convert(filter_input_array(\INPUT_GET) ?: []),
+        'POST' => ArraySimple::convert(filter_input_array(\INPUT_POST) ?: []),
         'COOKIE' => filter_input_array(\INPUT_COOKIE) ?: [],
     ];
     foreach ($input as &$item) {
@@ -308,7 +314,9 @@
             </tr>
             <tr>
                 <th>Message</th>
-                <td style="white-space: pre-wrap"><?= htmlentities($log->message) ?></td>
+                <td>
+                    <pre><code class="language-log"><?= htmlentities($log->message) ?></code></pre>
+                </td>
             </tr>
             <tr>
                 <th>Written</th>
@@ -317,5 +325,10 @@
         </table>
     </section>
 <?php endif ?>
+
+<!--<link rel="stylesheet" href="https://docs.aplus-framework.com/css/template.css">-->
+<!--<script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/prism.min.js"></script>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>-->
+
 </body>
 </html>
