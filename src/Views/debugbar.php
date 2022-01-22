@@ -44,8 +44,12 @@
                         <div class="title"><?= $collection->getName() ?></div>
                         <div class="actions"><?= implode(' ', $collection->getActions()) ?></div>
                         <div class="collectors">
-                            <select title="<?= $collection->getSafeName() ?> collectors">
-                                <?php foreach ($collection->getCollectors() as $collector): ?>
+                            <?php
+                            $collectors = $collection->getCollectors();
+                            ?>
+                            <select title="<?= $collection->getSafeName() ?> collectors"<?=
+                            count($collectors) === 1 ? ' disabled' : '' ?>>
+                                <?php foreach ($collectors as $collector): ?>
                                     <option value="<?= $collector->getSafeName() ?>"><?= $collector->getName() ?></option>
                                 <?php endforeach ?>
                             </select>

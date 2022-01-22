@@ -101,6 +101,12 @@
     cursor: pointer;
 }
 
+.aplus-debug select:disabled {
+    border-color: #000;
+    color: #666;
+    cursor: default;
+}
+
 .aplus-debug ul {
     padding-left: 15px;
 }
