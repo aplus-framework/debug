@@ -217,7 +217,7 @@ use Framework\Helpers\ArraySimple;
                         $line = 1;
                         while ($handle && ! feof($handle)) {
                             $code = fgets($handle);
-                            if ($line > ($trace['line'] - 10) && $line < ($trace['line'] + 10)) {
+                            if ($line >= ($trace['line'] - 10) && $line <= ($trace['line'] + 10)) {
                                 $pre .= rtrim((string) $code) . \PHP_EOL;
                                 $lines[] = $line;
                             }
