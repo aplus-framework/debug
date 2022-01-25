@@ -145,6 +145,10 @@
     table-layout: auto;
 }
 
+.aplus-debug td table {
+    margin: 0;
+}
+
 .aplus-debug table,
 .aplus-debug th,
 .aplus-debug td {
@@ -167,6 +171,10 @@
 
 .aplus-debug tbody th {
     border-right: 2px solid #222;
+}
+
+.aplus-debug tbody td table thead th {
+    border-right-width: 1px;
 }
 
 .aplus-debug tr:hover {
