@@ -212,6 +212,16 @@
     text-decoration: underline;
 }
 
+.aplus-debug .panels .contents button {
+    border-color: #222;
+    font-size: 16px;
+    padding: 5px;
+}
+
+.aplus-debug .panels .contents button:hover {
+    border-color: #fff;
+}
+
 .aplus-debug .toolbar {
     background-color: #000;
     border-top: 1px solid #222;
