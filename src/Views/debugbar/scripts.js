@@ -96,13 +96,14 @@ let Debugbar = {
         return localStorage.getItem('debugbar-panel') === id;
     },
     removeActivePanel: function () {
-        localStorage.removeItem('debugbar-panel')
+        localStorage.removeItem('debugbar-panel');
     },
     activeCollector: function (collection) {
         let contents = document.querySelector('.' + collection + ' .contents');
         for (let i = 0; i < contents.children.length; i++) {
             contents.children[i].style.display = 'none';
         }
+        Debugbar.makeResizable(contents);
         let collector = 'default';
         let select = document.querySelector('.' + collection + ' .collectors select');
         if (select) {
@@ -112,5 +113,38 @@ let Debugbar = {
             collector = select.value;
         }
         document.querySelector('.' + collection + ' .collector-' + collector).style.display = 'block';
+    },
+    makeResizable: function (contents) {
+        if (!contents.style.height) {
+            contents.style.height = '250px';
+        }
+        const storageKey = 'debugbar-panel-contents-height';
+        let storedHeight = localStorage.getItem(storageKey);
+        if (storedHeight) {
+            contents.style.height = storedHeight;
+        }
+        let resizer = contents.parentElement.querySelector('.resize');
+        resizer.addEventListener('mousedown', function (e) {
+            e.preventDefault();
+            window.addEventListener('mousemove', resize);
+            window.addEventListener('mouseup', stopResize);
+        });
+
+        function resize(e) {
+            let move = resizer.getBoundingClientRect().top - e.pageY;
+            let height = contents.offsetHeight - 20 + move;
+            let maxHeight = window.innerHeight - 120;
+            if (height < 0) {
+                height = 0;
+            } else if (height > maxHeight) {
+                height = maxHeight;
+            }
+            contents.style.height = height + 'px';
+            localStorage.setItem(storageKey, height + 'px');
+        }
+
+        function stopResize() {
+            window.removeEventListener('mousemove', resize);
+        }
     },
 };
