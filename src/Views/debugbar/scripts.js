@@ -129,11 +129,14 @@ let Debugbar = {
             window.addEventListener('mousemove', resize);
             window.addEventListener('mouseup', stopResize);
         });
+        let header = contents.parentElement.querySelector('header');
+        let toolbar = document.querySelector('#debugbar .toolbar');
 
         function resize(e) {
             let move = resizer.getBoundingClientRect().top - e.pageY;
             let height = contents.offsetHeight - 20 + move;
-            let maxHeight = window.innerHeight - 120;
+            let toRemove = header.clientHeight + toolbar.clientHeight + 25;
+            let maxHeight = window.innerHeight - toRemove;
             if (height < 0) {
                 height = 0;
             } else if (height > maxHeight) {
