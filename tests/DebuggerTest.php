@@ -75,4 +75,26 @@ final class DebuggerTest extends TestCase
     {
         self::assertSame('foo-bar-baz', Debugger::makeSafeName('Foo Bar <small>Baz</small>  '));
     }
+
+    public function testConvertSize() : void
+    {
+        self::assertSame('1 B', Debugger::convertSize(1));
+        self::assertSame('2 KB', Debugger::convertSize(1024 * 2));
+        self::assertSame('3 MB', Debugger::convertSize(1024 * 1024 * 3));
+        self::assertSame('4 GB', Debugger::convertSize(1024 * 1024 * 1024 * 4));
+        self::assertSame('5 TB', Debugger::convertSize(1024 * 1024 * 1024 * 1024 * 5));
+        self::assertSame('6 PB', Debugger::convertSize(1024 * 1024 * 1024 * 1024 * 1024 * 6));
+        self::assertSame('3.37 MB', Debugger::convertSize(1024 * 1024 * 3.36999));
+    }
+
+    public function testMakeDebugValue() : void
+    {
+        self::assertSame('array', Debugger::makeDebugValue([]));
+        self::assertSame('false', Debugger::makeDebugValue(false));
+        self::assertSame('1', Debugger::makeDebugValue(1));
+        self::assertSame('1.2', Debugger::makeDebugValue(1.2));
+        self::assertSame('null', Debugger::makeDebugValue(null));
+        self::assertSame("'\\'Ok'", Debugger::makeDebugValue("'Ok"));
+        self::assertSame('instanceof stdClass', Debugger::makeDebugValue(new \stdClass()));
+    }
 }

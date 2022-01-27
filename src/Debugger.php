@@ -66,4 +66,24 @@ class Debugger
     {
         return \strtr(\trim(\strip_tags(\strtolower($name))), [' ' => '-']);
     }
+
+    public static function convertSize(float | int $size) : string
+    {
+        $unit = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+        $index = \floor(\log($size, 1024));
+        return \round($size / (1024 ** $index), 3) . ' ' . $unit[$index];
+    }
+
+    public static function makeDebugValue(mixed $value) : string
+    {
+        $type = \get_debug_type($value);
+        return (string) match ($type) {
+            'array' => 'array',
+            'bool' => $value ? 'true' : 'false',
+            'float', 'int' => $value,
+            'null' => 'null',
+            'string' => "'" . \strtr($value, ["'" => "\\'"]) . "'",
+            default => 'instanceof ' . $type,
+        };
+    }
 }
