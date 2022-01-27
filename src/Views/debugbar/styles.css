@@ -6,6 +6,8 @@
     font-size: 16px;
     color: #eee;
     font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    line-height: normal;
 }
 
 .aplus-debug *,
@@ -122,6 +124,7 @@
 
 .aplus-debug .panels .panel {
     display: none;
+    margin: 0;
 }
 
 .aplus-debug .panels .panel .contents > * {
@@ -200,6 +203,8 @@
     float: left;
     color: #fff;
     font-weight: bold;
+    font-size: inherit;
+    margin: 0;
 }
 
 .aplus-debug .panels header .actions {
