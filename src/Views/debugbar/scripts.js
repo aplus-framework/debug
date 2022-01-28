@@ -128,6 +128,7 @@ let Debugbar = {
             e.preventDefault();
             window.addEventListener('mousemove', resize);
             window.addEventListener('mouseup', stopResize);
+            window.addEventListener('dblclick', autoHeight);
         });
         let header = contents.parentElement.querySelector('header');
         let toolbar = document.querySelector('#debugbar .toolbar');
@@ -148,6 +149,17 @@ let Debugbar = {
 
         function stopResize() {
             window.removeEventListener('mousemove', resize);
+        }
+
+        function autoHeight() {
+            let toRemove = header.clientHeight + toolbar.clientHeight + 25;
+            let height = window.innerHeight - toRemove + 'px';
+            let current = localStorage.getItem(storageKey);
+            if (current === height) {
+                height = '250px';
+            }
+            contents.style.height = height;
+            localStorage.setItem(storageKey, height);
         }
     },
 };
