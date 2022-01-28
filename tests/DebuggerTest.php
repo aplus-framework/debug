@@ -71,6 +71,91 @@ final class DebuggerTest extends TestCase
         self::assertStringContainsString('<button>Foo</button> xx', $debugbar);
     }
 
+    public function testActivities() : void
+    {
+        $microtime = \microtime(true);
+        $activities = [
+            [
+                'collector' => 'default',
+                'class' => 'Class name',
+                'description' => 'Collected data 1',
+                'start' => $microtime,
+                'end' => $microtime + .5,
+            ],
+            [
+                'collector' => 'default',
+                'class' => 'Class name',
+                'description' => 'Collected data 2',
+                'start' => $microtime + .1,
+                'end' => $microtime + 1.0,
+            ],
+        ];
+        self::assertSame([
+            'min' => .0,
+            'max' => .0,
+            'total' => .0,
+            'collected' => [],
+        ], $this->debugger->getActivities());
+        $collector = new CollectorMock();
+        $collector->activities[0] = $activities[0];
+        $this->debugger->addCollector($collector, 'Foo');
+        self::assertSame([
+            'min' => $microtime,
+            'max' => $activities[0]['end'],
+            'total' => .5,
+            'collected' => [
+                [
+                    'collection' => 'Foo',
+                    'collector' => 'default',
+                    'class' => 'Class name',
+                    'description' => 'Collected data 1',
+                    'start' => $microtime,
+                    'end' => $microtime + .5,
+                    'total' => .5,
+                    'left' => .0,
+                    'width' => 100.0,
+                ],
+            ],
+        ], $this->debugger->getActivities());
+        self::assertStringContainsString('1 activity', $this->debugger->renderDebugbar());
+        $collector->activities = $activities;
+        self::assertSame([
+            'min' => $microtime,
+            'max' => $activities[1]['end'],
+            'total' => 1.0,
+            'collected' => [
+                [
+                    'collection' => 'Foo',
+                    'collector' => 'default',
+                    'class' => 'Class name',
+                    'description' => 'Collected data 1',
+                    'start' => $microtime,
+                    'end' => $microtime + .5,
+                    'total' => .5,
+                    'left' => .0,
+                    'width' => 50.0,
+                ],
+                [
+                    'collection' => 'Foo',
+                    'collector' => 'default',
+                    'class' => 'Class name',
+                    'description' => 'Collected data 2',
+                    'start' => $microtime + .1,
+                    'end' => $microtime + 1.0,
+                    'total' => $activities[1]['end'] - $activities[1]['start'],
+                    'left' => 10.0,
+                    'width' => 90.0,
+                ],
+            ],
+        ], $this->debugger->getActivities());
+        $debugbar = $this->debugger->renderDebugbar();
+        self::assertStringContainsString('2 activities', $debugbar);
+        self::assertGreaterThan(
+            \strpos($debugbar, 'Collected data 1'),
+            \strpos($debugbar, 'Collected data 2')
+        );
+    }
+
     public function testMakeSafeName() : void
     {
         self::assertSame('foo-bar-baz', Debugger::makeSafeName('Foo Bar <small>Baz</small>  '));

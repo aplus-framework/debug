@@ -13,6 +13,8 @@ use Framework\Debug\Collector;
 
 class CollectorMock extends Collector
 {
+    public array $activities = [];
+
     public function getContents() : string
     {
         return '<p>Collector: ' . $this->getName() . '</p>';
