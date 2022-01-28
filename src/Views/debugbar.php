@@ -1,6 +1,7 @@
 <?php
 /**
- * @var array<string,\Framework\Debug\Collection> $collections
+ * @var array<string,Framework\Debug\Collection> $collections
+ * @var array<string,mixed> $infos
  */
 ?>
 <!-- Aplus Framework Debugbar start -->
@@ -21,18 +22,55 @@
                 <div class="collector-default">
                     <p>Running<?= class_exists('Aplus') ? ' ' . Aplus::DESCRIPTION
                             : '' ?> on <?= \PHP_OS_FAMILY ?> with PHP <?= \PHP_VERSION ?></p>
-                    <h3>Links</h3>
-                    <ul>
-                        <li><a href="https://docs.aplus-framework.com" target="_blank">Docs</a></li>
-                        <li>
-                            <a href="https://packages.aplus-framework.com" target="_blank">Packages</a>
-                        </li>
-                        <li><a href="https://status.aplus-framework.com" target="_blank">Status</a>
-                        </li>
-                        <li>
-                            <a href="https://aplus-framework.com" target="_blank">aplus-framework.com</a>
-                        </li>
-                    </ul>
+                    <p>★
+                        <a href="https://aplus-framework.com" target="_blank">aplus-framework.com</a>
+                    </p>
+                    <?php
+                    $count = isset($infos['collected']) ? count($infos['collected']) : 0;
+                    if ($count):
+                        ?>
+                        <p><?= $count ?> activit<?= $count === 1
+                                ? 'y was'
+                                : 'ies were' ?> collected in <?= round($infos['total'], 6) ?> seconds:
+                        </p>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Collection</th>
+                                <th>Collector</th>
+                                <th>Description</th>
+                                <th title="Seconds">Runtime</th>
+                                <th title="Runtime percentages">
+                                    <span>10%</span><span>20%</span><span>30%</span><span>40%</span>
+                                    <span>50%</span><span>60%</span><span>70%</span><span>80%</span>
+                                    <span>90%</span><span>100%</span>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach ($infos['collected'] as $index => $collected): ?>
+                                <tr>
+                                    <td><?= $index + 1 ?></td>
+                                    <td><?= htmlentities($collected['collection']) ?></td>
+                                    <td title="<?= htmlentities($collected['class']) ?>"><?= htmlentities($collected['collector']) ?></td>
+                                    <td><?= htmlentities($collected['description']) ?></td>
+                                    <td><?= round($collected['total'], 6) ?></td>
+                                    <td>
+                                    <span style="width: <?= $collected['width'] ?>%; margin-left: <?=
+                                    $collected['left']
+                                    ?>%" title="<?= $collected['width'] ?>% · From <?=
+                                    $collected['left'] ?>% to <?=
+                                    $collected['left'] + $collected['width'] ?>% · From <?=
+                                    round($collected['start'], 6) ?> to <?= round($collected['end'], 6) ?> second"></span>
+                                    </td>
+                                </tr>
+                            <?php endforeach ?>
+                            </tbody>
+                        </table>
+                    <?php
+                    endif
+                    ?>
                 </div>
             </div>
         </div>

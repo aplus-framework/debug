@@ -268,6 +268,49 @@
     margin-left: auto;
 }
 
+.aplus-debug .info-collection table th:last-of-type,
+.aplus-debug .info-collection table td:last-of-type {
+    font-size: 14px;
+    font-weight: normal;
+    padding: 8px 0;
+    width: 50%
+}
+
+.aplus-debug .info-collection table th span {
+    float: left;
+    text-align: right;
+    width: 10%;
+}
+
+.aplus-debug .info-collection table td span {
+    background: magenta;
+    display: block;
+    font-size: 12px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+}
+
+.aplus-debug .info-collection table td:last-of-type {
+    background: repeating-linear-gradient(
+        to right,
+        #111,
+        #111 10%,
+        #000 10%,
+        #000 20%
+    );
+}
+
+.aplus-debug .info-collection table tr:hover td:last-of-type {
+    background: repeating-linear-gradient(
+        to right,
+        #222,
+        #222 10%,
+        #111 10%,
+        #111 20%
+    );
+}
+
 .aplus-debug.inverted {
     filter: invert(1);
 }

@@ -53,11 +53,60 @@ class Debugger
         return $this;
     }
 
+    /**
+     * @return array<string,mixed>
+     */
+    protected function getInfos() : array
+    {
+        $collected = [];
+        foreach ($this->getCollections() as $collection) {
+            foreach ($collection->getInfos() as $info) {
+                $collected = [...$collected, ...$info];
+            }
+        }
+        $min = 0;
+        $max = 0;
+        if ($collected) {
+            \usort($collected, static function ($info1, $info2) {
+                $cmp = $info1['start'] <=> $info2['start'];
+                if ($cmp === 0) {
+                    $cmp = $info1['end'] <=> $info2['end'];
+                }
+                return $cmp;
+            });
+            $min = \min(\array_column($collected, 'start'));
+            $max = \max(\array_column($collected, 'end'));
+            foreach ($collected as &$info) {
+                $this->addInfoValues($info, $min, $max);
+            }
+        }
+        return [
+            'min' => $min,
+            'max' => $max,
+            'total' => $max - $min,
+            'collected' => $collected,
+        ];
+    }
+
+    /**
+     * @param array<string,mixed> $info
+     * @param float $min
+     * @param float $max
+     */
+    protected function addInfoValues(array &$info, float $min, float $max) : void
+    {
+        $total = $max - $min;
+        $info['total'] = $info['end'] - $info['start'];
+        $info['left'] = \round(($info['start'] - $min) * 100 / $total, 3);
+        $info['width'] = \round($info['total'] * 100 / $total, 3);
+    }
+
     public function renderDebugbar() : string
     {
         \ob_start();
         Isolation::require(__DIR__ . '/Views/debugbar.php', [
             'collections' => $this->getCollections(),
+            'infos' => $this->getInfos(),
         ]);
         return \ob_get_clean(); // @phpstan-ignore-line
     }

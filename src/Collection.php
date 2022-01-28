@@ -73,4 +73,25 @@ class Collection
     {
         return ! empty($this->collectors);
     }
+
+    /**
+     * @return array<int,array<string,mixed>>
+     */
+    public function getInfos() : array
+    {
+        $result = [];
+        foreach ($this->getCollectors() as $collector) {
+            $infos = $collector->getInfos();
+            if ($infos) {
+                foreach ($infos as &$info) {
+                    $info = \array_merge([
+                        'collection' => $this->getName(),
+                    ], $info);
+                }
+                unset($info);
+                $result[] = $infos;
+            }
+        }
+        return $result;
+    }
 }

@@ -61,5 +61,13 @@ abstract class Collector
         return ! empty($this->data);
     }
 
+    /**
+     * @return array<string,mixed>
+     */
+    public function getInfos() : array
+    {
+        return [];
+    }
+
     abstract public function getContents() : string;
 }
