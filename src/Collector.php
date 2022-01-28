@@ -21,6 +21,10 @@ abstract class Collector
      * @var array<mixed>
      */
     protected array $data = [];
+    /**
+     * @var array<int,array<string,mixed>>
+     */
+    protected array $activities = [];
 
     public function __construct(string $name = 'default')
     {
@@ -62,11 +66,11 @@ abstract class Collector
     }
 
     /**
-     * @return array<string,mixed>
+     * @return array<int,array<string,mixed>>
      */
-    public function getInfos() : array
+    public function getActivities() : array
     {
-        return [];
+        return $this->activities;
     }
 
     abstract public function getContents() : string;

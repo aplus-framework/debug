@@ -56,12 +56,12 @@ class Debugger
     /**
      * @return array<string,mixed>
      */
-    protected function getInfos() : array
+    public function getActivities() : array
     {
         $collected = [];
         foreach ($this->getCollections() as $collection) {
-            foreach ($collection->getInfos() as $info) {
-                $collected = [...$collected, ...$info];
+            foreach ($collection->getActivities() as $activities) {
+                $collected = [...$collected, ...$activities];
             }
         }
         $min = 0;
@@ -76,8 +76,8 @@ class Debugger
             });
             $min = \min(\array_column($collected, 'start'));
             $max = \max(\array_column($collected, 'end'));
-            foreach ($collected as &$info) {
-                $this->addInfoValues($info, $min, $max);
+            foreach ($collected as &$activity) {
+                $this->addActivityValues($activity, $min, $max);
             }
         }
         return [
@@ -89,16 +89,16 @@ class Debugger
     }
 
     /**
-     * @param array<string,mixed> $info
+     * @param array<string,mixed> $activity
      * @param float $min
      * @param float $max
      */
-    protected function addInfoValues(array &$info, float $min, float $max) : void
+    protected function addActivityValues(array &$activity, float $min, float $max) : void
     {
         $total = $max - $min;
-        $info['total'] = $info['end'] - $info['start'];
-        $info['left'] = \round(($info['start'] - $min) * 100 / $total, 3);
-        $info['width'] = \round($info['total'] * 100 / $total, 3);
+        $activity['total'] = $activity['end'] - $activity['start'];
+        $activity['left'] = \round(($activity['start'] - $min) * 100 / $total, 3);
+        $activity['width'] = \round($activity['total'] * 100 / $total, 3);
     }
 
     public function renderDebugbar() : string
@@ -106,7 +106,7 @@ class Debugger
         \ob_start();
         Isolation::require(__DIR__ . '/Views/debugbar.php', [
             'collections' => $this->getCollections(),
-            'infos' => $this->getInfos(),
+            'activities' => $this->getActivities(),
         ]);
         return \ob_get_clean(); // @phpstan-ignore-line
     }

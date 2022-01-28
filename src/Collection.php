@@ -75,21 +75,21 @@ class Collection
     }
 
     /**
-     * @return array<int,array<string,mixed>>
+     * @return array<int,array<int,array<string,mixed>>>
      */
-    public function getInfos() : array
+    public function getActivities() : array
     {
         $result = [];
         foreach ($this->getCollectors() as $collector) {
-            $infos = $collector->getInfos();
-            if ($infos) {
-                foreach ($infos as &$info) {
-                    $info = \array_merge([
+            $activities = $collector->getActivities();
+            if ($activities) {
+                foreach ($activities as &$activity) {
+                    $activity = \array_merge([
                         'collection' => $this->getName(),
-                    ], $info);
+                    ], $activity);
                 }
-                unset($info);
-                $result[] = $infos;
+                unset($activity);
+                $result[] = $activities;
             }
         }
         return $result;

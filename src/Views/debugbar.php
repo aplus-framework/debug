@@ -1,7 +1,7 @@
 <?php
 /**
  * @var array<string,Framework\Debug\Collection> $collections
- * @var array<string,mixed> $infos
+ * @var array<string,mixed> $activities
  */
 ?>
 <!-- Aplus Framework Debugbar start -->
@@ -26,12 +26,12 @@
                         <a href="https://aplus-framework.com" target="_blank">aplus-framework.com</a>
                     </p>
                     <?php
-                    $count = isset($infos['collected']) ? count($infos['collected']) : 0;
+                    $count = isset($activities['collected']) ? count($activities['collected']) : 0;
                     if ($count):
                         ?>
                         <p><?= $count ?> activit<?= $count === 1
                                 ? 'y was'
-                                : 'ies were' ?> collected in <?= round($infos['total'], 6) ?> seconds:
+                                : 'ies were' ?> collected in <?= round($activities['total'], 6) ?> seconds:
                         </p>
                         <table>
                             <thead>
@@ -49,7 +49,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($infos['collected'] as $index => $collected): ?>
+                            <?php foreach ($activities['collected'] as $index => $collected): ?>
                                 <tr>
                                     <td><?= $index + 1 ?></td>
                                     <td><?= htmlentities($collected['collection']) ?></td>
