@@ -2,6 +2,7 @@
 /**
  * @var array<string,Framework\Debug\Collection> $collections
  * @var array<string,mixed> $activities
+ * @var array<string,mixed> $options
  */
 ?>
 <!-- Aplus Framework Debugbar start -->
@@ -9,7 +10,13 @@
     <?= file_get_contents(__DIR__ . '/assets/prism-aplus.css') ?>
 </style>
 <style>
-    <?= file_get_contents(__DIR__ . '/debugbar/styles.css') ?>
+    <?php
+    $contents = file_get_contents(__DIR__ . '/debugbar/styles.css');
+    if (isset($options['color'])) {
+        $contents = strtr($contents, ['magenta' => $options['color']]); // @phpstan-ignore-line
+    }
+    echo $contents;
+    ?>
 </style>
 <div id="debugbar" class="aplus-debug">
     <div class="panels">

@@ -22,6 +22,10 @@ class Debugger
      * @var array<string,Collection>
      */
     protected array $collections = [];
+    /**
+     * @var array<string,mixed>
+     */
+    protected array $options = [];
 
     public function addCollection(Collection $collection) : static
     {
@@ -51,6 +55,25 @@ class Debugger
         }
         $collection->addCollector($collector);
         return $this;
+    }
+
+    /**
+     * @param array<string,mixed> $options
+     *
+     * @return static
+     */
+    public function setOptions(array $options) : static
+    {
+        $this->options = $options;
+        return $this;
+    }
+
+    /**
+     * @return array<string,mixed>
+     */
+    public function getOptions() : array
+    {
+        return $this->options;
     }
 
     /**
@@ -103,6 +126,7 @@ class Debugger
         Isolation::require(__DIR__ . '/Views/debugbar.php', [
             'collections' => $this->getCollections(),
             'activities' => $this->getActivities(),
+            'options' => $this->getOptions(),
         ]);
         return \ob_get_clean(); // @phpstan-ignore-line
     }

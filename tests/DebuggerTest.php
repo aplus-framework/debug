@@ -156,6 +156,14 @@ final class DebuggerTest extends TestCase
         );
     }
 
+    public function testOptions() : void
+    {
+        self::assertEmpty($this->debugger->getOptions());
+        $this->debugger->setOptions(['color' => 'royalblue']);
+        self::assertSame(['color' => 'royalblue'], $this->debugger->getOptions());
+        self::assertStringContainsString('royalblue', $this->debugger->renderDebugbar());
+    }
+
     public function testMakeSafeName() : void
     {
         self::assertSame('foo-bar-baz', Debugger::makeSafeName('Foo Bar <small>Baz</small>  '));
