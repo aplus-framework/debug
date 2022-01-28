@@ -64,15 +64,11 @@ class Debugger
                 $collected = [...$collected, ...$activities];
             }
         }
-        $min = 0;
-        $max = 0;
+        $min = .0;
+        $max = .0;
         if ($collected) {
-            \usort($collected, static function ($info1, $info2) {
-                $cmp = $info1['start'] <=> $info2['start'];
-                if ($cmp === 0) {
-                    $cmp = $info1['end'] <=> $info2['end'];
-                }
-                return $cmp;
+            \usort($collected, static function ($c1, $c2) {
+                return $c1['start'] <=> $c2['start'];
             });
             $min = \min(\array_column($collected, 'start'));
             $max = \max(\array_column($collected, 'end'));
