@@ -171,6 +171,7 @@ final class DebuggerTest extends TestCase
 
     public function testConvertSize() : void
     {
+        self::assertSame('0 B', Debugger::convertSize(0));
         self::assertSame('1 B', Debugger::convertSize(1));
         self::assertSame('2 KB', Debugger::convertSize(1024 * 2));
         self::assertSame('3 MB', Debugger::convertSize(1024 * 1024 * 3));

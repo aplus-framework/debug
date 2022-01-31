@@ -138,6 +138,9 @@ class Debugger
 
     public static function convertSize(float | int $size) : string
     {
+        if (empty($size)) {
+            return '0 B';
+        }
         $unit = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
         $index = \floor(\log($size, 1024));
         return \round($size / (1024 ** $index), 3) . ' ' . $unit[$index];
