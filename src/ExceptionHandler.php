@@ -67,8 +67,9 @@ class ExceptionHandler
         if ($logger) {
             $this->logger = $logger;
         }
-        $this->language = $language ?? new Language('en');
-        $this->language->addDirectory(__DIR__ . '/Languages');
+        if ($language) {
+            $this->setLanguage($language);
+        }
     }
 
     public function getEnvironment() : string
@@ -84,11 +85,21 @@ class ExceptionHandler
         return $this->logger;
     }
 
+    public function setLanguage(Language $language = null) : static
+    {
+        $this->language = $language ?? new Language();
+        $this->language->addDirectory(__DIR__ . '/Languages');
+        return $this;
+    }
+
     /**
      * @return Language
      */
     public function getLanguage() : Language
     {
+        if ( ! isset($this->language)) {
+            $this->setLanguage();
+        }
         return $this->language;
     }
 
@@ -183,7 +194,7 @@ class ExceptionHandler
                 'trace' => $exception->getTrace(),
             ]
             : [
-                'message' => $this->language->render('debug', 'exceptionDescription'),
+                'message' => $this->getLanguage()->render('debug', 'exceptionDescription'),
             ];
         echo \json_encode([
             'status' => [
@@ -205,15 +216,16 @@ class ExceptionHandler
 
     protected function cliError(Throwable $exception) : void
     {
-        $message = $this->language->render('debug', 'exception')
+        $language = $this->getLanguage();
+        $message = $language->render('debug', 'exception')
             . ': ' . $exception::class . \PHP_EOL;
-        $message .= $this->language->render('debug', 'message')
+        $message .= $language->render('debug', 'message')
             . ': ' . $exception->getMessage() . \PHP_EOL;
-        $message .= $this->language->render('debug', 'file')
+        $message .= $language->render('debug', 'file')
             . ': ' . $exception->getFile() . \PHP_EOL;
-        $message .= $this->language->render('debug', 'line')
+        $message .= $language->render('debug', 'line')
             . ': ' . $exception->getLine() . \PHP_EOL;
-        $message .= $this->language->render('debug', 'trace')
+        $message .= $language->render('debug', 'trace')
             . ': ' . $exception->getTraceAsString();
         CLI::error($message, $this->testing ? null : 1);
     }
