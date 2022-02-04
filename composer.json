@@ -40,8 +40,8 @@
         "php": ">=8.0",
         "aplus/cli": "^1.17",
         "aplus/helpers": "^2.3",
-        "aplus/language": "^1.7",
-        "aplus/log": "^2.2"
+        "aplus/language": "^1.8",
+        "aplus/log": "^2.3"
     },
     "require-dev": {
         "ext-xdebug": "*",
@@ -71,5 +71,10 @@
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.x-dev"
+        }
     }
 }
