@@ -233,7 +233,7 @@ class ExceptionHandler
     protected function log(string $message) : void
     {
         if ($this->logger) {
-            $this->logger->critical($message);
+            $this->logger->logCritical($message);
         }
     }
 
