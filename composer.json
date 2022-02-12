@@ -40,7 +40,7 @@
         "php": ">=8.1",
         "aplus/cli": "^1.17",
         "aplus/helpers": "^2.3",
-        "aplus/language": "^1.8",
+        "aplus/language": "^2.0",
         "aplus/log": "^3.0"
     },
     "require-dev": {
