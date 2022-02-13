@@ -19,7 +19,7 @@ use JetBrains\PhpStorm\ArrayShape;
 class Timer
 {
     /**
-     * @var array<string,array>
+     * @var array<string,array<string,mixed>>
      */
     protected array $marks = [];
     protected int $testsCount = 1;
@@ -101,9 +101,9 @@ class Timer
     }
 
     /**
-     * @var bool $format
+     * @param bool $format
      *
-     * @return array<string,array>
+     * @return array<string,array<string,mixed>>
      */
     public function getMarks(bool $format = false) : array
     {
