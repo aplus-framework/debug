@@ -28,8 +28,11 @@
 <body>
 <h1><?= $handler->getLanguage()->render('debug', 'exceptionTitle') ?></h1>
 <p><?= $handler->getLanguage()->render('debug', 'exceptionDescription') ?></p>
-<?php if ($handler->getLogger() && $handler->getLogger()->getLastLog()?->written): ?>
-    <p>Log Id: <?= $handler->getLogger()->getLastLog()->id ?></p>
-<?php endif ?>
+<?php
+$log = $handler->getLogger()?->getLastLog();
+if ($log) {
+    echo '<p>Log Id: ' . htmlentities($log->id) . '</p>';
+}
+?>
 </body>
 </html>

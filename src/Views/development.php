@@ -291,25 +291,23 @@ use Framework\Helpers\ArraySimple;
         </table>
     <?php endforeach ?>
 </section>
-<?php if ($handler->getLogger() && ($log = $handler->getLogger()->getLastLog())): ?>
+<?php
+$log = $handler->getLogger()?->getLastLog();
+if ($log): ?>
     <section class="log">
         <div class="header">Log:</div>
         <table>
             <tr>
-                <th>Filename</th>
-                <td><?= htmlentities($log->filename) ?></td>
-            </tr>
-            <tr>
                 <th>Date</th>
-                <td><?= htmlentities($log->date) ?></td>
+                <td><?= date('Y-m-d', $log->time) ?></td>
             </tr>
             <tr>
                 <th>Time</th>
-                <td><?= htmlentities($log->time) ?></td>
+                <td><?= date('H:i:s', $log->time) ?></td>
             </tr>
             <tr>
-                <th>Level Name</th>
-                <td><?= htmlentities($log->levelName) ?></td>
+                <th>Level</th>
+                <td><?= htmlentities($log->level->name) ?></td>
             </tr>
             <tr>
                 <th>ID</th>
@@ -321,13 +319,10 @@ use Framework\Helpers\ArraySimple;
                     <pre><code class="language-log"><?= htmlentities($log->message) ?></code></pre>
                 </td>
             </tr>
-            <tr>
-                <th>Written</th>
-                <td><?= $log->written ? 'true' : 'false' ?></td>
-            </tr>
         </table>
     </section>
-<?php endif ?>
+<?php
+endif ?>
 <script>
     <?= file_get_contents(__DIR__ . '/assets/prism.js') ?>
 </script>
