@@ -191,7 +191,7 @@ use Framework\Helpers\ArraySimple;
     if ($traces
         && isset($traces[0]['file'])
         && ($traces[0]['file'] !== $exception->getFile()
-            || $traces[0]['line'] !== $exception->getLine())
+            || (isset($traces[0]['line']) && $traces[0]['line'] !== $exception->getLine()))
     ) {
         $traces = array_reverse($traces);
         $traces[] = [
@@ -207,7 +207,8 @@ use Framework\Helpers\ArraySimple;
                 <dl>
                     <dt>
                         <span><?= count($traces) - $key ?></span>
-                        <?= $trace['file'] ?>:<?= $trace['line'] ?>
+                        <?= $trace['file'] ?>
+                        <?= isset($trace['line']) ? ':' . $trace['line'] : '' ?>
                     </dt>
                     <dd>
                         <?php
@@ -217,7 +218,10 @@ use Framework\Helpers\ArraySimple;
                         $line = 1;
                         while ($handle && ! feof($handle)) {
                             $code = fgets($handle);
-                            if ($line >= ($trace['line'] - 10) && $line <= ($trace['line'] + 10)) {
+                            if (isset($trace['line'])
+                                && $line >= ($trace['line'] - 10)
+                                && $line <= ($trace['line'] + 10)
+                            ) {
                                 $pre .= rtrim((string) $code) . \PHP_EOL;
                                 $lines[] = $line;
                             }
@@ -229,7 +233,7 @@ use Framework\Helpers\ArraySimple;
                         ?>
                         <div><?php
                             foreach ($lines as $line) {
-                                if ($line === $trace['line']) {
+                                if (isset($trace['line']) && $line === $trace['line']) {
                                     echo '<span>';
                                     echo $line . \PHP_EOL;
                                     echo '</span>';
