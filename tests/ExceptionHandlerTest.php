@@ -12,7 +12,8 @@ namespace Tests\Debug;
 use Framework\CLI\Streams\Stderr;
 use Framework\Debug\ExceptionHandler;
 use Framework\Language\Language;
-use Framework\Log\Logger;
+use Framework\Log\Loggers\FileLogger;
+use Framework\Log\Loggers\SysLogger;
 use PHPUnit\Framework\TestCase;
 
 final class ExceptionHandlerTest extends TestCase
@@ -33,7 +34,7 @@ final class ExceptionHandlerTest extends TestCase
         $exceptions = new ExceptionHandler();
         self::assertNull($exceptions->getLogger());
         self::assertInstanceOf(Language::class, $exceptions->getLanguage());
-        $logger = new Logger(\sys_get_temp_dir());
+        $logger = new SysLogger();
         $language = new Language();
         $exceptions = new ExceptionHandler(logger: $logger, language: $language);
         self::assertSame($logger, $exceptions->getLogger());
@@ -185,7 +186,7 @@ final class ExceptionHandlerTest extends TestCase
      */
     public function testExceptionWithLogger(string $environment) : void
     {
-        $logger = new Logger(\sys_get_temp_dir());
+        $logger = new FileLogger(\sys_get_temp_dir() . '/tests.log');
         $exceptions = new ExceptionHandlerMock($environment, $logger);
         $exceptions->cli = false;
         \ob_start();
