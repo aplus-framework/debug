@@ -44,6 +44,17 @@ final class DebuggerTest extends TestCase
         self::assertNotEmpty($collection->getCollectors());
     }
 
+    public function testDebugbarView() : void
+    {
+        self::assertIsString($this->debugger->getDebugbarView());
+        $file = __DIR__ . '/../src/Views/debugbar.php';
+        $this->debugger->setDebugbarView($file);
+        self::assertSame(\realpath($file), $this->debugger->getDebugbarView());
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid debugbar view file: /unknown/foo.php');
+        $this->debugger->setDebugbarView('/unknown/foo.php');
+    }
+
     public function testRenderDebugbar() : void
     {
         $debugbar = $this->debugger->renderDebugbar();

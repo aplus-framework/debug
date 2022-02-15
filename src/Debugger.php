@@ -10,6 +10,7 @@
 namespace Framework\Debug;
 
 use Framework\Helpers\Isolation;
+use InvalidArgumentException;
 
 /**
  * Class Debugger.
@@ -26,6 +27,7 @@ class Debugger
      * @var array<string,mixed>
      */
     protected array $options = [];
+    protected string $debugbarView = __DIR__ . '/Views/debugbar.php';
 
     public function addCollection(Collection $collection) : static
     {
@@ -120,10 +122,27 @@ class Debugger
         $activity['width'] = \round($activity['total'] * 100 / $total, 3);
     }
 
+    public function setDebugbarView(string $file) : static
+    {
+        $realpath = \realpath($file);
+        if ( ! $realpath || ! \is_file($realpath)) {
+            throw new InvalidArgumentException(
+                'Invalid debugbar view file: ' . $file
+            );
+        }
+        $this->debugbarView = $realpath;
+        return $this;
+    }
+
+    public function getDebugbarView() : string
+    {
+        return $this->debugbarView;
+    }
+
     public function renderDebugbar() : string
     {
         \ob_start();
-        Isolation::require(__DIR__ . '/Views/debugbar.php', [
+        Isolation::require($this->getDebugbarView(), [
             'collections' => $this->getCollections(),
             'activities' => $this->getActivities(),
             'options' => $this->getOptions(),
