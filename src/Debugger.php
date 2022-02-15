@@ -27,7 +27,7 @@ class Debugger
      * @var array<string,mixed>
      */
     protected array $options = [];
-    protected string $debugbarView = __DIR__ . '/Views/debugbar.php';
+    protected string $debugbarView = __DIR__ . '/Views/debugbar/debugbar.php';
 
     public function addCollection(Collection $collection) : static
     {

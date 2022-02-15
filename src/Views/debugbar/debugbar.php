@@ -7,11 +7,11 @@
 ?>
 <!-- Aplus Framework Debugbar start -->
 <style>
-    <?= file_get_contents(__DIR__ . '/assets/prism-aplus.css') ?>
+    <?= file_get_contents(__DIR__ . '/../assets/prism-aplus.css') ?>
 </style>
 <style>
     <?php
-    $contents = file_get_contents(__DIR__ . '/debugbar/styles.css');
+    $contents = file_get_contents(__DIR__ . '/styles.css');
     if (isset($options['color'])) {
         $contents = strtr($contents, ['magenta' => $options['color']]); // @phpstan-ignore-line
     }
@@ -111,7 +111,7 @@
     </div>
     <div class="toolbar">
         <div class="icon">
-            <img src="data:image/png;base64,<?= base64_encode((string) file_get_contents(__DIR__ . '/debugbar/icon.png')) ?>" alt="A+" width="32">
+            <img src="data:image/png;base64,<?= base64_encode((string) file_get_contents(__DIR__ . '/icon.png')) ?>" alt="A+" width="32">
         </div>
         <div class="collections">
             <?php foreach ($collections as $collection): ?>
@@ -126,10 +126,10 @@
     </div>
 </div>
 <script>
-    <?= file_get_contents(__DIR__ . '/assets/prism.js') ?>
+    <?= file_get_contents(__DIR__ . '/../assets/prism.js') ?>
 </script>
 <script>
-    <?= file_get_contents(__DIR__ . '/debugbar/scripts.js') ?>
+    <?= file_get_contents(__DIR__ . '/scripts.js') ?>
     Debugbar.init();
 </script>
 <!-- Aplus Framework Debugbar end -->

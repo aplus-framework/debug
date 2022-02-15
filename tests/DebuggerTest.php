@@ -47,7 +47,7 @@ final class DebuggerTest extends TestCase
     public function testDebugbarView() : void
     {
         self::assertIsString($this->debugger->getDebugbarView());
-        $file = __DIR__ . '/../src/Views/debugbar.php';
+        $file = __DIR__ . '/../src/Views/debugbar/debugbar.php';
         $this->debugger->setDebugbarView($file);
         self::assertSame(\realpath($file), $this->debugger->getDebugbarView());
         $this->expectException(\InvalidArgumentException::class);
