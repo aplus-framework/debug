@@ -206,7 +206,26 @@ final class ExceptionHandlerTest extends TestCase
         self::assertNotEmpty($logger->getLastLog());
     }
 
-    public function testErrorHandler() : void
+    /**
+     * @return array<array<int|string>>
+     */
+    public function errorProvider() : array
+    {
+        return [
+            [\E_USER_WARNING, 'User Warning'],
+            [\E_USER_DEPRECATED, 'User Deprecated'],
+            [\E_USER_ERROR, 'User Error'],
+            [\E_USER_NOTICE, 'User Notice'],
+        ];
+    }
+
+    /**
+     * @dataProvider errorProvider
+     *
+     * @param int $error
+     * @param string $type
+     */
+    public function testErrorHandler(int $error, string $type) : void
     {
         $exceptions = new ExceptionHandler();
         $exceptions->initialize();
@@ -214,7 +233,7 @@ final class ExceptionHandlerTest extends TestCase
         \trigger_error('Error message', \E_USER_WARNING);
         \error_reporting(\E_ALL);
         $this->expectException(\ErrorException::class);
-        $this->expectExceptionMessage('User Warning: Error message');
-        \trigger_error('Error message', \E_USER_WARNING);
+        $this->expectExceptionMessage($type . ': Error message');
+        \trigger_error('Error message', $error);
     }
 }
