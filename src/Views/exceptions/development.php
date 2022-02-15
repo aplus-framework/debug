@@ -16,7 +16,7 @@ use Framework\Helpers\ArraySimple;
     <title><?= $handler->getLanguage()->render('debug', 'exception') ?>: <?=
         htmlentities($exception->getMessage()) ?></title>
     <style>
-        <?= file_get_contents(__DIR__ . '/assets/prism-aplus.css') ?>
+        <?= file_get_contents(__DIR__ . '/../assets/prism-aplus.css') ?>
     </style>
     <style>
         body {
@@ -328,7 +328,7 @@ if ($log): ?>
 <?php
 endif ?>
 <script>
-    <?= file_get_contents(__DIR__ . '/assets/prism.js') ?>
+    <?= file_get_contents(__DIR__ . '/../assets/prism.js') ?>
 </script>
 </body>
 </html>
