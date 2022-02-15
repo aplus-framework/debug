@@ -25,7 +25,7 @@ final class ExceptionHandlerTest extends TestCase
         $exceptions = new ExceptionHandler(ExceptionHandler::PRODUCTION);
         self::assertSame('production', $exceptions->getEnvironment());
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage("Invalid environment 'foo'");
+        $this->expectExceptionMessage('Invalid environment: foo');
         new ExceptionHandler('foo');
     }
 

@@ -58,19 +58,25 @@ class ExceptionHandler
         Logger $logger = null,
         Language $language = null
     ) {
-        if ( ! \in_array($environment, [
-            static::DEVELOPMENT,
-            static::PRODUCTION,
-        ], true)) {
-            throw new InvalidArgumentException("Invalid environment '{$environment}'");
-        }
-        $this->environment = $environment;
+        $this->setEnvironment($environment);
         if ($logger) {
             $this->logger = $logger;
         }
         if ($language) {
             $this->setLanguage($language);
         }
+    }
+
+    public function setEnvironment(string $environment) : static
+    {
+        if ( ! \in_array($environment, [
+            static::DEVELOPMENT,
+            static::PRODUCTION,
+        ], true)) {
+            throw new InvalidArgumentException('Invalid environment: ' . $environment);
+        }
+        $this->environment = $environment;
+        return $this;
     }
 
     public function getEnvironment() : string
@@ -192,7 +198,7 @@ class ExceptionHandler
 
     protected function sendJson(Throwable $exception) : void
     {
-        $data = $this->environment === static::DEVELOPMENT
+        $data = $this->getEnvironment() === static::DEVELOPMENT
             ? [
                 'exception' => $exception::class,
                 'message' => $exception->getMessage(),
