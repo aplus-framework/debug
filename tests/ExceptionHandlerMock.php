@@ -16,12 +16,6 @@ class ExceptionHandlerMock extends ExceptionHandler
     public bool $testing = true;
     public ?bool $cli = null;
 
-    public function setTestViewsDir(string $dir) : static
-    {
-        $this->viewsDir = $dir;
-        return $this;
-    }
-
     protected function isCli() : bool
     {
         if ($this->cli) {

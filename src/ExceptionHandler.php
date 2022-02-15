@@ -37,7 +37,8 @@ class ExceptionHandler
      * @var string
      */
     public const PRODUCTION = 'production';
-    protected string $viewsDir = __DIR__ . '/Views/';
+    protected string $developmentView = __DIR__ . '/Views/exceptions/development.php';
+    protected string $productionView = __DIR__ . '/Views/exceptions/production.php';
     protected ?Logger $logger = null;
     protected string $environment = ExceptionHandler::PRODUCTION;
     protected Language $language;
@@ -103,24 +104,37 @@ class ExceptionHandler
         return $this->language;
     }
 
-    public function getViewsDir() : string
+    protected function validateView(string $file) : string
     {
-        return $this->viewsDir;
+        $realpath = \realpath($file);
+        if ( ! $realpath || ! \is_file($realpath)) {
+            throw new InvalidArgumentException(
+                'Invalid exceptions view file: ' . $file
+            );
+        }
+        return $realpath;
     }
 
-    /**
-     * @param string $dir
-     *
-     * @return static
-     */
-    public function setViewsDir(string $dir) : static
+    public function setDevelopmentView(string $file) : static
     {
-        $path = \realpath($dir);
-        if ( ! $path) {
-            throw new InvalidArgumentException('Invalid path to view dir "' . $dir . '"');
-        }
-        $this->viewsDir = \rtrim($path, \DIRECTORY_SEPARATOR) . \DIRECTORY_SEPARATOR;
+        $this->developmentView = $this->validateView($file);
         return $this;
+    }
+
+    public function getDevelopmentView() : string
+    {
+        return $this->developmentView;
+    }
+
+    public function setProductionView(string $file) : static
+    {
+        $this->productionView = $this->validateView($file);
+        return $this;
+    }
+
+    public function getProductionView() : string
+    {
+        return $this->productionView;
     }
 
     public function initialize(bool $handleErrors = true) : void
@@ -156,20 +170,13 @@ class ExceptionHandler
             $this->sendJson($exception);
             return;
         }
-        $file = $this->environment === static::DEVELOPMENT
-            ? 'development.php'
-            : 'production.php';
-        $file = $this->viewsDir . $file;
-        if (\is_file($file)) {
-            Isolation::require($file, [
-                'handler' => $this,
-                'exception' => $exception,
-            ]);
-            return;
-        }
-        $error = 'Debug exception view "' . $file . '" was not found';
-        $this->log($error);
-        throw new RuntimeException($error);
+        $file = $this->getEnvironment() === static::DEVELOPMENT
+            ? $this->getDevelopmentView()
+            : $this->getProductionView();
+        Isolation::require($file, [
+            'handler' => $this,
+            'exception' => $exception,
+        ]);
     }
 
     protected function isCli() : bool

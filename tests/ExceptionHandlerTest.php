@@ -41,17 +41,28 @@ final class ExceptionHandlerTest extends TestCase
         self::assertSame($language, $exceptions->getLanguage());
     }
 
-    public function testViewsDir() : void
+    public function testDevelopmentView() : void
     {
         $exceptions = new ExceptionHandler();
-        $dir = __DIR__ . '/../src/Views/';
-        $expectedDir = \realpath($dir) . '/';
-        self::assertSame($expectedDir, $exceptions->getViewsDir());
-        $exceptions->setViewsDir($dir);
-        self::assertSame($expectedDir, $exceptions->getViewsDir());
+        $file = __DIR__ . '/../src/Views/exceptions/development.php';
+        self::assertSame(\realpath($file), $exceptions->getDevelopmentView());
+        $exceptions->setDevelopmentView($file);
+        self::assertSame(\realpath($file), $exceptions->getDevelopmentView());
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid path to view dir "/foobar"');
-        $exceptions->setViewsDir('/foobar');
+        $this->expectExceptionMessage('Invalid exceptions view file: /unknown/foo.php');
+        $exceptions->setDevelopmentView('/unknown/foo.php');
+    }
+
+    public function testProductionView() : void
+    {
+        $exceptions = new ExceptionHandler();
+        $file = __DIR__ . '/../src/Views/exceptions/production.php';
+        self::assertSame(\realpath($file), $exceptions->getProductionView());
+        $exceptions->setProductionView($file);
+        self::assertSame(\realpath($file), $exceptions->getProductionView());
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid exceptions view file: /unknown/foo.php');
+        $exceptions->setProductionView('/unknown/foo.php');
     }
 
     public function testCliException() : void
@@ -193,19 +204,6 @@ final class ExceptionHandlerTest extends TestCase
         $exceptions->exceptionHandler(new \Exception('Foo'));
         \ob_get_clean();
         self::assertNotEmpty($logger->getLastLog());
-    }
-
-    public function testViewNotFound() : void
-    {
-        $exceptions = new ExceptionHandlerMock();
-        $exceptions->cli = false;
-        $dir = __DIR__ . '/unknown/';
-        $exceptions->setTestViewsDir($dir);
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage(
-            'Debug exception view "' . $dir . 'production.php" was not found'
-        );
-        $exceptions->exceptionHandler(new \Exception('Foo'));
     }
 
     public function testErrorHandler() : void
