@@ -245,9 +245,7 @@ class ExceptionHandler
 
     protected function log(string $message) : void
     {
-        if ($this->logger) {
-            $this->logger->logCritical($message);
-        }
+        $this->getLogger()?->logCritical($message);
     }
 
     /**
