@@ -19,3 +19,12 @@ expectedArguments(
     0,
     argumentsSet('eh_env')
 );
+expectedArguments(
+    \Framework\Debug\ExceptionHandler::setEnvironment(),
+    0,
+    argumentsSet('eh_env')
+);
+expectedReturnValues(
+    \Framework\Debug\ExceptionHandler::getEnvironment(),
+    argumentsSet('eh_env')
+);
