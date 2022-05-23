@@ -8,6 +8,7 @@
     font-family: Arial, Helvetica, sans-serif;
     font-weight: normal;
     line-height: normal;
+    z-index: 9999;
 }
 
 .aplus-debug *,
