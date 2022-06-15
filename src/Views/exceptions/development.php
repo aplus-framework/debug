@@ -207,8 +207,9 @@ use Framework\Helpers\ArraySimple;
                 <dl>
                     <dt>
                         <span><?= count($traces) - $key ?></span>
-                        <?= $trace['file'] ?>
-                        <?= isset($trace['line']) ? ':' . $trace['line'] : '' ?>
+                        <?= $trace['file'] ?><?=
+                        isset($trace['line']) ? ':' . $trace['line'] : ''
+                        ?>
                     </dt>
                     <dd>
                         <?php
