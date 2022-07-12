@@ -188,19 +188,19 @@ use Framework\Helpers\ArraySimple;
     <div class="header"><?= $handler->getLanguage()->render('debug', 'trace') ?>:</div>
     <?php
     $traces = $exception->getTrace();
-    if ($traces
-        && isset($traces[0]['file'])
-        && ($traces[0]['file'] !== $exception->getFile()
-            || (isset($traces[0]['line']) && $traces[0]['line'] !== $exception->getLine()))
-    ) {
-        $traces = array_reverse($traces);
-        $traces[] = [
-            'file' => $exception->getFile(),
-            'line' => $exception->getLine(),
-        ];
-        $traces = array_reverse($traces);
-    }
-    ?>
+if ($traces
+    && isset($traces[0]['file'])
+    && ($traces[0]['file'] !== $exception->getFile()
+        || (isset($traces[0]['line']) && $traces[0]['line'] !== $exception->getLine()))
+) {
+    $traces = array_reverse($traces);
+    $traces[] = [
+        'file' => $exception->getFile(),
+        'line' => $exception->getLine(),
+    ];
+    $traces = array_reverse($traces);
+}
+?>
     <?php foreach ($traces as $key => $trace) : ?>
         <?php if (isset($trace['file'])) : ?>
             <?php if (is_readable($trace['file'])) : ?>
@@ -208,41 +208,41 @@ use Framework\Helpers\ArraySimple;
                     <dt>
                         <span><?= count($traces) - $key ?></span>
                         <?= $trace['file'] ?><?=
-                        isset($trace['line']) ? ':' . $trace['line'] : ''
-                        ?>
+                    isset($trace['line']) ? ':' . $trace['line'] : ''
+                ?>
                     </dt>
                     <dd>
                         <?php
-                        $lines = [];
-                        $pre = '';
-                        $handle = fopen($trace['file'], 'rb');
-                        $line = 1;
-                        while ($handle && ! feof($handle)) {
-                            $code = fgets($handle);
-                            if (isset($trace['line'])
-                                && $line >= ($trace['line'] - 10)
-                                && $line <= ($trace['line'] + 10)
-                            ) {
-                                $pre .= rtrim((string) $code) . \PHP_EOL;
-                                $lines[] = $line;
-                            }
-                            $line++;
-                        }
-                        if ($handle) {
-                            fclose($handle);
-                        }
-                        ?>
+                $lines = [];
+                $pre = '';
+                $handle = fopen($trace['file'], 'rb');
+                $line = 1;
+                while ($handle && ! feof($handle)) {
+                    $code = fgets($handle);
+                    if (isset($trace['line'])
+                        && $line >= ($trace['line'] - 10)
+                        && $line <= ($trace['line'] + 10)
+                    ) {
+                        $pre .= rtrim((string) $code) . \PHP_EOL;
+                        $lines[] = $line;
+                    }
+                    $line++;
+                }
+                if ($handle) {
+                    fclose($handle);
+                }
+                ?>
                         <div><?php
-                            foreach ($lines as $line) {
-                                if (isset($trace['line']) && $line === $trace['line']) {
-                                    echo '<span>';
-                                    echo $line . \PHP_EOL;
-                                    echo '</span>';
-                                } else {
-                                    echo $line . \PHP_EOL;
-                                }
-                            }
-                            ?></div>
+                    foreach ($lines as $line) {
+                        if (isset($trace['line']) && $line === $trace['line']) {
+                            echo '<span>';
+                            echo $line . \PHP_EOL;
+                            echo '</span>';
+                        } else {
+                            echo $line . \PHP_EOL;
+                        }
+                    }
+            ?></div>
                         <pre class="code"><code class="language-php"><?= htmlentities($pre) ?></code></pre>
                     </dd>
                 </dl>
@@ -267,16 +267,16 @@ use Framework\Helpers\ArraySimple;
         'POST' => ArraySimple::convert(filter_input_array(\INPUT_POST) ?: []),
         'COOKIE' => filter_input_array(\INPUT_COOKIE) ?: [],
     ];
-    foreach ($input as &$item) {
-        ksort($item);
-    }
-    unset($item);
-    ?>
+foreach ($input as &$item) {
+    ksort($item);
+}
+unset($item);
+?>
 
     <?php foreach ($input as $key => $values) : ?>
         <?php
-        if (empty($values)) {
-            continue;
+    if (empty($values)) {
+        continue;
         }
         ?>
         <table>

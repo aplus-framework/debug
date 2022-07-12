@@ -12,11 +12,11 @@
 <style>
     <?php
     $contents = file_get_contents(__DIR__ . '/styles.css');
-    if (isset($options['color'])) {
-        $contents = strtr($contents, ['magenta' => $options['color']]); // @phpstan-ignore-line
-    }
-    echo $contents;
-    ?>
+if (isset($options['color'])) {
+    $contents = strtr($contents, ['magenta' => $options['color']]); // @phpstan-ignore-line
+}
+echo $contents;
+?>
 </style>
 <div id="debugbar" class="aplus-debug">
     <div class="panels">
@@ -28,17 +28,17 @@
             <div class="contents">
                 <div class="collector-default">
                     <p>Running<?= class_exists('Aplus') ? ' ' . Aplus::DESCRIPTION
-                            : '' ?> on <?= \PHP_OS_FAMILY ?> with PHP <?= \PHP_VERSION ?></p>
+                        : '' ?> on <?= \PHP_OS_FAMILY ?> with PHP <?= \PHP_VERSION ?></p>
                     <p>★
                         <a href="https://aplus-framework.com" target="_blank">aplus-framework.com</a>
                     </p>
                     <?php
-                    $count = isset($activities['collected']) ? count($activities['collected']) : 0;
-                    if ($count):
-                        ?>
+                $count = isset($activities['collected']) ? count($activities['collected']) : 0;
+if ($count):
+    ?>
                         <p><?= $count ?> activit<?= $count === 1
-                                ? 'y was'
-                                : 'ies were' ?> collected in <?= round($activities['total'], 6) ?> seconds:
+            ? 'y was'
+            : 'ies were' ?> collected in <?= round($activities['total'], 6) ?> seconds:
                         </p>
                         <table>
                             <thead>
@@ -65,19 +65,19 @@
                                     <td><?= round($collected['total'], 6) ?></td>
                                     <td>
                                     <span style="width: <?= $collected['width'] ?>%; margin-left: <?=
-                                    $collected['left']
-                                    ?>%" title="<?= $collected['width'] ?>% · From <?=
-                                    $collected['left'] ?>% to <?=
-                                    $collected['left'] + $collected['width'] ?>% · From <?=
-                                    round($collected['start'], 6) ?> to <?= round($collected['end'], 6) ?> second"></span>
+                $collected['left']
+                                ?>%" title="<?= $collected['width'] ?>% · From <?=
+                                $collected['left'] ?>% to <?=
+                                $collected['left'] + $collected['width'] ?>% · From <?=
+                                round($collected['start'], 6) ?> to <?= round($collected['end'], 6) ?> second"></span>
                                     </td>
                                 </tr>
                             <?php endforeach ?>
                             </tbody>
                         </table>
                     <?php
-                    endif
-                    ?>
+endif
+?>
                 </div>
             </div>
         </div>
@@ -90,10 +90,10 @@
                         <div class="actions"><?= implode(' ', $collection->getActions()) ?></div>
                         <div class="collectors">
                             <?php
-                            $collectors = $collection->getCollectors();
-                            ?>
+        $collectors = $collection->getCollectors();
+                ?>
                             <select title="<?= $collection->getSafeName() ?> collectors"<?=
-                            count($collectors) === 1 ? ' disabled' : '' ?>>
+                count($collectors) === 1 ? ' disabled' : '' ?>>
                                 <?php foreach ($collectors as $collector): ?>
                                     <option value="<?= $collector->getSafeName() ?>"><?= $collector->getName() ?></option>
                                 <?php endforeach ?>
