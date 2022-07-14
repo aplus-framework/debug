@@ -244,6 +244,8 @@ on the **info** button, located at the bottom right of the debugbar.
 .. image:: img/debugbar-activities.png
     :alt: Aplus Debug - Debugbar Activities
 
+You can toggle the debugbar by pressing the ``Ctrl + F12`` keys.
+
 Using the ``setDebugbarView`` method you can set a custom debug bar view for
 your brand.
 
