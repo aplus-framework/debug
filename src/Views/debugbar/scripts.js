@@ -13,16 +13,11 @@ let Debugbar = {
         }
         Debugbar.prepareIcon();
         Debugbar.prepareCollections();
+        Debugbar.prepareKeys();
     },
     prepareIcon: function () {
         Debugbar.icon.addEventListener('click', function () {
-            if (Debugbar.isWide()) {
-                Debugbar.hideWide();
-                Debugbar.setWide('n');
-            } else {
-                Debugbar.showWide();
-                Debugbar.setWide('y');
-            }
+            Debugbar.toggleWide();
         });
     },
     prepareCollections: function () {
@@ -47,6 +42,13 @@ let Debugbar = {
                     this.classList.add('active');
                 }
             });
+        });
+    },
+    prepareKeys: function () {
+        document.addEventListener('keydown', function (e) {
+            if (e.ctrlKey && e.code === 'F12') {
+                Debugbar.toggleWide();
+            }
         });
     },
     setWide: function (active) {
@@ -75,6 +77,15 @@ let Debugbar = {
         panelsDiv.style.display = 'none';
         collectionsDiv.style.display = 'none';
         toolbar.style.borderRightWidth = '1px';
+    },
+    toggleWide: function () {
+        if (Debugbar.isWide()) {
+            Debugbar.hideWide();
+            Debugbar.setWide('n');
+            return;
+        }
+        Debugbar.showWide();
+        Debugbar.setWide('y');
     },
     activePanel: function () {
         let id = localStorage.getItem('debugbar-panel');
