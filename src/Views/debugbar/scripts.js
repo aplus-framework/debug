@@ -145,7 +145,7 @@ let Debugbar = {
         let toolbar = document.querySelector('#debugbar .toolbar');
 
         function resize(e) {
-            let move = resizer.getBoundingClientRect().top - e.pageY;
+            let move = resizer.getBoundingClientRect().top - e.clientY;
             let height = contents.offsetHeight - 20 + move;
             let toRemove = header.clientHeight + toolbar.clientHeight + 25;
             let maxHeight = window.innerHeight - toRemove;
