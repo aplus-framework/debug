@@ -193,6 +193,7 @@ final class ExceptionHandlerTest extends TestCase
 
     /**
      * @runInSeparateProcess
+     *
      * @dataProvider environmentsProvider
      */
     public function testExceptionWithLogger(string $environment) : void
