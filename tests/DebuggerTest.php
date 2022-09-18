@@ -177,7 +177,10 @@ final class DebuggerTest extends TestCase
 
     public function testMakeSafeName() : void
     {
-        self::assertSame('foo-bar-baz', Debugger::makeSafeName('Foo Bar <small>Baz</small>  '));
+        self::assertSame(
+            'foo-bar--baz-',
+            Debugger::makeSafeName('Foo Bar <small>(Baz)</small>  ')
+        );
     }
 
     public function testConvertSize() : void

@@ -152,7 +152,15 @@ class Debugger
 
     public static function makeSafeName(string $name) : string
     {
-        return \strtr(\trim(\strip_tags(\strtolower($name))), [' ' => '-']);
+        return \strtr(\trim(\strip_tags(\strtolower($name))), [
+            '·' => '-',
+            ':' => '-',
+            '(' => '-',
+            ')' => '-',
+            '/' => '-',
+            '\\' => '-',
+            ' ' => '-',
+        ]);
     }
 
     public static function convertSize(float | int $size) : string
