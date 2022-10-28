@@ -126,7 +126,10 @@ endif
     </div>
 </div>
 <script>
+    window.Prism = {};
+    Prism.manual = true;
     <?= file_get_contents(__DIR__ . '/../assets/prism.js') ?>
+    Prism.highlightAllUnder(document.querySelector('#debugbar .panels'));
 </script>
 <script>
     <?= file_get_contents(__DIR__ . '/scripts.js') ?>
