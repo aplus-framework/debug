@@ -27,7 +27,7 @@ echo $contents;
             </header>
             <div class="contents">
                 <div class="collector-default">
-                    <p>Running<?= class_exists('Aplus') ? ' ' . Aplus::DESCRIPTION
+                    <p>Running<?= class_exists('Aplus') ? ' Aplus ' . Aplus::VERSION
                         : '' ?> on <?= \PHP_OS_FAMILY ?> with PHP <?= \PHP_VERSION ?></p>
                     <p>★
                         <a href="https://aplus-framework.com" target="_blank">aplus-framework.com</a>
