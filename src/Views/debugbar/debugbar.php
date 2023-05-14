@@ -1,4 +1,7 @@
 <?php
+
+use Framework\Debug\Debugger;
+
 /**
  * @var array<string,Framework\Debug\Collection> $collections
  * @var array<string,mixed> $activities
@@ -27,8 +30,12 @@ echo $contents;
             </header>
             <div class="contents">
                 <div class="collector-default">
-                    <p>Running<?= class_exists('Aplus') ? ' Aplus ' . Aplus::VERSION
-                        : '' ?> on <?= \PHP_OS_FAMILY ?> with PHP <?= \PHP_VERSION ?></p>
+                    <p>Running<?=
+                        class_exists('Aplus')
+                            ? ' Aplus ' . Debugger::roundVersion(Aplus::VERSION)
+                            : '' ?> on <?= \PHP_OS_FAMILY ?> with PHP
+                        <?= Debugger::roundVersion(\PHP_VERSION) ?>
+                    </p>
                     <p>★
                         <a href="https://aplus-framework.com" target="_blank">aplus-framework.com</a>
                     </p>

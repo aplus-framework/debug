@@ -185,4 +185,20 @@ class Debugger
             default => 'instanceof ' . $type,
         };
     }
+
+    /**
+     * Remove dots and zeros from the end of the version.
+     *
+     * @param string $version
+     *
+     * @return string
+     */
+    public static function roundVersion(string $version) : string
+    {
+        if (\str_ends_with($version, '.0')) {
+            $version = \substr($version, 0, -2);
+            return static::roundVersion($version);
+        }
+        return $version;
+    }
 }

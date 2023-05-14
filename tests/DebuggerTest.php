@@ -205,4 +205,12 @@ final class DebuggerTest extends TestCase
         self::assertSame("'\\'Ok'", Debugger::makeDebugValue("'Ok"));
         self::assertSame('instanceof stdClass', Debugger::makeDebugValue(new \stdClass()));
     }
+
+    public function testRoundVersion() : void
+    {
+        self::assertSame('1.2.3', Debugger::roundVersion('1.2.3'));
+        self::assertSame('1.0.3', Debugger::roundVersion('1.0.3'));
+        self::assertSame('1.2', Debugger::roundVersion('1.2.0'));
+        self::assertSame('1', Debugger::roundVersion('1.0.0'));
+    }
 }
