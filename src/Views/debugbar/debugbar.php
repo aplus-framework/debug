@@ -21,7 +21,7 @@ if (isset($options['color'])) {
 echo $contents;
 ?>
 </style>
-<div id="debugbar" class="aplus-debug">
+<div id="debugbar" class="aplus-debug" dir="ltr">
     <div class="panels">
         <div class="panel info-collection">
             <div class="resize"></div>
