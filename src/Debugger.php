@@ -125,7 +125,7 @@ class Debugger
     public function setDebugbarView(string $file) : static
     {
         $realpath = \realpath($file);
-        if ( ! $realpath || ! \is_file($realpath)) {
+        if (!$realpath || !\is_file($realpath)) {
             throw new InvalidArgumentException(
                 'Invalid debugbar view file: ' . $file
             );

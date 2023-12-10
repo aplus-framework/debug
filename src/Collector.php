@@ -62,7 +62,7 @@ abstract class Collector
 
     public function hasData() : bool
     {
-        return ! empty($this->data);
+        return !empty($this->data);
     }
 
     /**

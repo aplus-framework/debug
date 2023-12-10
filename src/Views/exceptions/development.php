@@ -217,7 +217,7 @@ if ($traces
                 $pre = '';
                 $handle = fopen($trace['file'], 'rb');
                 $line = 1;
-                while ($handle && ! feof($handle)) {
+                while ($handle && !feof($handle)) {
                     $code = fgets($handle);
                     if (isset($trace['line'])
                         && $line >= ($trace['line'] - 10)

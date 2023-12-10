@@ -69,7 +69,7 @@ class ExceptionHandler
 
     public function setEnvironment(string $environment) : static
     {
-        if ( ! \in_array($environment, [
+        if (!\in_array($environment, [
             static::DEVELOPMENT,
             static::PRODUCTION,
         ], true)) {
@@ -104,7 +104,7 @@ class ExceptionHandler
      */
     public function getLanguage() : Language
     {
-        if ( ! isset($this->language)) {
+        if (!isset($this->language)) {
             $this->setLanguage();
         }
         return $this->language;
@@ -113,7 +113,7 @@ class ExceptionHandler
     protected function validateView(string $file) : string
     {
         $realpath = \realpath($file);
-        if ( ! $realpath || ! \is_file($realpath)) {
+        if (!$realpath || !\is_file($realpath)) {
             throw new InvalidArgumentException(
                 'Invalid exceptions view file: ' . $file
             );
@@ -169,7 +169,7 @@ class ExceptionHandler
             return;
         }
         \http_response_code(500);
-        if ( ! \headers_sent()) {
+        if (!\headers_sent()) {
             $this->sendHeaders();
         }
         if ($this->isJson()) {
@@ -268,7 +268,7 @@ class ExceptionHandler
         string $errfile = null,
         int $errline = null
     ) : bool {
-        if ( ! (\error_reporting() & $errno)) {
+        if (!(\error_reporting() & $errno)) {
             return true;
         }
         $type = match ($errno) {
