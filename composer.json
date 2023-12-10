@@ -25,9 +25,9 @@
     "homepage": "https://aplus-framework.com/packages/debug",
     "support": {
         "email": "support@aplus-framework.com",
-        "issues": "https://gitlab.com/aplus-framework/libraries/debug/issues",
+        "issues": "https://github.com/aplus-framework/debug/issues",
         "forum": "https://aplus-framework.com/forum",
-        "source": "https://gitlab.com/aplus-framework/libraries/debug",
+        "source": "https://github.com/aplus-framework/debug",
         "docs": "https://docs.aplus-framework.com/guides/libraries/debug/"
     },
     "funding": [
