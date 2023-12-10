@@ -42,7 +42,7 @@ class Timer
     #[ArrayShape(['memory' => 'string', 'time' => 'string'])]
     public function test(int $times, callable $function, bool $flush = false) : array
     {
-        if ( ! $flush) {
+        if (!$flush) {
             \ob_start();
         }
         $this->testsCount++;
@@ -51,7 +51,7 @@ class Timer
             $function();
         }
         $this->addMark('test[' . ($this->testsCount) . '][end]');
-        if ( ! $flush) {
+        if (!$flush) {
             \ob_end_clean();
         }
         return $this->diff(

@@ -71,7 +71,7 @@ class Collection
 
     public function hasCollectors() : bool
     {
-        return ! empty($this->collectors);
+        return !empty($this->collectors);
     }
 
     /**
