@@ -181,17 +181,6 @@ final class ExceptionHandlerTest extends TestCase
     }
 
     /**
-     * @return array<array<string>>
-     */
-    public function environmentsProvider() : array
-    {
-        return [
-            [ExceptionHandler::DEVELOPMENT],
-            [ExceptionHandler::PRODUCTION],
-        ];
-    }
-
-    /**
      * @runInSeparateProcess
      *
      * @dataProvider environmentsProvider
@@ -205,19 +194,6 @@ final class ExceptionHandlerTest extends TestCase
         $exceptions->exceptionHandler(new \Exception('Foo'));
         \ob_get_clean();
         self::assertNotEmpty($logger->getLastLog());
-    }
-
-    /**
-     * @return array<array<int|string>>
-     */
-    public function errorProvider() : array
-    {
-        return [
-            [\E_USER_WARNING, 'User Warning'],
-            [\E_USER_DEPRECATED, 'User Deprecated'],
-            [\E_USER_ERROR, 'User Error'],
-            [\E_USER_NOTICE, 'User Notice'],
-        ];
     }
 
     /**
@@ -236,5 +212,29 @@ final class ExceptionHandlerTest extends TestCase
         $this->expectException(\ErrorException::class);
         $this->expectExceptionMessage($type . ': Error message');
         \trigger_error('Error message', $error);
+    }
+
+    /**
+     * @return array<array<string>>
+     */
+    public static function environmentsProvider() : array
+    {
+        return [
+            [ExceptionHandler::DEVELOPMENT],
+            [ExceptionHandler::PRODUCTION],
+        ];
+    }
+
+    /**
+     * @return array<array<int|string>>
+     */
+    public static function errorProvider() : array
+    {
+        return [
+            [\E_USER_WARNING, 'User Warning'],
+            [\E_USER_DEPRECATED, 'User Deprecated'],
+            [\E_USER_ERROR, 'User Error'],
+            [\E_USER_NOTICE, 'User Notice'],
+        ];
     }
 }
