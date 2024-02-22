@@ -211,7 +211,7 @@ class ExceptionHandler
                 'reason' => 'Internal Server Error',
             ],
             'data' => $data,
-        ], \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE);
+        ], \JSON_THROW_ON_ERROR | \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE);
     }
 
     protected function sendHeaders() : void
