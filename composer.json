@@ -37,7 +37,7 @@
         }
     ],
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.3",
         "aplus/cli": "^2.1",
         "aplus/helpers": "^3.0",
         "aplus/language": "^3.0",
