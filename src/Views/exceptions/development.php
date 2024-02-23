@@ -40,6 +40,16 @@ use Framework\Helpers\ArraySimple;
             margin: 0 0 5px;
         }
 
+        h2 a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        h2 a:hover {
+            color: inherit;
+            text-decoration: underline;
+        }
+
         section {
             border-bottom: 1px solid #222;
             padding: 10px 20px;
@@ -173,7 +183,13 @@ use Framework\Helpers\ArraySimple;
     <small><?= $handler->getLanguage()->render('debug', 'exception') ?>:</small>
     <h1><?= $exception::class ?></h1>
     <small><?= $handler->getLanguage()->render('debug', 'message') ?>:</small>
-    <h2><?= htmlentities($exception->getMessage()) ?></h2>
+    <h2>
+        <a href="<?= $handler->makeSearchLink(
+            $exception::class . ': ' . $exception->getMessage()
+        ) ?>" rel="noreferrer" target="_blank">
+            <?= htmlentities($exception->getMessage()) ?>
+        </a>
+    </h2>
 </header>
 <section class="file">
     <div>
