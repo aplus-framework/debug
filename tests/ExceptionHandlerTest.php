@@ -214,6 +214,83 @@ final class ExceptionHandlerTest extends TestCase
         \trigger_error('Error message', $error);
     }
 
+    public function testSearchEngines() : void
+    {
+        $handler = new ExceptionHandler(ExceptionHandler::DEVELOPMENT);
+        self::assertIsArray($handler->getSearchEngines());
+    }
+
+    public function testSearchEngine() : void
+    {
+        $handler = new ExceptionHandler(ExceptionHandler::DEVELOPMENT);
+        self::assertSame(
+            'https://www.google.com/search?q=',
+            $handler->getSearchEngineUrl('google')
+        );
+        self::assertSame(
+            'https://www.bing.com/search?q=',
+            $handler->getSearchEngineUrl('bing')
+        );
+        $handler->addSearchEngine('foo', 'https://foo.tld/search?q=');
+        self::assertSame(
+            'https://foo.tld/search?q=',
+            $handler->getSearchEngineUrl('foo')
+        );
+    }
+
+    public function testInvalidSearchEngineUrl() : void
+    {
+        $handler = new ExceptionHandler(ExceptionHandler::DEVELOPMENT);
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid search engine name: foo');
+        $handler->getSearchEngineUrl('foo');
+    }
+
+    public function testCurrentSearchEngine() : void
+    {
+        $handler = new ExceptionHandler(ExceptionHandler::DEVELOPMENT);
+        self::assertSame('google', $handler->getCurrentSearchEngine());
+        self::assertSame(
+            'https://www.google.com/search?q=',
+            $handler->getCurrentSearchEngineUrl()
+        );
+        $handler->setCurrentSearchEngine('bing');
+        self::assertSame('bing', $handler->getCurrentSearchEngine());
+        self::assertSame(
+            'https://www.bing.com/search?q=',
+            $handler->getCurrentSearchEngineUrl()
+        );
+    }
+
+    public function testInvalidCurrentSearchEngine() : void
+    {
+        $handler = new ExceptionHandler(ExceptionHandler::DEVELOPMENT);
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid search engine name: foo');
+        $handler->setCurrentSearchEngine('foo');
+    }
+
+    public function testDevelopmentViewWithSearchEngine() : void
+    {
+        $handler = new ExceptionHandlerMock(ExceptionHandler::DEVELOPMENT);
+        $handler->cli = false;
+        \ob_start();
+        $handler->exceptionHandler(new \Exception('Foo'));
+        $contents = (string) \ob_get_clean();
+        self::assertStringContainsString(
+            $handler->getCurrentSearchEngineUrl(),
+            $contents
+        );
+        $handler->setCurrentSearchEngine('baidu');
+        \ob_start();
+        $handler->exceptionHandler(new \Exception('Foo'));
+        $contents = (string) \ob_get_clean();
+        self::assertStringContainsString(
+            $handler->getCurrentSearchEngineUrl(),
+            $contents
+        );
+    }
+
     /**
      * @return array<array<string>>
      */

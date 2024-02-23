@@ -39,6 +39,19 @@ class ExceptionHandler
     protected string $environment = ExceptionHandler::PRODUCTION;
     protected Language $language;
     protected bool $testing = false;
+    /**
+     * @var array<string,string>
+     */
+    protected array $searchEngines = [
+        'ask' => 'https://www.ask.com/web?q=',
+        'baidu' => 'https://www.baidu.com/s?wd=',
+        'bing' => 'https://www.bing.com/search?q=',
+        'duckduckgo' => 'https://duckduckgo.com/?q=',
+        'google' => 'https://www.google.com/search?q=',
+        'yahoo' => 'https://search.yahoo.com/search?p=',
+        'yandex' => 'https://yandex.com/search/?text=',
+    ];
+    protected string $currentSearchEngine = 'google';
 
     /**
      * ExceptionHandler constructor.
@@ -293,5 +306,51 @@ class ExceptionHandler
             $errfile,
             $errline
         );
+    }
+
+    /**
+     * @return array<string,string>
+     */
+    public function getSearchEngines() : array
+    {
+        return $this->searchEngines;
+    }
+
+    public function addSearchEngine(string $name, string $url) : static
+    {
+        $this->searchEngines[$name] = $url;
+        return $this;
+    }
+
+    public function getSearchEngineUrl(string $name) : string
+    {
+        if (!isset($this->searchEngines[$name])) {
+            throw new InvalidArgumentException('Invalid search engine name: ' . $name);
+        }
+        return $this->searchEngines[$name];
+    }
+
+    public function setCurrentSearchEngine(string $name) : static
+    {
+        if (!isset($this->searchEngines[$name])) {
+            throw new InvalidArgumentException('Invalid search engine name: ' . $name);
+        }
+        $this->currentSearchEngine = $name;
+        return $this;
+    }
+
+    public function getCurrentSearchEngine() : string
+    {
+        return $this->currentSearchEngine;
+    }
+
+    public function getCurrentSearchEngineUrl() : string
+    {
+        return $this->getSearchEngineUrl($this->getCurrentSearchEngine());
+    }
+
+    public function makeSearchLink(string $query) : string
+    {
+        return $this->getCurrentSearchEngineUrl() . \urlencode($query);
     }
 }
