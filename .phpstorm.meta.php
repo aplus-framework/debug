@@ -28,3 +28,28 @@ expectedReturnValues(
     \Framework\Debug\ExceptionHandler::getEnvironment(),
     argumentsSet('eh_env')
 );
+registerArgumentsSet(
+    'search_engines',
+    'ask',
+    'baidu',
+    'bing',
+    'duckduckgo',
+    'google',
+    'yahoo',
+    'yandex',
+);
+expectedArguments(
+    \Framework\Debug\ExceptionHandler::addSearchEngine(),
+    0,
+    argumentsSet('search_engines')
+);
+expectedArguments(
+    \Framework\Debug\ExceptionHandler::getSearchEngineUrl(),
+    0,
+    argumentsSet('search_engines')
+);
+expectedArguments(
+    \Framework\Debug\ExceptionHandler::setCurrentSearchEngine(),
+    0,
+    argumentsSet('search_engines')
+);
