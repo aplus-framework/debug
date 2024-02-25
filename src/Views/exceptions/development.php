@@ -184,7 +184,7 @@ use Framework\Helpers\ArraySimple;
     <h1><?= $exception::class ?></h1>
     <small><?= $handler->getLanguage()->render('debug', 'message') ?>:</small>
     <h2>
-        <a href="<?= $handler->makeSearchLink(
+        <a href="<?= $handler->getSearchEngines()->makeLink(
             $exception::class . ': ' . $exception->getMessage()
         ) ?>" rel="noreferrer" target="_blank">
             <?= htmlentities($exception->getMessage()) ?>
