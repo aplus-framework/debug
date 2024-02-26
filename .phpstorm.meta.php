@@ -39,17 +39,27 @@ registerArgumentsSet(
     'yandex',
 );
 expectedArguments(
-    \Framework\Debug\ExceptionHandler::addSearchEngine(),
+    \Framework\Debug\SearchEngines::__construct(),
     0,
     argumentsSet('search_engines')
 );
 expectedArguments(
-    \Framework\Debug\ExceptionHandler::getSearchEngineUrl(),
+    \Framework\Debug\SearchEngines::add(),
     0,
     argumentsSet('search_engines')
 );
 expectedArguments(
-    \Framework\Debug\ExceptionHandler::setCurrentSearchEngine(),
+    \Framework\Debug\SearchEngines::getUrl(),
     0,
+    argumentsSet('search_engines')
+);
+expectedArguments(
+    \Framework\Debug\SearchEngines::setCurrent(),
+    0,
+    argumentsSet('search_engines')
+);
+expectedArguments(
+    \Framework\Debug\SearchEngines::makeLink(),
+    1,
     argumentsSet('search_engines')
 );
