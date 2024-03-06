@@ -41,7 +41,7 @@
         "aplus/cli": "^3.0",
         "aplus/helpers": "^3.0",
         "aplus/language": "^4.0",
-        "aplus/log": "^3.0"
+        "aplus/log": "^4.0"
     },
     "require-dev": {
         "ext-xdebug": "*",
