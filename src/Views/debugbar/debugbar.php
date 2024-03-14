@@ -7,6 +7,7 @@ use Framework\Debug\Debugger;
  * @var array<string,mixed> $activities
  * @var array<string,mixed> $options
  */
+$infoIcon = file_get_contents(__DIR__ . '/icons/info.svg');
 ?>
 <!-- Aplus Framework Debugbar start -->
 <style>
@@ -26,7 +27,7 @@ echo $contents;
         <div class="panel info-collection">
             <div class="resize"></div>
             <header>
-                <div class="title">Info</div>
+                <div class="title"><?= $infoIcon ?> Info</div>
             </header>
             <div class="contents">
                 <div class="collector-default">
@@ -133,7 +134,9 @@ endif
                 <?php endif ?>
             <?php endforeach ?>
             <div class="info">
-                <button class="collection" id="info-collection">Info</button>
+                <button class="collection" id="info-collection">
+                    <?= $infoIcon ?> Info
+                </button>
             </div>
         </div>
     </div>
