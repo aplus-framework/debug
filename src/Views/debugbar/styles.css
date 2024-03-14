@@ -360,6 +360,14 @@
     );
 }
 
+.aplus-debug .debugbar-icon {
+    width: 12px;
+}
+
+.aplus-debug .title .debugbar-icon {
+    width: 14px;
+}
+
 .aplus-debug.inverted {
     filter: invert(1);
 }

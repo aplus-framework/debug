@@ -93,7 +93,10 @@ endif
                 <div class="panel <?= $collection->getSafeName() ?>-collection">
                     <div class="resize"></div>
                     <header>
-                        <div class="title"><?= $collection->getName() ?></div>
+                        <div class="title">
+                            <?= $collection->getIcon() ?>
+                            <?= $collection->getName() ?>
+                        </div>
                         <div class="actions"><?= implode(' ', $collection->getActions()) ?></div>
                         <div class="collectors">
                             <?php
@@ -123,7 +126,10 @@ endif
         <div class="collections">
             <?php foreach ($collections as $collection): ?>
                 <?php if ($collection->hasCollectors()): ?>
-                    <button class="collection" id="<?= $collection->getSafeName() ?>-collection"><?= $collection->getName() ?></button>
+                    <button class="collection" id="<?= $collection->getSafeName() ?>-collection">
+                        <?= $collection->getIcon() ?>
+                        <?= $collection->getName() ?>
+                    </button>
                 <?php endif ?>
             <?php endforeach ?>
             <div class="info">

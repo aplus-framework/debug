@@ -94,4 +94,9 @@ class Collection
         }
         return $result;
     }
+
+    public function getIcon() : string
+    {
+        return '';
+    }
 }
