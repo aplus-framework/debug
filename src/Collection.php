@@ -25,6 +25,7 @@ class Collection
      * @var array<string>
      */
     protected array $actions = [];
+    protected string $icon = '';
 
     public function __construct(string $name)
     {
@@ -97,6 +98,17 @@ class Collection
 
     public function getIcon() : string
     {
-        return '';
+        return $this->icon;
+    }
+
+    public function setIcon(string $icon) : static
+    {
+        $this->icon = $icon;
+        return $this;
+    }
+
+    public function hasIcon() : bool
+    {
+        return $this->icon !== '';
     }
 }
