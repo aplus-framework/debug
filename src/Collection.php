@@ -30,6 +30,17 @@ class Collection
     public function __construct(string $name)
     {
         $this->name = $name;
+        $this->prepare();
+    }
+
+    /**
+     * Used to prepare configurations.
+     * Called right after setting the name in the constructor.
+     *
+     * @return void
+     */
+    protected function prepare() : void
+    {
     }
 
     public function getName() : string
