@@ -33,12 +33,6 @@ class Collection
         $this->prepare();
     }
 
-    /**
-     * Used to prepare configurations.
-     * Called right after setting the name in the constructor.
-     *
-     * @return void
-     */
     protected function prepare() : void
     {
     }
