@@ -9,6 +9,8 @@
  */
 namespace Framework\Debug;
 
+use RuntimeException;
+
 /**
  * Class Collection.
  *
@@ -26,6 +28,7 @@ class Collection
      */
     protected array $actions = [];
     protected string $icon = '';
+    protected string $iconPath;
 
     public function __construct(string $name)
     {
@@ -35,6 +38,14 @@ class Collection
 
     protected function prepare() : void
     {
+        if (isset($this->iconPath)) {
+            if (!\is_file($this->iconPath)) {
+                throw new RuntimeException(
+                    'Icon path is invalid: ' . $this->iconPath
+                );
+            }
+            $this->setIcon((string) \file_get_contents($this->iconPath));
+        }
     }
 
     public function getName() : string
