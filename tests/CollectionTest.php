@@ -29,4 +29,21 @@ final class CollectionTest extends TestCase
         self::assertTrue($this->collection->hasIcon());
         self::assertSame('xXx', $this->collection->getIcon());
     }
+
+    public function testIconPath() : void
+    {
+        $collection = new class('Foo') extends Collection {
+            protected string $iconPath = __DIR__ . '/../src/Views/debugbar/icons/info.svg';
+        };
+        self::assertTrue($collection->hasIcon());
+    }
+
+    public function testIconPathWithInvalidPath() : void
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Icon path is invalid: /foo/bar');
+        $collection = new class('Foo') extends Collection {
+            protected string $iconPath = '/foo/bar';
+        };
+    }
 }
