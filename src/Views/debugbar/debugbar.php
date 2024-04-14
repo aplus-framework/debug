@@ -35,7 +35,7 @@ echo $contents;
                         class_exists('Aplus')
                             ? ' Aplus ' . Debugger::roundVersion(Aplus::VERSION)
                             : '' ?> on <?= \PHP_OS_FAMILY ?> with PHP
-                        <?= Debugger::roundVersion(\PHP_VERSION) ?>
+                        <?= Debugger::roundVersion(\PHP_VERSION) ?>.
                     </p>
                     <p>★
                         <a href="https://aplus-framework.com" target="_blank">aplus-framework.com</a>
