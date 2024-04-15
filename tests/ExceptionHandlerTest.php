@@ -79,11 +79,13 @@ final class ExceptionHandlerTest extends TestCase
     }
 
     /**
+     * @dataProvider jsonHeadersProvider
+     *
      * @runInSeparateProcess
      */
-    public function testJsonExceptionOnProduction() : void
+    public function testJsonExceptionOnProduction(string $header, string $value) : void
     {
-        $_SERVER['HTTP_CONTENT_TYPE'] = 'application/json ';
+        $_SERVER[$header] = $value;
         $exceptions = new ExceptionHandlerMock();
         $exceptions->cli = false;
         \ob_start();
@@ -106,11 +108,13 @@ final class ExceptionHandlerTest extends TestCase
     }
 
     /**
+     * @dataProvider jsonHeadersProvider
+     *
      * @runInSeparateProcess
      */
-    public function testJsonExceptionOnDevelopment() : void
+    public function testJsonExceptionOnDevelopment(string $header, string $value) : void
     {
-        $_SERVER['HTTP_CONTENT_TYPE'] = 'application/json ';
+        $_SERVER[$header] = $value;
         $exceptions = new ExceptionHandlerMock(ExceptionHandler::DEVELOPMENT);
         $exceptions->cli = false;
         \ob_start();
@@ -235,6 +239,17 @@ final class ExceptionHandlerTest extends TestCase
             [\E_USER_DEPRECATED, 'User Deprecated'],
             [\E_USER_ERROR, 'User Error'],
             [\E_USER_NOTICE, 'User Notice'],
+        ];
+    }
+
+    /**
+     * @return array<array<string>>
+     */
+    public static function jsonHeadersProvider() : array
+    {
+        return [
+            ['HTTP_ACCEPT', 'text/html; application/json'],
+            ['HTTP_CONTENT_TYPE', 'application/json; charset=UTF-8'],
         ];
     }
 }

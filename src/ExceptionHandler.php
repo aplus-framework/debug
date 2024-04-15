@@ -169,7 +169,7 @@ class ExceptionHandler
         if (!\headers_sent()) {
             $this->sendHeaders();
         }
-        if ($this->isJson()) {
+        if ($this->isJson() || $this->acceptJson()) {
             $this->sendJson($exception);
             return;
         }
@@ -191,6 +191,12 @@ class ExceptionHandler
     {
         return isset($_SERVER['HTTP_CONTENT_TYPE'])
             && \str_starts_with($_SERVER['HTTP_CONTENT_TYPE'], 'application/json');
+    }
+
+    protected function acceptJson() : bool
+    {
+        return isset($_SERVER['HTTP_ACCEPT'])
+            && \str_contains($_SERVER['HTTP_ACCEPT'], 'application/json');
     }
 
     protected function sendJson(Throwable $exception) : void
@@ -218,7 +224,7 @@ class ExceptionHandler
     protected function sendHeaders() : void
     {
         $contentType = 'text/html';
-        if ($this->isJson()) {
+        if ($this->isJson() || $this->acceptJson()) {
             $contentType = 'application/json';
         }
         \header('Content-Type: ' . $contentType . '; charset=UTF-8');
