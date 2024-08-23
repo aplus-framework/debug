@@ -32,7 +32,7 @@ class SearchEngines
     ];
     protected string $current = 'google';
 
-    public function __construct(string $current = null)
+    public function __construct(?string $current = null)
     {
         if (isset($current)) {
             $this->setCurrent($current);
@@ -80,7 +80,7 @@ class SearchEngines
         return $this->getUrl($this->getCurrent());
     }
 
-    public function makeLink(string $query, string $name = null) : string
+    public function makeLink(string $query, ?string $name = null) : string
     {
         $link = isset($name) ? $this->getUrl($name) : $this->getCurrentUrl();
         return $link . \urlencode($query);

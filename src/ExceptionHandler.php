@@ -52,8 +52,8 @@ class ExceptionHandler
      */
     public function __construct(
         string $environment = ExceptionHandler::PRODUCTION,
-        Logger $logger = null,
-        Language $language = null
+        ?Logger $logger = null,
+        ?Language $language = null
     ) {
         $this->setEnvironment($environment);
         if ($logger) {
@@ -89,7 +89,7 @@ class ExceptionHandler
         return $this->logger;
     }
 
-    public function setLanguage(Language $language = null) : static
+    public function setLanguage(?Language $language = null) : static
     {
         $this->language = $language ?? new Language();
         $this->language->addDirectory(__DIR__ . '/Languages');
@@ -268,8 +268,8 @@ class ExceptionHandler
     public function errorHandler(
         int $errno,
         string $errstr,
-        string $errfile = null,
-        int $errline = null
+        ?string $errfile = null,
+        ?int $errline = null
     ) : bool {
         if (!(\error_reporting() & $errno)) {
             return true;
