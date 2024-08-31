@@ -59,6 +59,7 @@
 }
 
 .aplus-debug p {
+    line-height: normal;
     margin-top: 0;
     margin-bottom: 10px;
 }
@@ -134,13 +135,19 @@
 }
 
 .aplus-debug select {
+    appearance: auto;
     background: none;
     color: #fff;
     border: 1px solid #222;
+    border-radius: 0;
+    display: inline-block;
+    font-family: inherit;
     font-size: 14px;
     padding: 3px 5px;
     height: 16px;
+    width: auto;
     line-height: 16px;
+    margin: auto;
 }
 
 .aplus-debug select:hover {
@@ -153,8 +160,19 @@
     cursor: default;
 }
 
+.aplus-debug select:focus {
+    background: #111;
+    box-shadow: none;
+    outline: none;
+}
+
 .aplus-debug strong {
     color: inherit;
+}
+
+.aplus-debug svg {
+    display: inline-block;
+    vertical-align: unset;
 }
 
 .aplus-debug ul {
@@ -172,7 +190,13 @@
 
 .aplus-debug .panels .panel {
     display: none;
+    font-size: 16px;
     margin: 0;
+}
+
+.aplus-debug .panels .panel .contents {
+    background: transparent;
+    display: block;
 }
 
 .aplus-debug .panels .panel .contents > * {
@@ -188,6 +212,7 @@
 }
 
 .aplus-debug table {
+    background: #000;
     margin-top: 0;
     margin-bottom: 10px;
     border-collapse: collapse;
@@ -220,6 +245,11 @@
 
 .aplus-debug thead th {
     border-bottom: 2px solid #222;
+}
+
+.aplus-debug tbody,
+.aplus-debug tbody tr {
+    background: transparent;
 }
 
 .aplus-debug tbody th {
@@ -301,6 +331,8 @@
 .aplus-debug .toolbar .icon {
     display: inline;
     cursor: pointer;
+    width: auto;
+    height: auto;
 }
 
 .aplus-debug .toolbar .collections {
