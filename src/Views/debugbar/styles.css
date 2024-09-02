@@ -84,6 +84,7 @@
 
 .aplus-debug code {
     background: #000;
+    border: 0;
     font-family: 'JetBrains Mono', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
     margin: 0;
     padding: 0;
