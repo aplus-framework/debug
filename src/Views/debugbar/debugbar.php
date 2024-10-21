@@ -25,7 +25,7 @@ echo $contents;
 <div id="debugbar" class="aplus-debug" dir="ltr">
     <div class="panels">
         <div class="panel info-collection">
-            <div class="resize"></div>
+            <div class="resize" title="Change panel height"></div>
             <header>
                 <div class="title"><?= $infoIcon ?> Info</div>
             </header>
