@@ -404,3 +404,9 @@
 .aplus-debug.inverted {
     filter: invert(1);
 }
+
+@media (max-width: 576px) {
+    .aplus-debug .toolbar .collections .collection .collection-name {
+        display: none;
+    }
+}
