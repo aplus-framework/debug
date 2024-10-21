@@ -95,8 +95,8 @@ endif
                     <div class="resize"></div>
                     <header>
                         <div class="title">
-                            <?= $collection->getIcon() ?>
-                            <?= $collection->getName() ?>
+                            <span class="title-icon"><?= $collection->getIcon() ?></span>
+                            <span class="title-name"><?= $collection->getName() ?></span>
                         </div>
                         <div class="actions"><?= implode(' ', $collection->getActions()) ?></div>
                         <div class="collectors">
