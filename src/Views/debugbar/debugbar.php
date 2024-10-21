@@ -92,7 +92,7 @@ endif
         <?php foreach ($collections as $collection): ?>
             <?php if ($collection->hasCollectors()): ?>
                 <div class="panel <?= $collection->getSafeName() ?>-collection">
-                    <div class="resize"></div>
+                    <div class="resize" title="Change panel height"></div>
                     <header>
                         <div class="title">
                             <span class="title-icon"><?= $collection->getIcon() ?></span>
