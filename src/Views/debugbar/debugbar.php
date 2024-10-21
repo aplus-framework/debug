@@ -122,7 +122,7 @@ endif
     </div>
     <div class="toolbar">
         <div class="icon">
-            <img src="data:image/png;base64,<?= base64_encode((string) file_get_contents(__DIR__ . '/icon.png')) ?>" alt="A+" width="32">
+            <img src="data:image/png;base64,<?= base64_encode((string) file_get_contents(__DIR__ . '/icon.png')) ?>" alt="A+" width="32" title="A+">
         </div>
         <div class="collections">
             <?php foreach ($collections as $collection): ?>
