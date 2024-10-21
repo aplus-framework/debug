@@ -127,14 +127,15 @@ endif
         <div class="collections">
             <?php foreach ($collections as $collection): ?>
                 <?php if ($collection->hasCollectors()): ?>
-                    <button class="collection" id="<?= $collection->getSafeName() ?>-collection" title="<?= $collection->getName() ?>">
+                    <button class="collection" id="<?= $collection->getSafeName() ?>-collection"
+                        title="<?= $collection->getName() ?> Collection">
                         <span class="collection-icon"><?= $collection->getIcon() ?></span>
                         <span class="collection-name"><?= $collection->getName() ?></span>
                     </button>
                 <?php endif ?>
             <?php endforeach ?>
             <div class="info">
-                <button class="collection" id="info-collection" title="Info">
+                <button class="collection" id="info-collection" title="Info Collection">
                     <span class="collection-icon"><?= $infoIcon ?></span>
                     <span class="collection-name">Info</span>
                 </button>
