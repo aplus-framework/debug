@@ -67,6 +67,7 @@ let Debugbar = {
         collectionsDiv.style.display = 'flex';
         toolbar.style.borderRightWidth = '0';
         Debugbar.activePanel();
+        Debugbar.icon.title = 'Hide debugbar (Ctrl + F12)';
     },
     hideWide: function () {
         let debugbar = document.querySelector('#debugbar');
@@ -77,6 +78,7 @@ let Debugbar = {
         panelsDiv.style.display = 'none';
         collectionsDiv.style.display = 'none';
         toolbar.style.borderRightWidth = '1px';
+        Debugbar.icon.title = 'Show debugbar (Ctrl + F12)';
     },
     toggleWide: function () {
         if (Debugbar.isWide()) {
