@@ -405,6 +405,10 @@
     filter: invert(1);
 }
 
+/*
+ * Bootstrap 5 Breakpoint
+ * `md` applies to small devices (landscape phones, less than 768px)
+ */
 @media (max-width: 767.98px) {
     .aplus-debug .toolbar .collections .collection .collection-name {
         display: none;
