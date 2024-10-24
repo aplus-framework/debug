@@ -405,7 +405,7 @@
     filter: invert(1);
 }
 
-@media (max-width: 576px) {
+@media (max-width: 767.98px) {
     .aplus-debug .toolbar .collections .collection .collection-name {
         display: none;
     }
