@@ -82,6 +82,18 @@ final class DebuggerTest extends TestCase
         self::assertStringContainsString('<button>Foo</button> xx', $debugbar);
     }
 
+    public function testDebugbarStatus() : void
+    {
+        self::assertTrue($this->debugger->isDebugbarEnabled());
+        self::assertNotSame('', $this->debugger->renderDebugbar());
+        $this->debugger->disableDebugbar();
+        self::assertFalse($this->debugger->isDebugbarEnabled());
+        self::assertSame('', $this->debugger->renderDebugbar());
+        $this->debugger->enableDebugbar();
+        self::assertTrue($this->debugger->isDebugbarEnabled());
+        self::assertNotSame('', $this->debugger->renderDebugbar());
+    }
+
     public function testActivities() : void
     {
         $microtime = \microtime(true);

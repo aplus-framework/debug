@@ -28,6 +28,7 @@ class Debugger
      */
     protected array $options = [];
     protected string $debugbarView = __DIR__ . '/Views/debugbar/debugbar.php';
+    protected bool $debugbarEnabled = true;
 
     public function addCollection(Collection $collection) : static
     {
@@ -141,6 +142,9 @@ class Debugger
 
     public function renderDebugbar() : string
     {
+        if (!$this->isDebugbarEnabled()) {
+            return '';
+        }
         \ob_start();
         Isolation::require($this->getDebugbarView(), [
             'collections' => $this->getCollections(),
@@ -148,6 +152,44 @@ class Debugger
             'options' => $this->getOptions(),
         ]);
         return \ob_get_clean(); // @phpstan-ignore-line
+    }
+
+    /**
+     * Tells if debugbar rendering is enabled.
+     *
+     * @since 4.2
+     *
+     * @return bool
+     */
+    public function isDebugbarEnabled() : bool
+    {
+        return $this->debugbarEnabled;
+    }
+
+    /**
+     * Enables debugbar rendering.
+     *
+     * @since 4.2
+     *
+     * @return static
+     */
+    public function enableDebugbar() : static
+    {
+        $this->debugbarEnabled = true;
+        return $this;
+    }
+
+    /**
+     * Disables debugbar rendering.
+     *
+     * @since 4.2
+     *
+     * @return static
+     */
+    public function disableDebugbar() : static
+    {
+        $this->debugbarEnabled = false;
+        return $this;
     }
 
     public static function makeSafeName(string $name) : string
