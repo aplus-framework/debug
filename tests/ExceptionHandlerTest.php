@@ -237,7 +237,6 @@ final class ExceptionHandlerTest extends TestCase
         return [
             [\E_USER_WARNING, 'User Warning'],
             [\E_USER_DEPRECATED, 'User Deprecated'],
-            [\E_USER_ERROR, 'User Error'],
             [\E_USER_NOTICE, 'User Notice'],
         ];
     }
