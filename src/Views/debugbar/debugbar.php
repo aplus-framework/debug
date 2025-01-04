@@ -46,7 +46,7 @@ if ($count):
     ?>
                         <p><?= $count ?> activit<?= $count === 1
             ? 'y was'
-            : 'ies were' ?> collected in <?= round($activities['total'], 6) ?> seconds:
+            : 'ies were' ?> collected in <?= Debugger::roundSecondsToMilliseconds($activities['total']) ?> milliseconds:
                         </p>
                         <table>
                             <thead>
@@ -55,7 +55,7 @@ if ($count):
                                 <th>Collection</th>
                                 <th>Collector</th>
                                 <th>Description</th>
-                                <th title="Seconds">Runtime</th>
+                                <th title="Milliseconds">Runtime</th>
                                 <th title="Runtime percentages">
                                     <span>10%</span><span>20%</span><span>30%</span><span>40%</span>
                                     <span>50%</span><span>60%</span><span>70%</span><span>80%</span>
@@ -70,7 +70,7 @@ if ($count):
                                     <td><?= htmlentities($collected['collection']) ?></td>
                                     <td title="<?= htmlentities($collected['class']) ?>"><?= htmlentities($collected['collector']) ?></td>
                                     <td><?= htmlentities($collected['description']) ?></td>
-                                    <td><?= round($collected['total'], 6) ?></td>
+                                    <td><?= Debugger::roundSecondsToMilliseconds($collected['total']) ?></td>
                                     <td>
                                     <span style="width: <?= $collected['width'] ?>%; margin-left: <?=
                 $collected['left']

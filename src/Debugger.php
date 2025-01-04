@@ -243,4 +243,9 @@ class Debugger
         }
         return $version;
     }
+
+    public static function roundSecondsToMilliseconds(float | int $seconds, int $precision = 6) : float
+    {
+        return \round($seconds * 1000, $precision);
+    }
 }

@@ -225,4 +225,12 @@ final class DebuggerTest extends TestCase
         self::assertSame('1.2', Debugger::roundVersion('1.2.0'));
         self::assertSame('1', Debugger::roundVersion('1.0.0'));
     }
+
+    public function testRoundSecondsToMilliseconds() : void
+    {
+        self::assertSame(1000.0, Debugger::roundSecondsToMilliseconds(1));
+        self::assertSame(0.120123, Debugger::roundSecondsToMilliseconds(0.000120123));
+        self::assertSame(0.120, Debugger::roundSecondsToMilliseconds(0.000120, 3));
+        self::assertSame(321.998765, Debugger::roundSecondsToMilliseconds(0.3219987654321));
+    }
 }
