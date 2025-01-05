@@ -229,8 +229,8 @@ final class DebuggerTest extends TestCase
     public function testRoundSecondsToMilliseconds() : void
     {
         self::assertSame(1000.0, Debugger::roundSecondsToMilliseconds(1));
-        self::assertSame(0.120123, Debugger::roundSecondsToMilliseconds(0.000120123));
-        self::assertSame(0.120, Debugger::roundSecondsToMilliseconds(0.000120, 3));
-        self::assertSame(321.998765, Debugger::roundSecondsToMilliseconds(0.3219987654321));
+        self::assertSame(0.120123, Debugger::roundSecondsToMilliseconds(0.000120123, 6));
+        self::assertSame(0.120, Debugger::roundSecondsToMilliseconds(0.000120));
+        self::assertSame(321.999, Debugger::roundSecondsToMilliseconds(0.3219987654321));
     }
 }
