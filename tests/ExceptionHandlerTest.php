@@ -218,6 +218,14 @@ final class ExceptionHandlerTest extends TestCase
         \trigger_error('Error message', $error);
     }
 
+    public function testShowLogId() : void
+    {
+        $exceptions = new ExceptionHandler();
+        self::assertTrue($exceptions->isShowingLogId());
+        $exceptions->setShowLogId(false);
+        self::assertFalse($exceptions->isShowingLogId());
+    }
+
     /**
      * @return array<array<string>>
      */

@@ -30,9 +30,11 @@
 <h1><?= $handler->getLanguage()->render('debug', 'exceptionTitle') ?></h1>
 <p><?= $handler->getLanguage()->render('debug', 'exceptionDescription') ?></p>
 <?php
-$log = $handler->getLogger()?->getLastLog();
-if ($log) {
-    echo '<p>Log Id: ' . htmlentities($log->id) . '</p>';
+if ($handler->isShowingLogId()) {
+    $log = $handler->getLogger()?->getLastLog();
+    if ($log) {
+        echo '<p>Log Id: ' . htmlentities($log->id) . '</p>';
+    }
 }
 ?>
 </body>

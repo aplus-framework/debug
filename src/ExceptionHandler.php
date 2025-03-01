@@ -40,6 +40,7 @@ class ExceptionHandler
     protected Language $language;
     protected bool $testing = false;
     protected SearchEngines $searchEngines;
+    protected bool $showLogId = true;
 
     /**
      * ExceptionHandler constructor.
@@ -105,6 +106,29 @@ class ExceptionHandler
             $this->setLanguage();
         }
         return $this->language;
+    }
+
+    /**
+     * Sets whether the log id will be shown in the production view.
+     *
+     * @param bool $showLogId True to show. False to not show.
+     *
+     * @return static
+     */
+    public function setShowLogId(bool $showLogId = true) : static
+    {
+        $this->showLogId = $showLogId;
+        return $this;
+    }
+
+    /**
+     * Tells if the log id is being shown.
+     *
+     * @return bool
+     */
+    public function isShowingLogId() : bool
+    {
+        return $this->showLogId;
     }
 
     protected function validateView(string $file) : string
