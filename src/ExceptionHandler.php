@@ -111,6 +111,8 @@ class ExceptionHandler
     /**
      * Sets whether the log id will be shown in the production view.
      *
+     * @since 4.4
+     *
      * @param bool $showLogId True to show. False to not show.
      *
      * @return static
@@ -123,6 +125,8 @@ class ExceptionHandler
 
     /**
      * Tells if the log id is being shown.
+     *
+     * @since 4.4
      *
      * @return bool
      */
