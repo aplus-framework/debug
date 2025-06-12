@@ -211,6 +211,13 @@ final class DebuggerTest extends TestCase
         );
     }
 
+    protected function closeBuffer() : void
+    {
+        if (\ob_get_level()) {
+            \ob_end_clean();
+        }
+    }
+
     public function testInvalidIconPathOption() : void
     {
         $iconPath = __DIR__ . '/not-found.png';
@@ -223,9 +230,7 @@ final class DebuggerTest extends TestCase
                 $e->getMessage()
             );
         }
-        if (\ob_get_level()) {
-            \ob_end_clean();
-        }
+        $this->closeBuffer();
     }
 
     public function testInfoLinkOption() : void
@@ -250,9 +255,7 @@ final class DebuggerTest extends TestCase
                 $e->getMessage()
             );
         }
-        if (\ob_get_level()) {
-            \ob_end_clean();
-        }
+        $this->closeBuffer();
         $this->debugger->setOption('info_link', [
             'href' => '#',
         ]);
@@ -264,9 +267,7 @@ final class DebuggerTest extends TestCase
                 $e->getMessage()
             );
         }
-        if (\ob_get_level()) {
-            \ob_end_clean();
-        }
+        $this->closeBuffer();
         $this->debugger->setOption('info_link', [
             'text' => '#',
         ]);
@@ -278,9 +279,7 @@ final class DebuggerTest extends TestCase
                 $e->getMessage()
             );
         }
-        if (\ob_get_level()) {
-            \ob_end_clean();
-        }
+        $this->closeBuffer();
         $this->debugger->setOption('info_link', [
             'href' => 'https://foo.com',
             'text' => 'Foo Website',
