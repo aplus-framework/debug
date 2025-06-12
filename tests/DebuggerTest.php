@@ -239,6 +239,57 @@ final class DebuggerTest extends TestCase
         self::assertStringContainsString('Foo Website', $debugbar);
     }
 
+    public function testInvalidInfoLinkOption() : void
+    {
+        $this->debugger->setOption('info_link', []);
+        try {
+            $this->debugger->renderDebugbar();
+        } catch (\LogicException $e) {
+            self::assertSame(
+                'Info link must contain "href" and "text" keys',
+                $e->getMessage()
+            );
+        }
+        if (\ob_get_level()) {
+            \ob_end_clean();
+        }
+        $this->debugger->setOption('info_link', [
+            'href' => '#',
+        ]);
+        try {
+            $this->debugger->renderDebugbar();
+        } catch (\LogicException $e) {
+            self::assertSame(
+                'Info link must contain "href" and "text" keys',
+                $e->getMessage()
+            );
+        }
+        if (\ob_get_level()) {
+            \ob_end_clean();
+        }
+        $this->debugger->setOption('info_link', [
+            'text' => '#',
+        ]);
+        try {
+            $this->debugger->renderDebugbar();
+        } catch (\LogicException $e) {
+            self::assertSame(
+                'Info link must contain "href" and "text" keys',
+                $e->getMessage()
+            );
+        }
+        if (\ob_get_level()) {
+            \ob_end_clean();
+        }
+        $this->debugger->setOption('info_link', [
+            'href' => 'https://foo.com',
+            'text' => 'Foo Website',
+        ]);
+        $debugbar = $this->debugger->renderDebugbar();
+        self::assertStringContainsString('https://foo.com', $debugbar);
+        self::assertStringContainsString('Foo Website', $debugbar);
+    }
+
     public function testMakeSafeName() : void
     {
         self::assertSame(

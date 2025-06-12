@@ -38,7 +38,17 @@ echo $contents;
                         <?= Debugger::roundVersion(\PHP_VERSION) ?>.
                     </p>
                     <p>★
-                        <?php if (isset($options['info_link'])): ?>
+                        <?php
+                        $hasInfoLink = isset($options['info_link']);
+                        if ($hasInfoLink) {
+                            if(!isset($options['info_link']['href'])
+                                || !isset($options['info_link']['text'])
+                            ) {
+                                throw new LogicException('Info link must contain "href" and "text" keys');
+                            }
+                        }
+                        ?>
+                        <?php if ($hasInfoLink): ?>
                             <a href="<?= $options['info_link']['href'] ?>"
                                target="_blank"><?= $options['info_link']['text'] ?>
                             </a>
