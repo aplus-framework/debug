@@ -63,3 +63,19 @@ expectedArguments(
     1,
     argumentsSet('search_engines')
 );
+registerArgumentsSet(
+    'debugger_options',
+    'color',
+    'icon_path',
+    'info_link',
+);
+expectedArguments(
+    \Framework\Debug\Debugger::getOption(),
+    0,
+    argumentsSet('debugger_options')
+);
+expectedArguments(
+    \Framework\Debug\Debugger::setOption(),
+    0,
+    argumentsSet('debugger_options')
+);
