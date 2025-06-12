@@ -128,7 +128,13 @@ endif
     </div>
     <div class="toolbar">
         <div class="icon">
-            <img src="data:image/png;base64,<?= base64_encode((string) file_get_contents(__DIR__ . '/icon.png')) ?>" alt="A+" width="32" height="32">
+            <?php
+            $iconPath = __DIR__ . '/icon.png';
+            if (isset($options['icon_path'])) {
+                $iconPath = $options['icon_path'];
+            }
+            ?>
+            <img src="data:image/png;base64,<?= base64_encode((string) file_get_contents($iconPath)) ?>" alt="A+" width="32" height="32">
         </div>
         <div class="collections">
             <?php foreach ($collections as $collection): ?>
