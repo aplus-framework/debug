@@ -182,12 +182,44 @@ final class DebuggerTest extends TestCase
     public function testOptions() : void
     {
         self::assertEmpty($this->debugger->getOptions());
-        $this->debugger->setOptions(['color' => 'royalblue']);
-        self::assertSame(['color' => 'royalblue'], $this->debugger->getOptions());
-        self::assertSame('royalblue', $this->debugger->getOption('color'));
-        $this->debugger->setOption('color', 'green');
-        self::assertSame('green', $this->debugger->getOption('color'));
-        self::assertStringContainsString('green', $this->debugger->renderDebugbar());
+        $this->debugger->setOptions([
+            'color' => 'royalblue',
+            'foo' => 'bar',
+        ]);
+        self::assertSame([
+            'color' => 'royalblue',
+            'foo' => 'bar',
+        ], $this->debugger->getOptions());
+        self::assertSame('bar', $this->debugger->getOption('foo'));
+        $this->debugger->setOption('foo', 'baz');
+        self::assertSame('baz', $this->debugger->getOption('foo'));
+    }
+
+    public function testColorOption() : void
+    {
+        $this->debugger->setOption('color', '#34cc67');
+        self::assertStringContainsString('#34cc67', $this->debugger->renderDebugbar());
+    }
+
+    public function testIconPathOption() : void
+    {
+        $iconPath = __DIR__ . '/../guide/icon.png';
+        $this->debugger->setOption('icon_path', $iconPath);
+        self::assertStringContainsString(
+            \base64_encode((string) \file_get_contents($iconPath)),
+            $this->debugger->renderDebugbar()
+        );
+    }
+
+    public function testInfoLinkOption() : void
+    {
+        $this->debugger->setOption('info_link', [
+            'href' => 'https://foo.com',
+            'text' => 'Foo Website',
+        ]);
+        $debugbar = $this->debugger->renderDebugbar();
+        self::assertStringContainsString('https://foo.com', $debugbar);
+        self::assertStringContainsString('Foo Website', $debugbar);
     }
 
     public function testMakeSafeName() : void
