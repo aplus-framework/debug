@@ -203,12 +203,29 @@ final class DebuggerTest extends TestCase
 
     public function testIconPathOption() : void
     {
-        $iconPath = __DIR__ . '/../guide/icon.png';
+        $iconPath = __DIR__ . '/../guide/image.png';
         $this->debugger->setOption('icon_path', $iconPath);
         self::assertStringContainsString(
             \base64_encode((string) \file_get_contents($iconPath)),
             $this->debugger->renderDebugbar()
         );
+    }
+
+    public function testInvalidIconPathOption() : void
+    {
+        $iconPath = __DIR__ . '/not-found.png';
+        $this->debugger->setOption('icon_path', $iconPath);
+        try {
+            $this->debugger->renderDebugbar();
+        } catch (\LogicException $e) {
+            self::assertSame(
+                'Icon not found: ' . $iconPath,
+                $e->getMessage()
+            );
+        }
+        if (\ob_get_level()) {
+            \ob_end_clean();
+        }
     }
 
     public function testInfoLinkOption() : void

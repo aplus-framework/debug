@@ -133,6 +133,9 @@ endif
             if (isset($options['icon_path'])) {
                 $iconPath = $options['icon_path'];
             }
+            if (!is_file($iconPath)) {
+                throw new LogicException('Icon not found: ' . $iconPath);
+            }
             ?>
             <img src="data:image/png;base64,<?= base64_encode((string) file_get_contents($iconPath)) ?>" alt="A+" width="32" height="32">
         </div>
