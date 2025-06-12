@@ -53,7 +53,7 @@ echo $contents;
                                target="_blank"><?= $options['info_link']['text'] ?>
                             </a>
                         <?php else: ?>
-                            <a href="https://aplus-framework.com?ref=debugbar" target="_blank">aplus-framework.com</a>
+                            <a href="https://aplus-framework.com" target="_blank">aplus-framework.com</a>
                         <?php endif ?>
                     </p>
                     <?php
