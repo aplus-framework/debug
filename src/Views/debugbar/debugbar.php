@@ -38,7 +38,13 @@ echo $contents;
                         <?= Debugger::roundVersion(\PHP_VERSION) ?>.
                     </p>
                     <p>★
-                        <a href="https://aplus-framework.com" target="_blank">aplus-framework.com</a>
+                        <?php if (isset($options['info_link'])): ?>
+                            <a href="<?= $options['info_link']['href'] ?>"
+                               target="_blank"><?= $options['info_link']['text'] ?>
+                            </a>
+                        <?php else: ?>
+                            <a href="https://aplus-framework.com?ref=debugbar" target="_blank">aplus-framework.com</a>
+                        <?php endif ?>
                     </p>
                     <?php
                 $count = isset($activities['collected']) ? count($activities['collected']) : 0;
