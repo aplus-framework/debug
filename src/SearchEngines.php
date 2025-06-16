@@ -44,7 +44,8 @@ class SearchEngines
     /**
      * Instantiate the class and allows you to define the current search engine.
      *
-     * @param string|null $current
+     * @param string|null $current Set the current search engine name or null to
+     * use the default
      */
     public function __construct(?string $current = null)
     {
@@ -78,7 +79,8 @@ class SearchEngines
      *
      * @since 4.5
      *
-     * @return array<string,string>
+     * @return array<string,string> search engine names as keys and URLs as
+     * values
      */
     public function getEngines() : array
     {
@@ -109,8 +111,8 @@ class SearchEngines
      *
      * @since 4.5
      *
-     * @param string $name
-     * @param string $url
+     * @param string $name The search engine name
+     * @param string $url The search engine base URL
      *
      * @return static
      */
@@ -126,9 +128,9 @@ class SearchEngines
     /**
      * Returns the base URL of an engine; throws exception if it does not exist.
      *
-     * @param string $name
+     * @param string $name The search engine name
      *
-     * @return string
+     * @return string The search engine base URL
      */
     public function getUrl(string $name) : string
     {
@@ -141,7 +143,7 @@ class SearchEngines
     /**
      * Sets the current search engine; validates existence.
      *
-     * @param string $name
+     * @param string $name The search engine name
      *
      * @return static
      */
@@ -165,7 +167,7 @@ class SearchEngines
     }
 
     /**
-     * Returns the URL of the current engine.
+     * Returns the base URL of the current engine.
      *
      * @return string
      */
@@ -177,10 +179,10 @@ class SearchEngines
     /**
      * Generates a search link with the given query, using the current engine or a specific name.
      *
-     * @param string $query
-     * @param string|null $name
+     * @param string $query A string to be URL-encoded
+     * @param string|null $name the search engine name or null to use the current
      *
-     * @return string
+     * @return string Returns the link to search for the exception
      */
     public function makeLink(string $query, ?string $name = null) : string
     {
