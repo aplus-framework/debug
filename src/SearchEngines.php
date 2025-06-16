@@ -118,6 +118,9 @@ class SearchEngines
      */
     public function setEngine(string $name, string $url) : static
     {
+        if (\trim($name) === '') {
+            throw new InvalidArgumentException('Engine name cannot be empty');
+        }
         if (\filter_var($url, \FILTER_VALIDATE_URL) === false) {
             throw new InvalidArgumentException('Invalid URL: ' . $url);
         }

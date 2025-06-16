@@ -47,6 +47,17 @@ final class SearchEnginesTest extends TestCase
         $url = 'https://foo.tld/?q=';
         $this->searchEngines->setEngine('foo', $url);
         self::assertSame($url, $this->searchEngines->getUrl($name));
+    }
+
+    public function testSetEngineWithEmptyName() : void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Engine name cannot be empty');
+        $this->searchEngines->setEngine('', 'foo.com');
+    }
+
+    public function testSetEngineWithInvalidUrl() : void
+    {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid URL: foo.com');
         $this->searchEngines->setEngine('foo', 'foo.com');
