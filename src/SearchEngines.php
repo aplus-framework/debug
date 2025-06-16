@@ -44,6 +44,8 @@ class SearchEngines
      * @return array<string,string>
      *
      * @deprecated since version 4.5, use getEngines() instead
+     *
+     * @codeCoverageIgnore
      */
     #[Deprecated(
         reason: 'since version 4.5, use getEngines() instead',
@@ -68,6 +70,8 @@ class SearchEngines
 
     /**
      * @deprecated since version 4.5, use setEngine() instead
+     *
+     * @codeCoverageIgnore
      */
     #[Deprecated(
         reason: 'since version 4.5, use setEngine() instead',
