@@ -33,7 +33,7 @@ echo $contents;
                 <div class="collector-default">
                     <p>Running<?=
                         class_exists('Aplus')
-                            ? ' Aplus ' . Debugger::roundVersion(Aplus::VERSION)
+                            ? ' <a href="https://aplus-framework.com" target="_blank" class="aplus-link">Aplus</a> ' . Debugger::roundVersion(Aplus::VERSION)
                             : '' ?> on <?= \PHP_OS_FAMILY ?> with PHP
                         <?= Debugger::roundVersion(\PHP_VERSION) ?>.
                     </p>
