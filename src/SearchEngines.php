@@ -46,11 +46,15 @@ class SearchEngines
      *
      * @param string|null $current Set the current search engine name or null to
      * use the default
+     * @param array<string,string> $engines Custom search engines
      */
-    public function __construct(?string $current = null)
+    public function __construct(?string $current = null, array $engines = [])
     {
         if (isset($current)) {
             $this->setCurrent($current);
+        }
+        if ($engines) {
+            $this->setEngines($engines);
         }
     }
 

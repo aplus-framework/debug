@@ -30,6 +30,10 @@ final class SearchEnginesTest extends TestCase
     {
         $searchEngines = new SearchEngines('bing');
         self::assertSame('bing', $searchEngines->getCurrent());
+        self::assertArrayNotHasKey('foo', $searchEngines->getEngines());
+        $searchEngines = new SearchEngines(engines: ['foo' => 'https://foo.com']);
+        self::assertSame('google', $searchEngines->getCurrent());
+        self::assertArrayHasKey('foo', $searchEngines->getEngines());
     }
 
     public function testGetEngines() : void
