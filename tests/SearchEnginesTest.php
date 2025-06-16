@@ -63,6 +63,21 @@ final class SearchEnginesTest extends TestCase
         $this->searchEngines->setEngine('foo', 'foo.com');
     }
 
+    public function testSetEngines() : void
+    {
+        $engines = $this->searchEngines->getEngines();
+        self::assertSame('https://www.google.com/search?q=', $engines['google']);
+        self::assertArrayHasKey('google', $engines);
+        self::assertArrayNotHasKey('foo', $engines);
+        $this->searchEngines->setEngines([
+            'foo' => 'https://foo.com',
+            'google' => 'https://bar.com',
+        ]);
+        $engines = $this->searchEngines->getEngines();
+        self::assertSame('https://foo.com', $engines['foo']);
+        self::assertSame('https://bar.com', $engines['google']);
+    }
+
     public function testGetUrl() : void
     {
         self::assertIsString($this->searchEngines->getUrl('google'));

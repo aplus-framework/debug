@@ -129,6 +129,19 @@ class SearchEngines
     }
 
     /**
+     * Set multiple search engines at once.
+     *
+     * @param array<string,string> $engines
+     */
+    public function setEngines(array $engines) : static
+    {
+        foreach ($engines as $name => $url) {
+            $this->setEngine($name, $url);
+        }
+        return $this;
+    }
+
+    /**
      * Returns the base URL of an engine; throws exception if it does not exist.
      *
      * @param string $name The search engine name
