@@ -10,6 +10,7 @@
 namespace Framework\Debug;
 
 use InvalidArgumentException;
+use JetBrains\PhpStorm\Deprecated;
 
 /**
  * Class SearchEngines.
@@ -41,14 +42,35 @@ class SearchEngines
 
     /**
      * @return array<string,string>
+     *
+     * @deprecated since version 4.5, use getEngines() instead
      */
+    #[Deprecated(
+        reason: 'since version 4.5, use getEngines() instead',
+        replacement: '%class%->getEngines()'
+    )]
     public function getAll() : array
     {
+        \trigger_error(
+            'This method is deprecated, use getEngines() instead',
+            \E_USER_DEPRECATED
+        );
         return $this->engines;
     }
 
+    /**
+     * @deprecated since version 4.5, use setEngine() instead
+     */
+    #[Deprecated(
+        reason: 'since version 4.5, use setEngine() instead',
+        replacement: '%class%->setEngine(%parameter0%, %parameter1%)'
+    )]
     public function add(string $name, string $url) : static
     {
+        \trigger_error(
+            'This method is deprecated, use setEngine() instead',
+            \E_USER_DEPRECATED
+        );
         $this->engines[$name] = $url;
         return $this;
     }
