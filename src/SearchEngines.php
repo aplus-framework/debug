@@ -116,7 +116,7 @@ class SearchEngines
      */
     public function setEngine(string $name, string $url) : static
     {
-        if (!\filter_var($url, \FILTER_VALIDATE_URL)) {
+        if (\filter_var($url, \FILTER_VALIDATE_URL) === false) {
             throw new InvalidArgumentException('Invalid URL: ' . $url);
         }
         $this->engines[$name] = $url;
