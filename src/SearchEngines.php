@@ -59,6 +59,14 @@ class SearchEngines
     }
 
     /**
+     * @return array<string,string>
+     */
+    public function getEngines() : array
+    {
+        return $this->engines;
+    }
+
+    /**
      * @deprecated since version 4.5, use setEngine() instead
      */
     #[Deprecated(
@@ -71,6 +79,15 @@ class SearchEngines
             'This method is deprecated, use setEngine() instead',
             \E_USER_DEPRECATED
         );
+        $this->engines[$name] = $url;
+        return $this;
+    }
+
+    public function setEngine(string $name, string $url) : static
+    {
+        if (!\filter_var($url, \FILTER_VALIDATE_URL)) {
+            throw new InvalidArgumentException('Invalid URL: ' . $url);
+        }
         $this->engines[$name] = $url;
         return $this;
     }
