@@ -226,6 +226,18 @@ final class ExceptionHandlerTest extends TestCase
         self::assertFalse($exceptions->isShowingLogId());
     }
 
+    public function testJsonFlags() : void
+    {
+        $exceptions = new ExceptionHandler();
+        self::assertSame(
+            \JSON_THROW_ON_ERROR | \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE,
+            $exceptions->getJsonFlags()
+        );
+        $flags = \JSON_PRETTY_PRINT | \JSON_OBJECT_AS_ARRAY;
+        $exceptions->setJsonFlags($flags);
+        self::assertSame($flags, $exceptions->getJsonFlags());
+    }
+
     /**
      * @return array<array<string>>
      */

@@ -6,7 +6,11 @@
         <exclude name="StaticAccess"/>
     </rule>
     <!-- codesize -->
-    <rule ref="rulesets/codesize.xml"/>
+    <rule ref="rulesets/codesize.xml/ExcessiveClassComplexity">
+        <properties>
+            <property name="maximum" value="75"/>
+        </properties>
+    </rule>
     <!-- controversial -->
     <rule ref="rulesets/controversial.xml">
         <exclude name="Superglobals"/>

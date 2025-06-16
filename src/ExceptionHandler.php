@@ -41,6 +41,9 @@ class ExceptionHandler
     protected bool $testing = false;
     protected SearchEngines $searchEngines;
     protected bool $showLogId = true;
+    protected int $jsonFlags = \JSON_THROW_ON_ERROR
+    | \JSON_UNESCAPED_SLASHES
+    | \JSON_UNESCAPED_UNICODE;
 
     /**
      * ExceptionHandler constructor.
@@ -246,7 +249,18 @@ class ExceptionHandler
                 'reason' => 'Internal Server Error',
             ],
             'data' => $data,
-        ], \JSON_THROW_ON_ERROR | \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE);
+        ], $this->getJsonFlags());
+    }
+
+    public function getJsonFlags() : int
+    {
+        return $this->jsonFlags;
+    }
+
+    public function setJsonFlags(int $flags) : static
+    {
+        $this->jsonFlags = $flags;
+        return $this;
     }
 
     protected function sendHeaders() : void
