@@ -131,6 +131,8 @@ class SearchEngines
     /**
      * Set multiple search engines at once.
      *
+     * @since 4.5
+     *
      * @param array<string,string> $engines
      */
     public function setEngines(array $engines) : static
