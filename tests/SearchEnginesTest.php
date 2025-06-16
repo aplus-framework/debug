@@ -32,21 +32,24 @@ final class SearchEnginesTest extends TestCase
         self::assertSame('bing', $searchEngines->getCurrent());
     }
 
-    public function testGetAll() : void
+    public function testGetEngines() : void
     {
-        foreach ($this->searchEngines->getAll() as $name => $link) {
+        foreach ($this->searchEngines->getEngines() as $name => $link) {
             self::assertIsString($name);
             self::assertIsString($link);
             self::assertStringStartsWith('https://', $link);
         }
     }
 
-    public function testAdd() : void
+    public function testSetEngine() : void
     {
         $name = 'foo';
         $url = 'https://foo.tld/?q=';
-        $this->searchEngines->add('foo', $url);
+        $this->searchEngines->setEngine('foo', $url);
         self::assertSame($url, $this->searchEngines->getUrl($name));
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid URL: foo.com');
+        $this->searchEngines->setEngine('foo', 'foo.com');
     }
 
     public function testGetUrl() : void
