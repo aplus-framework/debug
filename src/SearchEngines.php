@@ -61,6 +61,8 @@ class SearchEngines
     }
 
     /**
+     * @since 4.5
+     *
      * @return array<string,string>
      */
     public function getEngines() : array
@@ -87,6 +89,14 @@ class SearchEngines
         return $this;
     }
 
+    /**
+     * @since 4.5
+     *
+     * @param string $name
+     * @param string $url
+     *
+     * @return static
+     */
     public function setEngine(string $name, string $url) : static
     {
         if (!\filter_var($url, \FILTER_VALIDATE_URL)) {

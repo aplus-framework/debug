@@ -60,12 +60,27 @@ class Debugger
         return $this;
     }
 
+    /**
+     * @since 4.5
+     *
+     * @param string $name
+     * @param mixed $value
+     *
+     * @return static
+     */
     public function setOption(string $name, mixed $value) : static
     {
         $this->options[$name] = $value;
         return $this;
     }
 
+    /**
+     * @since 4.5
+     *
+     * @param string $name
+     *
+     * @return mixed
+     */
     public function getOption(string $name) : mixed
     {
         return $this->options[$name] ?? null;
