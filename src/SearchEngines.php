@@ -20,6 +20,9 @@ use JetBrains\PhpStorm\Deprecated;
 class SearchEngines
 {
     /**
+     * Associative array with search engine names as key and their base URLs as
+     * value.
+     *
      * @var array<string,string>
      */
     protected array $engines = [
@@ -31,8 +34,18 @@ class SearchEngines
         'yahoo' => 'https://search.yahoo.com/search?p=',
         'yandex' => 'https://yandex.com/search/?text=',
     ];
+    /**
+     * Name of currently selected search engine.
+     *
+     * @var string
+     */
     protected string $current = 'google';
 
+    /**
+     * Instantiate the class and allows you to define the current search engine.
+     *
+     * @param string|null $current
+     */
     public function __construct(?string $current = null)
     {
         if (isset($current)) {
@@ -61,6 +74,8 @@ class SearchEngines
     }
 
     /**
+     * Returns the array of search engines.
+     *
      * @since 4.5
      *
      * @return array<string,string>
@@ -90,6 +105,8 @@ class SearchEngines
     }
 
     /**
+     * Sets a search engine.
+     *
      * @since 4.5
      *
      * @param string $name
@@ -106,6 +123,13 @@ class SearchEngines
         return $this;
     }
 
+    /**
+     * Returns the base URL of an engine; throws exception if it does not exist.
+     *
+     * @param string $name
+     *
+     * @return string
+     */
     public function getUrl(string $name) : string
     {
         if (!isset($this->engines[$name])) {
@@ -114,6 +138,13 @@ class SearchEngines
         return $this->engines[$name];
     }
 
+    /**
+     * Sets the current search engine; validates existence.
+     *
+     * @param string $name
+     *
+     * @return static
+     */
     public function setCurrent(string $name) : static
     {
         if (!isset($this->engines[$name])) {
@@ -123,16 +154,34 @@ class SearchEngines
         return $this;
     }
 
+    /**
+     * Returns the name of the current engine.
+     *
+     * @return string
+     */
     public function getCurrent() : string
     {
         return $this->current;
     }
 
+    /**
+     * Returns the URL of the current engine.
+     *
+     * @return string
+     */
     public function getCurrentUrl() : string
     {
         return $this->getUrl($this->getCurrent());
     }
 
+    /**
+     * Generates a search link with the given query, using the current engine or a specific name.
+     *
+     * @param string $query
+     * @param string|null $name
+     *
+     * @return string
+     */
     public function makeLink(string $query, ?string $name = null) : string
     {
         $link = isset($name) ? $this->getUrl($name) : $this->getCurrentUrl();
