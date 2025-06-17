@@ -49,8 +49,8 @@ echo $contents;
                         }
                         ?>
                         <?php if ($hasInfoLink): ?>
-                            <a href="<?= $options['info_link']['href'] ?>"
-                               target="_blank"><?= $options['info_link']['text'] ?>
+                            <a href="<?= htmlentities($options['info_link']['href']) ?>"
+                               target="_blank"><?= htmlentities($options['info_link']['text']) ?>
                             </a>
                         <?php else: ?>
                             <a href="https://aplus-framework.com" target="_blank">aplus-framework.com</a>
