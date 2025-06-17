@@ -54,7 +54,7 @@ class SearchEngines
             $this->setCurrent($current);
         }
         if ($engines) {
-            $this->setEngines($engines);
+            $this->setMany($engines);
         }
     }
 
@@ -120,7 +120,7 @@ class SearchEngines
      *
      * @return static
      */
-    public function setEngine(string $name, string $url) : static
+    public function set(string $name, string $url) : static
     {
         if (\trim($name) === '') {
             throw new InvalidArgumentException('Engine name cannot be empty');
@@ -139,10 +139,10 @@ class SearchEngines
      *
      * @param array<string,string> $engines
      */
-    public function setEngines(array $engines) : static
+    public function setMany(array $engines) : static
     {
         foreach ($engines as $name => $url) {
-            $this->setEngine($name, $url);
+            $this->set($name, $url);
         }
         return $this;
     }

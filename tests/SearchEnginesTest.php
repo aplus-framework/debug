@@ -45,35 +45,35 @@ final class SearchEnginesTest extends TestCase
         }
     }
 
-    public function testSetEngine() : void
+    public function testSet() : void
     {
         $name = 'foo';
         $url = 'https://foo.tld/?q=';
-        $this->searchEngines->setEngine('foo', $url);
+        $this->searchEngines->set('foo', $url);
         self::assertSame($url, $this->searchEngines->getUrl($name));
     }
 
-    public function testSetEngineWithEmptyName() : void
+    public function testSetWithEmptyName() : void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Engine name cannot be empty');
-        $this->searchEngines->setEngine('', 'foo.com');
+        $this->searchEngines->set('', 'foo.com');
     }
 
-    public function testSetEngineWithInvalidUrl() : void
+    public function testSetWithInvalidUrl() : void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid URL: foo.com');
-        $this->searchEngines->setEngine('foo', 'foo.com');
+        $this->searchEngines->set('foo', 'foo.com');
     }
 
-    public function testSetEngines() : void
+    public function testSetMany() : void
     {
         $engines = $this->searchEngines->getEngines();
         self::assertSame('https://www.google.com/search?q=', $engines['google']);
         self::assertArrayHasKey('google', $engines);
         self::assertArrayNotHasKey('foo', $engines);
-        $this->searchEngines->setEngines([
+        $this->searchEngines->setMany([
             'foo' => 'https://foo.com',
             'google' => 'https://bar.com',
         ]);
