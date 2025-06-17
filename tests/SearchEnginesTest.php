@@ -30,15 +30,15 @@ final class SearchEnginesTest extends TestCase
     {
         $searchEngines = new SearchEngines('bing');
         self::assertSame('bing', $searchEngines->getCurrent());
-        self::assertArrayNotHasKey('foo', $searchEngines->getEngines());
+        self::assertArrayNotHasKey('foo', $searchEngines->getAll());
         $searchEngines = new SearchEngines(engines: ['foo' => 'https://foo.com']);
         self::assertSame('google', $searchEngines->getCurrent());
-        self::assertArrayHasKey('foo', $searchEngines->getEngines());
+        self::assertArrayHasKey('foo', $searchEngines->getAll());
     }
 
     public function testGetEngines() : void
     {
-        foreach ($this->searchEngines->getEngines() as $name => $link) {
+        foreach ($this->searchEngines->getAll() as $name => $link) {
             self::assertIsString($name);
             self::assertIsString($link);
             self::assertStringStartsWith('https://', $link);
@@ -69,7 +69,7 @@ final class SearchEnginesTest extends TestCase
 
     public function testSetMany() : void
     {
-        $engines = $this->searchEngines->getEngines();
+        $engines = $this->searchEngines->getAll();
         self::assertSame('https://www.google.com/search?q=', $engines['google']);
         self::assertArrayHasKey('google', $engines);
         self::assertArrayNotHasKey('foo', $engines);
@@ -77,7 +77,7 @@ final class SearchEnginesTest extends TestCase
             'foo' => 'https://foo.com',
             'google' => 'https://bar.com',
         ]);
-        $engines = $this->searchEngines->getEngines();
+        $engines = $this->searchEngines->getAll();
         self::assertSame('https://foo.com', $engines['foo']);
         self::assertSame('https://bar.com', $engines['google']);
     }

@@ -59,34 +59,12 @@ class SearchEngines
     }
 
     /**
-     * @return array<string,string>
-     *
-     * @deprecated since version 4.5, use getEngines() instead
-     *
-     * @codeCoverageIgnore
-     */
-    #[Deprecated(
-        reason: 'since version 4.5, use getEngines() instead',
-        replacement: '%class%->getEngines()'
-    )]
-    public function getAll() : array
-    {
-        \trigger_error(
-            'This method is deprecated, use getEngines() instead',
-            \E_USER_DEPRECATED
-        );
-        return $this->engines;
-    }
-
-    /**
      * Returns the array of search engines.
-     *
-     * @since 4.5
      *
      * @return array<string,string> search engine names as keys and URLs as
      * values
      */
-    public function getEngines() : array
+    public function getAll() : array
     {
         return $this->engines;
     }
