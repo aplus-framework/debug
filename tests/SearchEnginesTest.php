@@ -36,7 +36,7 @@ final class SearchEnginesTest extends TestCase
         self::assertArrayHasKey('foo', $searchEngines->getAll());
     }
 
-    public function testGetEngines() : void
+    public function testGetAll() : void
     {
         foreach ($this->searchEngines->getAll() as $name => $link) {
             self::assertIsString($name);
