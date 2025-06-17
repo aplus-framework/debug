@@ -11,6 +11,7 @@
     <meta name="robots" content="noindex">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= $handler->getLanguage()->render('debug', 'exceptionTitle') ?></title>
+    <link rel="shortcut icon" href="data:image/png;base64,<?= base64_encode((string) file_get_contents(__DIR__ . '/favicons/production.png')) ?>">
     <style>
         body {
             background: #000;

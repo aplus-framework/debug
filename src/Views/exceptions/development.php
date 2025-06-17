@@ -16,6 +16,7 @@ use Framework\Helpers\ArraySimple;
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= $handler->getLanguage()->render('debug', 'exception') ?>: <?=
         htmlentities($exception->getMessage()) ?></title>
+    <link rel="shortcut icon" href="data:image/png;base64,<?= base64_encode((string) file_get_contents(__DIR__ . '/favicons/development.png')) ?>">
     <style>
         <?= file_get_contents(__DIR__ . '/../assets/prism-aplus.css') ?>
     </style>
