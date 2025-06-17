@@ -284,7 +284,7 @@ class ExceptionHandler
         $message .= $language->render('debug', 'line')
             . ': ' . $exception->getLine() . \PHP_EOL;
         $message .= $language->render('debug', 'trace')
-            . ': ' . $exception->getTraceAsString();
+            . ': ' . \PHP_EOL . $exception->getTraceAsString();
         CLI::error($message, $this->testing ? null : 1);
     }
 
