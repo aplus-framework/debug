@@ -70,18 +70,18 @@ class SearchEngines
     }
 
     /**
-     * @deprecated since version 4.5, use setEngine() instead
+     * @deprecated since version 4.5, use set() instead
      *
      * @codeCoverageIgnore
      */
     #[Deprecated(
-        reason: 'since version 4.5, use setEngine() instead',
-        replacement: '%class%->setEngine(%parameter0%, %parameter1%)'
+        reason: 'since version 4.5, use set() instead',
+        replacement: '%class%->set(%parameter0%, %parameter1%)'
     )]
     public function add(string $name, string $url) : static
     {
         \trigger_error(
-            'This method is deprecated, use setEngine() instead',
+            'This method is deprecated, use set() instead',
             \E_USER_DEPRECATED
         );
         $this->engines[$name] = $url;
