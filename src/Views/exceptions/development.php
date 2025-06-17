@@ -181,9 +181,11 @@ use Framework\Helpers\ArraySimple;
             font-size: 14px;
             border: 1px solid #fff;
             border-radius: 4px;
-            padding: 5px 10px;
-            text-decoration: none;
-            margin-left: 20px;
+            padding: 5px;
+            margin-top: 20px;
+            display: block;
+            width: 80px;
+            text-align: center;
         }
 
         .search-button:hover {
@@ -196,7 +198,7 @@ use Framework\Helpers\ArraySimple;
         }
 
         .search-button-icon svg {
-            height: 16px;
+            height: 14px;
         }
     </style>
 </head>
