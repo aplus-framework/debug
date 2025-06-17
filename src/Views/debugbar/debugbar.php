@@ -8,6 +8,19 @@ use Framework\Debug\Debugger;
  * @var array<string,mixed> $options
  */
 $infoIcon = file_get_contents(__DIR__ . '/icons/info.svg');
+$hasInfoLink = isset($options['info_link']);
+if ($hasInfoLink) {
+    if (!isset($options['info_link']['href']) || !isset($options['info_link']['text'])) {
+        throw new LogicException('Info link must contain "href" and "text" keys');
+    }
+}
+$iconPath = __DIR__ . '/icon.png';
+if (isset($options['icon_path'])) {
+    $iconPath = $options['icon_path'];
+}
+if (!is_file($iconPath)) {
+    throw new LogicException('Icon not found: ' . $iconPath);
+}
 ?>
 <!-- Aplus Framework Debugbar start -->
 <style>
@@ -38,16 +51,6 @@ echo $contents;
                         <?= Debugger::roundVersion(\PHP_VERSION) ?>.
                     </p>
                     <p>★
-                        <?php
-                        $hasInfoLink = isset($options['info_link']);
-                        if ($hasInfoLink) {
-                            if(!isset($options['info_link']['href'])
-                                || !isset($options['info_link']['text'])
-                            ) {
-                                throw new LogicException('Info link must contain "href" and "text" keys');
-                            }
-                        }
-                        ?>
                         <?php if ($hasInfoLink): ?>
                             <a href="<?= htmlentities($options['info_link']['href']) ?>"
                                target="_blank"><?= htmlentities($options['info_link']['text']) ?>
@@ -138,15 +141,6 @@ endif
     </div>
     <div class="toolbar">
         <div class="icon">
-            <?php
-            $iconPath = __DIR__ . '/icon.png';
-            if (isset($options['icon_path'])) {
-                $iconPath = $options['icon_path'];
-            }
-            if (!is_file($iconPath)) {
-                throw new LogicException('Icon not found: ' . $iconPath);
-            }
-            ?>
             <img src="data:image/png;base64,<?= base64_encode((string) file_get_contents($iconPath)) ?>" alt="A+" width="32" height="32">
         </div>
         <div class="collections">
