@@ -159,10 +159,6 @@ use Framework\Helpers\ArraySimple;
             white-space: pre-wrap !important;
         }
 
-        tr:hover {
-            background: #111;
-        }
-
         thead th {
             background: #111;
             border-bottom: 2px solid #222;
@@ -176,6 +172,11 @@ use Framework\Helpers\ArraySimple;
             background: #111;
             min-width: 40%;
             text-align: right;
+        }
+
+        tbody tr:hover th,
+        tr:hover {
+            background: #222;
         }
 
         .search-button {
