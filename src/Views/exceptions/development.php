@@ -308,11 +308,11 @@ if ($traces
     <div class="header">Input:</div>
     <?php
     $input = [
-        'ENV' => ArraySimple::convert($_ENV),
-        'SERVER' => ArraySimple::convert($_SERVER),
-        'GET' => ArraySimple::convert($_GET),
-        'POST' => ArraySimple::convert($_POST),
-        'COOKIE' => ArraySimple::convert($_COOKIE),
+        '$_ENV' => ArraySimple::convert($_ENV),
+        '$_SERVER' => ArraySimple::convert($_SERVER),
+        '$_GET' => ArraySimple::convert($_GET),
+        '$_POST' => ArraySimple::convert($_POST),
+        '$_COOKIE' => ArraySimple::convert($_COOKIE),
     ];
 foreach ($input as &$item) {
     ksort($item);
