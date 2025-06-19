@@ -336,7 +336,7 @@ unset($item);
             <?php foreach ($values as $field => $value) : ?>
                 <tr>
                     <th><?= htmlentities($field) ?></th>
-                    <td><?= htmlentities(is_array($value) ? print_r($value, true) : $value) ?></td>
+                    <td><?= htmlentities($value) ?></td>
                 </tr>
             <?php endforeach ?>
             </tbody>
