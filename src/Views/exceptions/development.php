@@ -177,6 +177,7 @@ use Framework\Helpers\ArraySimple;
         tbody tr:hover th,
         tr:hover {
             background: #222;
+            cursor: text;
         }
 
         .search-button {
