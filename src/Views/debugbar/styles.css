@@ -405,6 +405,14 @@
     width: 14px;
 }
 
+.aplus-debug .text-success {
+    color: green;
+}
+
+.aplus-debug .text-error {
+    color: red;
+}
+
 .aplus-debug.inverted {
     filter: invert(1);
 }
