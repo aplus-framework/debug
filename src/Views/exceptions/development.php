@@ -312,6 +312,7 @@ if ($traces
         '$_SERVER' => ArraySimple::convert($_SERVER),
         '$_GET' => ArraySimple::convert($_GET),
         '$_POST' => ArraySimple::convert($_POST),
+        '$_FILES' => ArraySimple::convert(ArraySimple::files()),
         '$_COOKIE' => ArraySimple::convert($_COOKIE),
     ];
 foreach ($input as &$item) {
