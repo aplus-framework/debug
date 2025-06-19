@@ -184,10 +184,10 @@ use Framework\Helpers\ArraySimple;
             font-size: 14px;
             border: 1px solid #fff;
             border-radius: 4px;
-            padding: 5px;
+            padding: 5px 10px;
             margin-top: 20px;
             display: block;
-            width: 80px;
+            width: fit-content;
             text-align: center;
         }
 
