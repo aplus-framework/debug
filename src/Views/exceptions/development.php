@@ -207,6 +207,21 @@ $lang = static function (string $line) use ($handler) : string {
         .search-button-icon svg {
             height: 14px;
         }
+
+        .powered-by {
+            text-align: center;
+            margin: 40px auto;
+            font-size: 14px;
+        }
+
+        .powered-by a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .powered-by a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body class="aplus-debug">
@@ -382,6 +397,9 @@ if ($log): ?>
     </section>
 <?php
 endif ?>
+<p class="powered-by">Powered by
+    <a href="https://aplus-framework.com/packages/debug" target="_blank">Aplus Framework Debug Library</a>
+</p>
 <script>
     <?= file_get_contents(__DIR__ . '/../assets/prism.js') ?>
 </script>
