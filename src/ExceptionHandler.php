@@ -251,7 +251,7 @@ class ExceptionHandler
         echo \json_encode([
             'status' => [
                 'code' => 500,
-                'reason' => 'Internal Server Error',
+                'reason' => $this->getLanguage()->render('debug', 'internalServerError'),
             ],
             'data' => $data,
         ], $this->getJsonFlags());

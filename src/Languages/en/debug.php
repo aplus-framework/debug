@@ -15,6 +15,7 @@ return [
     'trace' => 'Trace',
     'exceptionTitle' => 'Error 500 - Internal Server Error',
     'exceptionDescription' => 'Something went wrong. Please, back later.',
+    'internalServerError' => 'Internal Server Error',
     'search' => 'Search',
     'log' => 'Log',
     'date' => 'Date',

@@ -15,6 +15,7 @@ return [
     'trace' => 'Rastro',
     'exceptionTitle' => 'Erro 500 - Erro Interno no Servidor',
     'exceptionDescription' => 'Algo deu errado. Por favor, volte mais tarde.',
+    'internalServerError' => 'Erro Interno no Servidor',
     'search' => 'Pesquisar',
     'log' => 'Log',
     'date' => 'Data',
