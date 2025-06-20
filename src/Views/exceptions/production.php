@@ -25,18 +25,35 @@
         h1 {
             color: #fff;
         }
+
+        .log-id {
+            background: #222;
+            border-radius: 4px;
+            cursor: copy;
+            padding: 5px 10px;
+        }
     </style>
 </head>
 <body>
 <h1><?= $handler->getLanguage()->render('debug', 'exceptionTitle') ?></h1>
 <p><?= $handler->getLanguage()->render('debug', 'exceptionDescription') ?></p>
+
 <?php
-if ($handler->isShowingLogId()) {
+if ($handler->isShowingLogId()) :
     $log = $handler->getLogger()?->getLastLog();
-    if ($log) {
-        echo '<p>Log Id: ' . htmlentities($log->id) . '</p>';
-    }
-}
+    if ($log):
+        ?>
+        <p>Log Id: <span class="log-id"><?= htmlentities($log->id) ?></span></p>
+        <script>
+            document.querySelector('.log-id').onclick = function () {
+                navigator.clipboard.writeText(this.innerText);
+                alert("<?= $handler->getLanguage()->render('debug', 'logIdCopied') ?>");
+            }
+        </script>
+    <?php
+    endif;
+endif;
 ?>
+
 </body>
 </html>
