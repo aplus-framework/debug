@@ -94,6 +94,7 @@ final class ExceptionHandlerTest extends TestCase
         self::assertSame(500, \http_response_code());
         self::assertSame([
             'Content-Type: application/json; charset=UTF-8',
+            'Content-Language: en',
         ], xdebug_get_headers());
         $contents = \json_decode($contents, true);
         self::assertSame($contents, [
@@ -123,6 +124,7 @@ final class ExceptionHandlerTest extends TestCase
         self::assertSame(500, \http_response_code());
         self::assertSame([
             'Content-Type: application/json; charset=UTF-8',
+            'Content-Language: en',
         ], xdebug_get_headers());
         $contents = \json_decode($contents, true);
         self::assertSame($contents['status'], [
@@ -149,6 +151,7 @@ final class ExceptionHandlerTest extends TestCase
         self::assertSame(500, \http_response_code());
         self::assertSame([
             'Content-Type: text/html; charset=UTF-8',
+            'Content-Language: en',
         ], xdebug_get_headers());
         self::assertStringContainsString(
             'Error 500 - Internal Server Error',
@@ -174,6 +177,7 @@ final class ExceptionHandlerTest extends TestCase
         self::assertSame(500, \http_response_code());
         self::assertSame([
             'Content-Type: text/html; charset=UTF-8',
+            'Content-Language: en',
         ], xdebug_get_headers());
         self::assertStringContainsString(
             'Error 500 - Internal Server Error',

@@ -275,6 +275,7 @@ class ExceptionHandler
             $contentType = 'application/json';
         }
         \header('Content-Type: ' . $contentType . '; charset=UTF-8');
+        \header('Content-Language: ' . $this->getLanguage()->getCurrentLocale());
     }
 
     protected function cliError(Throwable $exception) : void
