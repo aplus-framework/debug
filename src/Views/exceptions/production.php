@@ -43,9 +43,9 @@ if ($handler->isShowingLogId()) :
     $log = $handler->getLogger()?->getLastLog();
     if ($log):
         ?>
-        <p>Log Id: <span class="log-id" title="<?= $lang->render('debug', 'clickToCopyLogId') ?>">
-                <?= htmlentities($log->id) ?>
-            </span>
+        <p><?= $lang->render('debug', 'logId') ?>: <span class="log-id"
+                title="<?= $lang->render('debug', 'clickToCopyLogId') ?>"
+            ><?= htmlentities($log->id) ?></span>
         </p>
         <script>
             document.querySelector('.log-id').onclick = function () {

@@ -16,6 +16,7 @@ return [
     'exceptionTitle' => 'Error 500 - Error Interno del Servidor',
     'exceptionDescription' => 'Algo salió mal. Por favor vuelve más tarde.',
     'search' => 'Buscar',
+    'logId' => 'ID de registro',
     'logIdCopied' => '¡ID de registro copiado!',
     'clickToCopyLogId' => 'Haga clic para copiar el ID de registro',
 ];
