@@ -286,6 +286,10 @@ class ExceptionHandler
             . ': ' . $exception->getLine() . \PHP_EOL;
         $message .= $language->render('debug', 'trace')
             . ': ' . \PHP_EOL . $exception->getTraceAsString();
+        $log = $this->getLog();
+        if ($log) {
+            $message .= \PHP_EOL . $language->render('debug', 'logId') . ': ' . $log->id;
+        }
         CLI::error($message, $this->testing ? null : 1);
     }
 
