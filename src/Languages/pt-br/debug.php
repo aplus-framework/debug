@@ -12,7 +12,7 @@ return [
     'message' => 'Mensagem',
     'file' => 'Arquivo',
     'line' => 'Linha',
-    'trace' => 'Trace',
+    'trace' => 'Rastro',
     'exceptionTitle' => 'Erro 500 - Erro Interno no Servidor',
     'exceptionDescription' => 'Algo deu errado. Por favor, volte mais tarde.',
     'search' => 'Pesquisar',
