@@ -180,7 +180,7 @@ $lang = static function (string $line) use ($handler) : string {
 
         tbody tr:hover th,
         tr:hover {
-            background: #222;
+            background: #333;
             cursor: text;
         }
 
