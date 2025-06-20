@@ -12,12 +12,22 @@ namespace Tests\Debug;
 use Framework\CLI\Streams\Stderr;
 use Framework\Debug\ExceptionHandler;
 use Framework\Language\Language;
+use Framework\Log\Log;
+use Framework\Log\Logger;
 use Framework\Log\Loggers\FileLogger;
 use Framework\Log\Loggers\SysLogger;
 use PHPUnit\Framework\TestCase;
 
 final class ExceptionHandlerTest extends TestCase
 {
+    protected Logger $logger;
+
+    protected function getLogger() : Logger
+    {
+        return $this->logger
+            ??= new FileLogger(\sys_get_temp_dir() . '/tests.log');
+    }
+
     public function testEnvironments() : void
     {
         $exceptions = new ExceptionHandler(ExceptionHandler::DEVELOPMENT);
@@ -67,8 +77,8 @@ final class ExceptionHandlerTest extends TestCase
 
     public function testCliException() : void
     {
-        Stderr::init();
         $exceptions = new ExceptionHandlerMock();
+        Stderr::init();
         $exceptions->exceptionHandler(new \Exception('Foo'));
         $contents = Stderr::getContents();
         self::assertStringContainsString('Exception: ', $contents);
@@ -76,6 +86,16 @@ final class ExceptionHandlerTest extends TestCase
         self::assertStringContainsString('File: ', $contents);
         self::assertStringContainsString('Line: ', $contents);
         self::assertStringContainsString('Trace: ', $contents);
+        self::assertStringNotContainsString('Log id: ', $contents);
+    }
+
+    public function testCliExceptionWithLog() : void
+    {
+        $exceptions = new ExceptionHandlerMock(logger: $this->getLogger());
+        Stderr::init();
+        $exceptions->exceptionHandler(new \Exception('Foo'));
+        $contents = Stderr::getContents();
+        self::assertStringContainsString('Log id: ', $contents);
     }
 
     /**
@@ -139,6 +159,49 @@ final class ExceptionHandlerTest extends TestCase
     }
 
     /**
+     * @dataProvider jsonHeadersProvider
+     *
+     * @runInSeparateProcess
+     */
+    public function testJsonExceptionOnProductionWithLog(string $header, string $value) : void
+    {
+        $_SERVER[$header] = $value;
+        $exceptions = new ExceptionHandlerMock(logger: $this->getLogger());
+        $exceptions->cli = false;
+        \ob_start();
+        $exceptions->exceptionHandler(new \Exception('Foo'));
+        $contents = (string) \ob_get_clean();
+        $contents = \json_decode($contents, true);
+        self::assertSame($contents, [
+            'status' => [
+                'code' => 500,
+                'reason' => 'Internal Server Error',
+            ],
+            'data' => [
+                'message' => 'Something went wrong. Please, back later.',
+                'log_id' => $this->getLogger()->getLastLog()->id,
+            ],
+        ]);
+    }
+
+    /**
+     * @dataProvider jsonHeadersProvider
+     *
+     * @runInSeparateProcess
+     */
+    public function testJsonExceptionOnDevelopmentWithLog(string $header, string $value) : void
+    {
+        $_SERVER[$header] = $value;
+        $exceptions = new ExceptionHandlerMock(ExceptionHandler::DEVELOPMENT, $this->getLogger());
+        $exceptions->cli = false;
+        \ob_start();
+        $exceptions->exceptionHandler(new \Exception('Foo'));
+        $contents = (string) \ob_get_clean();
+        $contents = \json_decode($contents, true);
+        self::assertSame($contents['data']['log_id'], $this->getLogger()->getLastLog()->id);
+    }
+
+    /**
      * @runInSeparateProcess
      */
     public function testExceptionOnProduction() : void
@@ -195,13 +258,12 @@ final class ExceptionHandlerTest extends TestCase
      */
     public function testExceptionWithLogger(string $environment) : void
     {
-        $logger = new FileLogger(\sys_get_temp_dir() . '/tests.log');
-        $exceptions = new ExceptionHandlerMock($environment, $logger);
+        $exceptions = new ExceptionHandlerMock($environment, $this->getLogger());
         $exceptions->cli = false;
         \ob_start();
         $exceptions->exceptionHandler(new \Exception('Foo'));
         \ob_get_clean();
-        self::assertNotEmpty($logger->getLastLog());
+        self::assertNotEmpty($this->getLogger()->getLastLog());
     }
 
     /**
@@ -240,6 +302,19 @@ final class ExceptionHandlerTest extends TestCase
         $flags = \JSON_PRETTY_PRINT | \JSON_OBJECT_AS_ARRAY;
         $exceptions->setJsonFlags($flags);
         self::assertSame($flags, $exceptions->getJsonFlags());
+    }
+
+    public function testGetLog() : void
+    {
+        $exceptions = new ExceptionHandler();
+        self::assertNull($exceptions->getLog());
+        $exceptions = new ExceptionHandler(logger: $this->getLogger());
+        self::assertNull($exceptions->getLog());
+        $this->getLogger()->logCritical('Ooops!');
+        self::assertInstanceOf(Log::class, $exceptions->getLog());
+        self::assertSame('Ooops!', $exceptions->getLog()->message);
+        $exceptions->setShowLogId(false);
+        self::assertNull($exceptions->getLog());
     }
 
     /**
