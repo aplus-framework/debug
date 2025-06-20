@@ -16,6 +16,7 @@ return [
     'exceptionTitle' => 'Erro 500 - Erro Interno no Servidor',
     'exceptionDescription' => 'Algo deu errado. Por favor, volte mais tarde.',
     'search' => 'Pesquisar',
+    'input' => 'Entrada',
     'logId' => 'Id do log',
     'logIdCopied' => 'Id do log copiado!',
     'clickToCopyLogId' => 'Clique para copiar o id do log',

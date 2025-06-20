@@ -307,7 +307,7 @@ if ($traces
     <?php endforeach ?>
 </section>
 <section class="input">
-    <div class="header">Input:</div>
+    <div class="header"><?= $handler->getLanguage()->render('debug', 'input') ?>:</div>
     <?php
     $input = [
         '$_ENV' => ArraySimple::convert($_ENV),

@@ -16,6 +16,7 @@ return [
     'exceptionTitle' => 'Error 500 - Internal Server Error',
     'exceptionDescription' => 'Something went wrong. Please, back later.',
     'search' => 'Search',
+    'input' => 'Input',
     'logId' => 'Log id',
     'logIdCopied' => 'Log id copied!',
     'clickToCopyLogId' => 'Click to copy the log id',
