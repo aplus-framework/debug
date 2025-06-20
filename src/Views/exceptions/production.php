@@ -39,22 +39,20 @@ $lang = $handler->getLanguage();
 <p><?= $lang->render('debug', 'exceptionDescription') ?></p>
 
 <?php
-if ($handler->isShowingLogId()) :
-    $log = $handler->getLogger()?->getLastLog();
-    if ($log):
-        ?>
-        <p><?= $lang->render('debug', 'logId') ?>: <span class="log-id"
-                title="<?= $lang->render('debug', 'clickToCopyLogId') ?>"
-            ><?= htmlentities($log->id) ?></span>
-        </p>
-        <script>
-            document.querySelector('.log-id').onclick = function () {
-                navigator.clipboard.writeText(this.innerText);
-                alert("<?= $lang->render('debug', 'logIdCopied') ?>");
-            }
-        </script>
-    <?php
-    endif;
+$log = $handler->getLog();
+if ($log):
+    ?>
+    <p><?= $lang->render('debug', 'logId') ?>: <span class="log-id"
+            title="<?= $lang->render('debug', 'clickToCopyLogId') ?>"
+        ><?= htmlentities($log->id) ?></span>
+    </p>
+    <script>
+        document.querySelector('.log-id').onclick = function () {
+            navigator.clipboard.writeText(this.innerText);
+            alert("<?= $lang->render('debug', 'logIdCopied') ?>");
+        }
+    </script>
+<?php
 endif;
 ?>
 
