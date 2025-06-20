@@ -244,6 +244,10 @@ class ExceptionHandler
             : [
                 'message' => $this->getLanguage()->render('debug', 'exceptionDescription'),
             ];
+        $log = $this->getLog();
+        if ($log) {
+            $data['log_id'] = $log->id;
+        }
         echo \json_encode([
             'status' => [
                 'code' => 500,
