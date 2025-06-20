@@ -6,6 +6,10 @@
 
 use Framework\Helpers\ArraySimple;
 
+$lang = static function (string $line) use ($handler) : string {
+    return $handler->getLanguage()->render('debug', $line);
+}
+
 ?>
 <!doctype html>
 <html lang="<?= $handler->getLanguage()->getCurrentLocale() ?>" dir="<?= $handler->getLanguage()
@@ -14,7 +18,7 @@ use Framework\Helpers\ArraySimple;
     <meta charset="utf-8">
     <meta name="robots" content="noindex">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= $handler->getLanguage()->render('debug', 'exception') ?>: <?=
+    <title><?= $lang('exception') ?>: <?=
         htmlentities($exception->getMessage()) ?></title>
     <link rel="shortcut icon" href="data:image/png;base64,<?= base64_encode((string) file_get_contents(__DIR__ . '/favicons/development.png')) ?>">
     <style>
@@ -207,9 +211,9 @@ use Framework\Helpers\ArraySimple;
 </head>
 <body class="aplus-debug">
 <header class="top">
-    <small><?= $handler->getLanguage()->render('debug', 'exception') ?>:</small>
+    <small><?= $lang('exception') ?>:</small>
     <h1><?= $exception::class ?></h1>
-    <small><?= $handler->getLanguage()->render('debug', 'message') ?>:</small>
+    <small><?= $lang('message') ?>:</small>
     <h2>
         <?= htmlentities($exception->getMessage()) ?>
         <a href="<?= $handler->getSearchEngines()->makeLink(
@@ -219,22 +223,22 @@ use Framework\Helpers\ArraySimple;
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
                 </svg>
-            </span> <?= $handler->getLanguage()->render('debug', 'search') ?>
+            </span> <?= $lang('search') ?>
         </a>
     </h2>
 </header>
 <section class="file">
     <div>
-        <small><?= $handler->getLanguage()->render('debug', 'file') ?>:</small>
+        <small><?= $lang('file') ?>:</small>
         <h3><?= htmlentities($exception->getFile()) ?></h3>
     </div>
     <div class="line">
-        <small><?= $handler->getLanguage()->render('debug', 'line') ?>:</small>
+        <small><?= $lang('line') ?>:</small>
         <h3><?= $exception->getLine() ?></h3>
     </div>
 </section>
 <section class="trace">
-    <div class="header"><?= $handler->getLanguage()->render('debug', 'trace') ?>:</div>
+    <div class="header"><?= $lang('trace') ?>:</div>
     <?php
     $traces = $exception->getTrace();
 if ($traces
@@ -307,7 +311,7 @@ if ($traces
     <?php endforeach ?>
 </section>
 <section class="input">
-    <div class="header"><?= $handler->getLanguage()->render('debug', 'input') ?>:</div>
+    <div class="header"><?= $lang('input') ?>:</div>
     <?php
     $input = [
         '$_ENV' => ArraySimple::convert($_ENV),
@@ -350,26 +354,26 @@ unset($item);
 $log = $handler->getLogger()?->getLastLog();
 if ($log): ?>
     <section class="log">
-        <div class="header"><?= $handler->getLanguage()->render('debug', 'log') ?>:</div>
+        <div class="header"><?= $lang('log') ?>:</div>
         <table>
             <tr>
-                <th><?= $handler->getLanguage()->render('debug', 'date') ?></th>
+                <th><?= $lang('date') ?></th>
                 <td><?= date('Y-m-d', $log->time) ?></td>
             </tr>
             <tr>
-                <th><?= $handler->getLanguage()->render('debug', 'time') ?></th>
+                <th><?= $lang('time') ?></th>
                 <td><?= date('H:i:s', $log->time) ?></td>
             </tr>
             <tr>
-                <th><?= $handler->getLanguage()->render('debug', 'level') ?></th>
+                <th><?= $lang('level') ?></th>
                 <td><?= htmlentities($log->level->name) ?></td>
             </tr>
             <tr>
-                <th><?= $handler->getLanguage()->render('debug', 'id') ?></th>
+                <th><?= $lang('id') ?></th>
                 <td><?= htmlentities($log->id) ?></td>
             </tr>
             <tr>
-                <th><?= $handler->getLanguage()->render('debug', 'message') ?></th>
+                <th><?= $lang('message') ?></th>
                 <td>
                     <pre><code class="language-log"><?= htmlentities($log->message) ?></code></pre>
                 </td>
