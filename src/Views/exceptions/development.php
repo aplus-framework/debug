@@ -350,26 +350,26 @@ unset($item);
 $log = $handler->getLogger()?->getLastLog();
 if ($log): ?>
     <section class="log">
-        <div class="header">Log:</div>
+        <div class="header"><?= $handler->getLanguage()->render('debug', 'log') ?>:</div>
         <table>
             <tr>
-                <th>Date</th>
+                <th><?= $handler->getLanguage()->render('debug', 'date') ?></th>
                 <td><?= date('Y-m-d', $log->time) ?></td>
             </tr>
             <tr>
-                <th>Time</th>
+                <th><?= $handler->getLanguage()->render('debug', 'time') ?></th>
                 <td><?= date('H:i:s', $log->time) ?></td>
             </tr>
             <tr>
-                <th>Level</th>
+                <th><?= $handler->getLanguage()->render('debug', 'level') ?></th>
                 <td><?= htmlentities($log->level->name) ?></td>
             </tr>
             <tr>
-                <th>ID</th>
+                <th><?= $handler->getLanguage()->render('debug', 'id') ?></th>
                 <td><?= htmlentities($log->id) ?></td>
             </tr>
             <tr>
-                <th>Message</th>
+                <th><?= $handler->getLanguage()->render('debug', 'message') ?></th>
                 <td>
                     <pre><code class="language-log"><?= htmlentities($log->message) ?></code></pre>
                 </td>
