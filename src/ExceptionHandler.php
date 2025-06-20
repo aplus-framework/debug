@@ -13,6 +13,7 @@ use ErrorException;
 use Framework\CLI\CLI;
 use Framework\Helpers\Isolation;
 use Framework\Language\Language;
+use Framework\Log\Log;
 use Framework\Log\Logger;
 use InvalidArgumentException;
 use RuntimeException;
@@ -291,6 +292,19 @@ class ExceptionHandler
     protected function log(string $message) : void
     {
         $this->getLogger()?->logCritical($message);
+    }
+
+    /**
+     * Get the last log if it is showing log id and logger is set.
+     *
+     * @return Log|null
+     */
+    public function getLog() : ?Log
+    {
+        if ($this->isShowingLogId()) {
+            return $this->getLogger()?->getLastLog();
+        }
+        return null;
     }
 
     /**
