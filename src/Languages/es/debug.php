@@ -17,4 +17,5 @@ return [
     'exceptionDescription' => 'Algo salió mal. Por favor vuelve más tarde.',
     'search' => 'Buscar',
     'logIdCopied' => '¡ID de registro copiado!',
+    'clickToCopyLogId' => 'Haga clic para copiar el ID de registro',
 ];

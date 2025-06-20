@@ -43,7 +43,11 @@ if ($handler->isShowingLogId()) :
     $log = $handler->getLogger()?->getLastLog();
     if ($log):
         ?>
-        <p>Log Id: <span class="log-id"><?= htmlentities($log->id) ?></span></p>
+        <p>Log Id: <span class="log-id" title="<?= $handler->getLanguage()
+                ->render('debug', 'clickToCopyLogId') ?>">
+                <?= htmlentities($log->id) ?>
+            </span>
+        </p>
         <script>
             document.querySelector('.log-id').onclick = function () {
                 navigator.clipboard.writeText(this.innerText);

@@ -17,4 +17,5 @@ return [
     'exceptionDescription' => 'Algo deu errado. Por favor, volte mais tarde.',
     'search' => 'Pesquisar',
     'logIdCopied' => 'Log id copiado!',
+    'clickToCopyLogId' => 'Clique para copiar o id do log',
 ];
