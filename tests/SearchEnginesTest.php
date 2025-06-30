@@ -67,13 +67,13 @@ final class SearchEnginesTest extends TestCase
         $this->searchEngines->set('foo', 'foo.com');
     }
 
-    public function testSetMany() : void
+    public function testSetMulti() : void
     {
         $engines = $this->searchEngines->getAll();
         self::assertSame('https://www.google.com/search?q=', $engines['google']);
         self::assertArrayHasKey('google', $engines);
         self::assertArrayNotHasKey('foo', $engines);
-        $this->searchEngines->setMany([
+        $this->searchEngines->setMulti([
             'foo' => 'https://foo.com',
             'google' => 'https://bar.com',
         ]);

@@ -54,7 +54,7 @@ class SearchEngines
             $this->setCurrent($current);
         }
         if ($engines) {
-            $this->setMany($engines);
+            $this->setMulti($engines);
         }
     }
 
@@ -117,7 +117,7 @@ class SearchEngines
      *
      * @param array<string,string> $engines
      */
-    public function setMany(array $engines) : static
+    public function setMulti(array $engines) : static
     {
         foreach ($engines as $name => $url) {
             $this->set($name, $url);
