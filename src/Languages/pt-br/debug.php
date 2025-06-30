@@ -26,4 +26,5 @@ return [
     'logId' => 'Id do log',
     'logIdCopied' => 'Id do log copiado!',
     'clickToCopyLogId' => 'Clique para copiar o id do log',
+    'inputVarsHidden' => 'As seguintes variáveis de entrada estão ocultas: {0}.',
 ];

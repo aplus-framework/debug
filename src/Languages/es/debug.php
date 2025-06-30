@@ -26,4 +26,5 @@ return [
     'logId' => 'ID de registro',
     'logIdCopied' => '¡ID de registro copiado!',
     'clickToCopyLogId' => 'Haga clic para copiar el ID de registro',
+    'inputVarsHidden' => 'Las siguientes variables de entrada están ocultas: {0}.',
 ];
