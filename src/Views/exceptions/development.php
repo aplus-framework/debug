@@ -6,8 +6,8 @@
 
 use Framework\Helpers\ArraySimple;
 
-$lang = static function (string $line) use ($handler) : string {
-    return $handler->getLanguage()->render('debug', $line);
+$lang = static function (string $line, array $args = []) use ($handler) : string {
+    return $handler->getLanguage()->render('debug', $line, $args);
 }
 
 ?>
