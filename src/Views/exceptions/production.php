@@ -10,7 +10,9 @@
  */
 $lang = static function (string $line) use ($handler) : string {
     return $handler->getLanguage()->render('debug', $line);
-}
+};
+
+$log = $handler->getLog();
 ?>
 <!doctype html>
 <html lang="<?= $handler->getLanguage()->getCurrentLocale() ?>" dir="<?= $handler->getLanguage()
@@ -35,22 +37,21 @@ $lang = static function (string $line) use ($handler) : string {
             color: #fff;
         }
 
+        <?php if ($log) : ?>
         .log-id {
             background: #222;
             border-radius: 4px;
             cursor: copy;
             padding: 5px 10px;
         }
+
+        <?php endif ?>
     </style>
 </head>
 <body>
 <h1><?= $lang('exceptionTitle') ?></h1>
 <p><?= $lang('exceptionDescription') ?></p>
-
-<?php
-$log = $handler->getLog();
-if ($log):
-    ?>
+<?php if ($log) : ?>
     <p><?= $lang('logId') ?>: <span class="log-id"
             title="<?= $lang('clickToCopyLogId') ?>"
         ><?= htmlentities($log->id) ?></span>
@@ -61,9 +62,6 @@ if ($log):
             alert("<?= $lang('logIdCopied') ?>");
         }
     </script>
-<?php
-endif;
-?>
-
+<?php endif ?>
 </body>
 </html>
