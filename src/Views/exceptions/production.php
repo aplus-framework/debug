@@ -53,13 +53,13 @@ $log = $handler->getLog();
 <p><?= $lang('exceptionDescription') ?></p>
 <?php if ($log) : ?>
     <p><?= $lang('logId') ?>: <span class="log-id"
-            title="<?= $lang('clickToCopyLogId') ?>"
+            title="<?= htmlentities($lang('clickToCopyLogId')) ?>"
         ><?= htmlentities($log->id) ?></span>
     </p>
     <script>
         document.querySelector('.log-id').onclick = function () {
             navigator.clipboard.writeText(this.innerText);
-            alert("<?= $lang('logIdCopied') ?>");
+            alert("<?= htmlentities($lang('logIdCopied')) ?>");
         }
     </script>
 <?php endif ?>
