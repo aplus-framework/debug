@@ -72,6 +72,13 @@ $lang = static function (string $line, array $args = []) use ($handler) : string
             padding: 10px;
         }
 
+        .input .info {
+            padding: 10px;
+            background: #111;
+            border: 1px solid #222;
+            margin-top: 10px
+        }
+
         .top {
             border-top: 0;
         }
@@ -336,17 +343,31 @@ if ($traces
         '$_FILES' => ArraySimple::convert(ArraySimple::files()),
         '$_COOKIE' => ArraySimple::convert($_COOKIE),
     ];
-foreach ($input as &$item) {
-    ksort($item);
-}
-unset($item);
-?>
-
-    <?php foreach ($input as $key => $values) : ?>
-        <?php
-    if (empty($values)) {
-        continue;
+    foreach ($input as &$item) {
+        ksort($item);
     }
+    unset($item);
+
+    $hidden = [];
+    foreach ($input as $key => $value) {
+        if ($handler->isHiddenInput($key) && !empty($value)) {
+            $hidden[] = "<strong>{$key}</strong>";
+        }
+    }
+    if ($hidden) :
+        ?>
+        <div class="info"><?= $lang('inputVarsHidden', [implode(', ', $hidden)]) ?></div>
+    <?php
+    endif;
+
+    foreach ($input as $key => $values) : ?>
+        <?php
+        if (empty($values)) {
+            continue;
+        }
+        if ($handler->isHiddenInput($key)) {
+            continue;
+        }
         ?>
         <table>
             <thead>
