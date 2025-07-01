@@ -160,6 +160,11 @@ $lang = static function (string $line, array $args = []) use ($handler) : string
             border-right: 2px solid #222;
         }
 
+        .rtl th {
+            border-left: 2px solid #222;
+            border-right: 0;
+        }
+
         th, td {
             border-bottom: 1px solid #222;
             padding: 5px;
@@ -179,10 +184,19 @@ $lang = static function (string $line, array $args = []) use ($handler) : string
             text-align: left;
         }
 
+        .rtl thead th {
+            border-left: 0;
+            text-align: right;
+        }
+
         tbody th {
             background: #111;
             min-width: 40%;
             text-align: right;
+        }
+
+        .rtl tbody th {
+            text-align: left;
         }
 
         tbody tr:hover th,
@@ -231,7 +245,7 @@ $lang = static function (string $line, array $args = []) use ($handler) : string
         }
     </style>
 </head>
-<body class="aplus-debug">
+<body class="aplus-debug <?= $handler->getLanguage()->getCurrentLocaleDirection() ?>">
 <header class="top">
     <small><?= $lang('exception') ?>:</small>
     <h1><?= $exception::class ?></h1>
@@ -279,7 +293,7 @@ if ($traces
     <?php foreach ($traces as $key => $trace) : ?>
         <?php if (isset($trace['file'])) : ?>
             <?php if (is_readable($trace['file'])) : ?>
-                <dl>
+                <dl dir="ltr">
                     <dt>
                         <span><?= count($traces) - $key ?></span>
                         <?= $trace['file'] ?><?=
@@ -410,7 +424,7 @@ if ($log): ?>
             </tr>
             <tr>
                 <th><?= $lang('message') ?></th>
-                <td>
+                <td dir="ltr">
                     <pre><code class="language-log"><?= htmlentities($log->message) ?></code></pre>
                 </td>
             </tr>

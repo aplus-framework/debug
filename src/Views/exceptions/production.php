@@ -13,6 +13,7 @@ $lang = static function (string $line) use ($handler) : string {
 };
 
 $log = $handler->getLog();
+$isRtl = $handler->getLanguage()->getCurrentLocaleDirection() === 'rtl';
 ?>
 <!doctype html>
 <html lang="<?= $handler->getLanguage()->getCurrentLocale() ?>" dir="<?= $handler->getLanguage()
@@ -52,10 +53,17 @@ $log = $handler->getLog();
 <h1><?= $lang('exceptionTitle') ?></h1>
 <p><?= $lang('exceptionDescription') ?></p>
 <?php if ($log) : ?>
-    <p><?= $lang('logId') ?>: <span class="log-id"
-            title="<?= htmlentities($lang('clickToCopyLogId')) ?>"
-        ><?= htmlentities($log->id) ?></span>
-    </p>
+    <?php if ($isRtl) : ?>
+        <p><span class="log-id"
+                title="<?= htmlentities($lang('clickToCopyLogId')) ?>"
+            ><?= htmlentities($log->id) ?></span> :<?= $lang('logId') ?>
+        </p>
+    <?php else : ?>
+        <p><?= $lang('logId') ?>: <span class="log-id"
+                title="<?= htmlentities($lang('clickToCopyLogId')) ?>"
+            ><?= htmlentities($log->id) ?></span>
+        </p>
+    <?php endif ?>
     <script>
         document.querySelector('.log-id').onclick = function () {
             navigator.clipboard.writeText(this.innerText);

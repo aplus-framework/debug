@@ -384,6 +384,50 @@ final class ExceptionHandlerTest extends TestCase
     }
 
     /**
+     * @runInSeparateProcess
+     *
+     * @dataProvider environmentsProvider
+     */
+    public function testExceptionsWithLtrLanguage(string $environment) : void
+    {
+        $_POST = ['foo' => 'bar'];
+        $language = new Language('en', [__DIR__ . '/../src/Languages']);
+        $exceptions = new ExceptionHandlerMock(
+            $environment,
+            $this->getLogger(),
+            $language
+        );
+        $exceptions->cli = false;
+        $exceptions->setHiddenInputs('$_POST');
+        \ob_start();
+        $exceptions->exceptionHandler(new \Exception('Foo'));
+        $contents = (string) \ob_get_clean();
+        self::assertStringContainsString('dir="ltr"', $contents);
+    }
+
+    /**
+     * @runInSeparateProcess
+     *
+     * @dataProvider environmentsProvider
+     */
+    public function testExceptionsWithRtlLanguage(string $environment) : void
+    {
+        $_POST = ['foo' => 'bar'];
+        $language = new Language('he', [__DIR__ . '/../src/Languages']);
+        $exceptions = new ExceptionHandlerMock(
+            $environment,
+            $this->getLogger(),
+            $language
+        );
+        $exceptions->cli = false;
+        $exceptions->setHiddenInputs('$_POST');
+        \ob_start();
+        $exceptions->exceptionHandler(new \Exception('Foo'));
+        $contents = (string) \ob_get_clean();
+        self::assertStringContainsString('dir="rtl"', $contents);
+    }
+
+    /**
      * @return array<array<string>>
      */
     public static function environmentsProvider() : array
