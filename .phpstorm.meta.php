@@ -29,6 +29,55 @@ expectedReturnValues(
     argumentsSet('eh_env')
 );
 registerArgumentsSet(
+    'input_vars',
+    '$_COOKIE',
+    '$_ENV',
+    '$_FILES',
+    '$_GET',
+    '$_POST',
+    '$_SERVER',
+);
+expectedArguments(
+    \Framework\Debug\ExceptionHandler::validateInputName(),
+    0,
+    argumentsSet('input_vars')
+);
+expectedArguments(
+    \Framework\Debug\ExceptionHandler::isHiddenInput(),
+    0,
+    argumentsSet('input_vars')
+);
+expectedArguments(
+    \Framework\Debug\ExceptionHandler::setHiddenInputs(),
+    0,
+    argumentsSet('input_vars')
+);
+expectedArguments(
+    \Framework\Debug\ExceptionHandler::setHiddenInputs(),
+    1,
+    argumentsSet('input_vars')
+);
+expectedArguments(
+    \Framework\Debug\ExceptionHandler::addHiddenInputs(),
+    0,
+    argumentsSet('input_vars')
+);
+expectedArguments(
+    \Framework\Debug\ExceptionHandler::addHiddenInputs(),
+    1,
+    argumentsSet('input_vars')
+);
+expectedArguments(
+    \Framework\Debug\ExceptionHandler::removeHiddenInputs(),
+    0,
+    argumentsSet('input_vars')
+);
+expectedArguments(
+    \Framework\Debug\ExceptionHandler::removeHiddenInputs(),
+    1,
+    argumentsSet('input_vars')
+);
+registerArgumentsSet(
     'search_engines',
     'ask',
     'baidu',
