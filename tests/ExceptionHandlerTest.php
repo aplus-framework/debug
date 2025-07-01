@@ -317,6 +317,53 @@ final class ExceptionHandlerTest extends TestCase
         self::assertNull($exceptions->getLog());
     }
 
+    public function testGetSetHiddenInputs() : void
+    {
+        $exceptions = new ExceptionHandler();
+        self::assertEmpty($exceptions->getHiddenInputs());
+        $exceptions->setHiddenInputs('$_POST', '$_GET');
+        self::assertNotEmpty($exceptions->getHiddenInputs());
+        self::assertSame(['$_GET', '$_POST'], $exceptions->getHiddenInputs());
+        $exceptions->setHiddenInputs('$_POST', '$_SERVER', '$_ENV');
+        self::assertSame(['$_ENV', '$_POST', '$_SERVER'], $exceptions->getHiddenInputs());
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid input name: $_FOO');
+        $exceptions->setHiddenInputs('$_POST', '$_FOO', '$_ENV');
+    }
+
+    public function testIsHiddenInput() : void
+    {
+        $exceptions = new ExceptionHandler();
+        self::assertFalse($exceptions->isHiddenInput('$_GET'));
+        $exceptions->setHiddenInputs('$_GET');
+        self::assertTrue($exceptions->isHiddenInput('$_GET'));
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid input name: $_Bar');
+        $exceptions->isHiddenInput('$_Bar');
+    }
+
+    public function testAddAndRemoveHiddenInput() : void
+    {
+        $exceptions = new ExceptionHandler();
+        self::assertEmpty($exceptions->getHiddenInputs());
+        $exceptions->addHiddenInputs('$_ENV');
+        self::assertNotEmpty($exceptions->getHiddenInputs());
+        self::assertSame(
+            ['$_ENV'],
+            $exceptions->getHiddenInputs()
+        );
+        $exceptions->addHiddenInputs('$_POST', '$_FILES');
+        self::assertSame(
+            ['$_ENV', '$_FILES', '$_POST'],
+            $exceptions->getHiddenInputs()
+        );
+        $exceptions->removeHiddenInputs('$_FILES');
+        self::assertSame(
+            ['$_ENV', '$_POST'],
+            $exceptions->getHiddenInputs()
+        );
+    }
+
     /**
      * @return array<array<string>>
      */

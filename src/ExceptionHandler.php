@@ -45,6 +45,10 @@ class ExceptionHandler
     protected int $jsonFlags = \JSON_THROW_ON_ERROR
     | \JSON_UNESCAPED_SLASHES
     | \JSON_UNESCAPED_UNICODE;
+    /**
+     * @var array<string>
+     */
+    protected array $hiddenInputs = [];
 
     /**
      * ExceptionHandler constructor.
@@ -377,6 +381,129 @@ class ExceptionHandler
     public function setSearchEngines(SearchEngines $searchEngines) : static
     {
         $this->searchEngines = $searchEngines;
+        return $this;
+    }
+
+    /**
+     * @since 4.5
+     *
+     * @param string $name
+     *
+     * @see https://www.php.net/manual/en/filter.constants.php
+     */
+    protected function validateInputName(string $name) : void
+    {
+        if (!\in_array($name, [
+            '$_COOKIE',
+            '$_ENV',
+            '$_FILES',
+            '$_GET',
+            '$_POST',
+            '$_SERVER',
+        ], true)) {
+            throw new InvalidArgumentException('Invalid input name: ' . $name);
+        }
+    }
+
+    /**
+     * @since 4.5
+     *
+     * @param array<string> $names
+     *
+     * @return array<string>
+     */
+    protected function makeHiddenInputs(array $names) : array
+    {
+        foreach ($names as $name) {
+            $this->validateInputName($name);
+        }
+        \sort($names);
+        return \array_unique($names);
+    }
+
+    /**
+     * @since 4.5
+     *
+     * @return static
+     */
+    protected function reorderHiddenInputs() : static
+    {
+        $this->hiddenInputs = $this->makeHiddenInputs($this->hiddenInputs);
+        return $this;
+    }
+
+    /**
+     * @since 4.5
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function isHiddenInput(string $name) : bool
+    {
+        $this->validateInputName($name);
+        return \in_array($name, $this->hiddenInputs, true);
+    }
+
+    /**
+     * @since 4.5
+     *
+     * @return array<string>
+     */
+    public function getHiddenInputs() : array
+    {
+        return $this->hiddenInputs;
+    }
+
+    /**
+     * @since 4.5
+     *
+     * @param string $hiddenInput
+     * @param string ...$hiddenInputs
+     *
+     * @return static
+     */
+    public function setHiddenInputs(string $hiddenInput, string ...$hiddenInputs) : static
+    {
+        $this->hiddenInputs = $this->makeHiddenInputs([$hiddenInput, ...$hiddenInputs]);
+        return $this;
+    }
+
+    /**
+     * @since 4.5
+     *
+     * @param string $hiddenInput
+     * @param string ...$hiddenInputs
+     *
+     * @return static
+     */
+    public function addHiddenInputs(string $hiddenInput, string ...$hiddenInputs) : static
+    {
+        $hiddenInputs = $this->makeHiddenInputs([$hiddenInput, ...$hiddenInputs]);
+        foreach ($hiddenInputs as $hiddenInput) {
+            $this->hiddenInputs[] = $hiddenInput;
+        }
+        $this->reorderHiddenInputs();
+        return $this;
+    }
+
+    /**
+     * @since 4.5
+     *
+     * @param string $hiddenInput
+     * @param string ...$hiddenInputs
+     *
+     * @return static
+     */
+    public function removeHiddenInputs(string $hiddenInput, string ...$hiddenInputs) : static
+    {
+        $hiddenInputs = $this->makeHiddenInputs([$hiddenInput, ...$hiddenInputs]);
+        foreach ($this->hiddenInputs as $key => $value) {
+            if (\in_array($value, $hiddenInputs, true)) {
+                unset($this->hiddenInputs[$key]);
+            }
+        }
+        $this->reorderHiddenInputs();
         return $this;
     }
 }
