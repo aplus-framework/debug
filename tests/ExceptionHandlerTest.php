@@ -253,6 +253,25 @@ final class ExceptionHandlerTest extends TestCase
 
     /**
      * @runInSeparateProcess
+     */
+    public function testExceptionOnDevelopmentWithHiddenInputs() : void
+    {
+        $_ENV = [];
+        $_GET = ['foo' => 'bar'];
+        $_POST = ['foo' => 'bar'];
+        $exceptions = new ExceptionHandlerMock(ExceptionHandler::DEVELOPMENT);
+        $exceptions->setHiddenInputs('$_POST', '$_GET', '$_ENV');
+        $exceptions->cli = false;
+        \ob_start();
+        $exceptions->exceptionHandler(new \Exception('Foo'));
+        $contents = (string) \ob_get_clean();
+        self::assertStringContainsString('<strong>$_GET</strong>', $contents);
+        self::assertStringContainsString('<strong>$_POST</strong>', $contents);
+        self::assertStringNotContainsString('<strong>$_ENV</strong>', $contents);
+    }
+
+    /**
+     * @runInSeparateProcess
      *
      * @dataProvider environmentsProvider
      */
