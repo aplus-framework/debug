@@ -116,6 +116,11 @@ class, which can be passed by the constructor or the setter:
     $language = new Language('es');
     $exceptionHandler->setLanguage($language);
 
+Example of the exception page in production with the Spanish language:
+
+.. image:: img/exception-production-es.png
+    :alt: Aplus Debug - Exception Handler in Production with Spanish language
+
 Debugger
 --------
 
