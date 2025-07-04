@@ -72,6 +72,18 @@ It is possible to customize this screen by setting a view file using the
 ``setProductionView`` method. See the original files inside the
 **src/Views/exceptions** directory.
 
+Show Log Id
+^^^^^^^^^^^
+
+By default, the log id is shown in the production view.
+
+If for some reason you don't want the log id to be shown, disable it as per the
+example below:
+
+.. code-block:: php
+
+    $exceptionHandler->setShowLogId(false);
+
 Development Environment
 #######################
 
@@ -93,6 +105,42 @@ Example:
 
 The development view can also be customized. Set the file path via the
 ``setDevelopmentView`` method.
+
+Hidden Inputs
+^^^^^^^^^^^^^
+
+All input global variables (``$_COOKIE``, ``$_ENV``, ``$_FILES``, ``$_GET``,
+``$_POST`` and ``$_SERVER``) are shown on the exception page under development.
+
+If you want to hide any of them, do so as per the following example:
+
+.. code-block:: php
+
+    $exceptionHandler->setHiddenInputs('$_ENV', '$_POST');
+
+Search Engine
+^^^^^^^^^^^^^
+
+On the development page there is a link to search for the exception in a search
+engine.
+
+You can choose between several predefined engines:
+
+- `ask <https://www.ask.com/web?q=aplus+framework>`_
+- `baidu <https://www.baidu.com/s?wd=aplus+framework>`_
+- `bing <https://www.bing.com/search?q=aplus+framework>`_
+- `duckduckgo <https://duckduckgo.com/?q=aplus+framework>`_
+- `google <https://www.google.com/search?q=aplus+framework>`_
+- `yahoo <https://search.yahoo.com/search?p=aplus+framework>`_
+- `yandex <https://yandex.com/search/?text=aplus+framework>`_
+
+The default engine is ``google``.
+
+If you want to change to another engine, do as in the example below:
+
+.. code-block:: php
+
+    $exceptionHandler->getSearchEngines()->setCurrent('bing');
 
 Command Line
 ############
@@ -120,6 +168,93 @@ Example of the exception page in production with the Spanish language:
 
 .. image:: img/exception-production-es.png
     :alt: Aplus Debug - Exception Handler in Production with Spanish language
+
+JSON Responses
+##############
+
+If the server variable ``$_SERVER['HTTP_ACCEPT']`` contains ``application/json``
+or the variable ``$_SERVER['HTTP_CONTENT_TYPE']`` starts with ``application/json``
+the exception response page will be a page with JSON.
+
+Below is an example of what the body of the responses will look like:
+
+JSON in Production
+^^^^^^^^^^^^^^^^^^
+
+The production page is very simple. Remember that the log id can be disabled:
+
+.. code-block:: json
+
+    {
+      "status": {
+        "code": 500,
+        "reason": "Internal Server Error"
+      },
+      "data": {
+        "message": "Something went wrong. Please, back later.",
+        "log_id": "632617344ccd"
+      }
+    }
+
+JSON in Development
+^^^^^^^^^^^^^^^^^^^
+
+The development page contains detailed information about the exception:
+
+.. code-block:: json
+
+    {
+      "status": {
+        "code": 500,
+        "reason": "Internal Server Error"
+      },
+      "data": {
+        "exception": "mysqli_sql_exception",
+        "message": "Access denied for user 'root'@'localhost'",
+        "file": "/var/www/app/vendor/aplus/database/src/Database.php",
+        "line": 230,
+        "trace": [
+          {
+            "file": "/var/www/app/vendor/aplus/database/src/Database.php",
+            "line": 230,
+            "function": "real_connect",
+            "class": "mysqli",
+            "type": "->"
+          },
+          {
+            "file": "/var/www/app/vendor/aplus/database/src/Database.php",
+            "line": 103,
+            "function": "connect",
+            "class": "Framework\\Database\\Database",
+            "type": "->"
+          },
+          {
+            "file": "/var/www/app/public/index.php",
+            "line": 19,
+            "function": "__construct",
+            "class": "Framework\\Database\\Database",
+            "type": "->"
+          }
+        ],
+        "log_id": "01884d106dd9"
+      }
+    }
+
+JSON Flags
+^^^^^^^^^^
+
+The default flags for encoding JSON data are:
+
+.. code-block:: php
+
+    $flags = JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
+
+You can customize them as per the following example:
+
+.. code-block:: php
+
+    $flags = JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT;
+    $exceptionHandler->setJsonFlags($flags);
 
 Debugger
 --------
