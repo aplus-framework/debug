@@ -259,8 +259,8 @@ You can customize them as per the following example:
 Debugger
 --------
 
-The Framework\Debug\Debugger class has methods to help debug and, mainly, render
-the debugbar.
+The ``Framework\Debug\Debugger`` class has methods to help debug and, mainly,
+render the debugbar.
 
 .. code-block:: php
 
@@ -273,32 +273,144 @@ the debugbar.
 
     echo $debugger->renderDebugbar();
 
-The first time the debugbar is rendered, it will be shrunk and only the icon
-will appear at the bottom left of the screen:
+The first time you render the debug bar it will be collapsed to the bottom left
+of the page:
 
-.. image:: img/debugbar-icon.png
-    :alt: Aplus Debug - Debugbar Icon
+.. image:: img/debugbar-empty-closed.png
+    :alt: Aplus Debug - Debugbar Closed
 
-When the icon is clicked, the bar expands to the right of the screen showing the
-**info** button:
+When you click on the debug bar image, it will extend to the right of the page,
+showing the "info" button:
 
-.. image:: img/debugbar-wide.png
-    :alt: Aplus Debug - Debugbar Wide
+.. image:: img/debugbar-empty-open.png
+    :alt: Aplus Debug - Debugbar Open and Empty
 
-When **info** is clicked, the panel pops up showing basic information:
+When you click on the info button, the panel will open and you will be able to
+see some debug information:
 
-.. image:: img/debugbar-info.png
-    :alt: Aplus Debug - Debugbar Info
+.. image:: img/debugbar-info-empty.png
+    :alt: Aplus Debug - Open With Info Empty
 
-In the code below we show how to add collections, collectors and activity data
-in the debugbar:
+Collections
+###########
 
-.. code-block:: php    
+Collections with information collected from various services can be added to the
+debug bar.
+
+See below how to create a collection:
+
+.. code-block:: php
+
+    use Framework\Debug\Collection;
+
+    ...
+
+    class DatabaseCollection extends Collection
+    {
+    }
+
+    $collection = new DatabaseCollection('Database');
+    $debugger->addCollection($collection);
+
+The "Database" collection is created and added to the Debugger.
+
+Collection Icon
+^^^^^^^^^^^^^^^
+
+All collections can have an icon. Its path can be defined as in the example
+below:
+
+.. code-block:: php
+
+    class DatabaseCollection extends Collection
+    {
+        protected string $iconPath = __DIR__ . '/database.svg';
+    }
+
+Icons downloaded from `Font Awesome <https://fontawesome.com/v5/download>`_ are
+used in the Aplus Framework libraries.
+
+You can choose any icon you want from an SVG image. Copy and paste it into your
+project.
+
+To make the icon color change according to the text color, open the SVG file and
+look for the ``path`` tag. In it, add the attribute ``fill="currentColor"`` as
+shown in the example below and save the image.
+
+.. code-block:: svg
+
+    <svg ...>...<path fill="currentColor" d="..."/></svg>
+
+Next you will see the collection icon in action.
+
+Collectors
+##########
+
+Every collection must have debug data collectors, which should be displayed in
+the panel content.
+
+See below how to add a collector to the collection:
+
+.. code-block:: php
 
     use Framework\Debug\Collector;
-    use Framework\Debug\Debugger;
-    
-    class FooCollector extends Collector
+
+    ...
+
+    class DatabaseCollector extends Collector
+    {
+        public function getContents() : string
+        {
+            return 'Collector: ' . $this->getName();
+        }
+    }
+
+    $defaultCollector = new DatabaseCollector();
+    $collection->addCollector($defaultCollector);
+
+Once done, the collection will appear in the debugbar with its icon and name:
+
+.. image:: img/debugbar-collector-default-closed.png
+    :alt: Aplus Debug - Debugbar With Default Collector
+
+After clicking the collection button, a panel will open showing its contents:
+
+.. image:: img/debugbar-collector-default-open.png
+    :alt: Aplus Debug - Debugbar With Default Collector
+
+You can add as many collectors as you want.
+
+The example below shows how to add another collector. Think of it as another
+instance connecting to a different database:
+
+.. code-block:: php
+
+    ...
+
+    $otherCollector = new DatabaseCollector('other');
+    $collection->addCollector($otherCollector);
+
+Note that in the upper right part of the panel, a selection menu will appear in
+which you can change the collector that is shown in the panel contents:
+
+.. image:: img/debugbar-collector-other-open.png
+    :alt: Aplus Debug - Debugbar With Other Collector
+
+Collector Activities
+^^^^^^^^^^^^^^^^^^^^
+
+Every collector can collect activity data that can be displayed in the content
+panel, the information panel, or both.
+
+See below how to return activities that will be merged between all debugger
+collectors and will appear in the info panel:
+
+.. code-block:: php
+
+    <?php
+    ...
+
+    class DatabaseCollector extends Collector
     {
         public function getActivities() : array
         {
@@ -307,87 +419,191 @@ in the debugbar:
                 $activities[] = [
                     'collector' => $this->getName(),
                     'class' => static::class,
-                    'description' => 'Activity ' . ($index + 1),
+                    'description' => 'Statement ' . ($index + 1),
                     'start' => $data['start'],
                     'end' => $data['end'],
+                    'statement' => $data['statement'],
                 ];
             }
             return $activities;
         }
-    
+    }
+
+Collector Contents
+^^^^^^^^^^^^^^^^^^
+
+So far, we've seen a very simple panel, showing only the collector's name.
+
+In the example below, we will update the ``getContents`` method to return only
+the collector name if there are no activities and a table with details if there
+are activities:
+
+.. code-block:: php
+
+    <?php
+    ...
+
+    class DatabaseCollector extends Collector
+    {
+        ...
         public function getContents() : string
         {
-            return '<p>Collector: ' . $this->getName() . '</p>';
+            ob_start();
+            ?>
+            <p>Collector: <?= $this->getName() ?></p>
+            <?php
+            $activities = $this->getActivities();
+            if (empty($activities)) {
+                return ob_get_clean();
+            }
+            ?>
+            <table>
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Statement</th>
+                    <th>Time</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($activities as $index => $activity) : ?>
+                    <tr>
+                        <td><?= $index + 1 ?></td>
+                        <td>
+                            <pre class="language-sql"><code><?= htmlentities($activity['statement']) ?></code></pre>
+                        </td>
+                        <td><?= Debugger::roundSecondsToMilliseconds($activity['end'] - $activity['start']) ?></td>
+                    </tr>
+                <?php endforeach ?>
+                </tbody>
+            </table>
+            <?php
+            return ob_get_clean();
         }
     }
-    
-    class BarCollector extends FooCollector
-    {
-    }
-    
-    $fooCollector = new FooCollector();
-    
+
+The panel hasn't changed visually because no data has been collected:
+
+.. image:: img/debugbar-collector-default-open.png
+    :alt: Aplus Debug - Debugbar Collector With No Statement
+
+Next, we'll see how to collect data and how it will be presented within the
+table.
+
+Collecting Data
+^^^^^^^^^^^^^^^
+
+See the example below for how to collect data from a database connection:
+
+.. code-block:: php
+
+    $mysqli = new mysqli('localhost', 'root', 'password', 'test');
+
+    $statement = 'SELECT * FROM `users` WHERE `id` = 1';
     $start = microtime(true);
-    usleep(100);
+    $result = $mysqli->query($statement);
     $end = microtime(true);
-    $fooCollector->addData([
+
+    $defaultCollector->addData([
         'start' => $start,
         'end' => $end,
+        'statement' => $statement,
     ]);
+    
+    $statement ='SELECT * FROM `posts` WHERE `user_id` = 5';
     $start = microtime(true);
-    usleep(100);
+    $result = $mysqli->query($statement);
     $end = microtime(true);
-    $fooCollector->addData([
+
+    $defaultCollector->addData([
         'start' => $start,
         'end' => $end,
+        'statement' => $statement,
     ]);
-    
-    $fooCollector2 = new FooCollector('other');
-    
-    $barCollector = new BarCollector();
-    $start = microtime(true);
-    usleep(100);
-    $end = microtime(true);
-    $barCollector->addData([
-        'start' => $start,
-        'end' => $end,
-    ]);
-    
-    $debugger = new Debugger();
-    $debugger->addCollector($fooCollector, 'Collection 1');
-    $debugger->addCollector($fooCollector2, 'Collection 1');
-    $debugger->addCollector($barCollector, 'Collection 2');
 
-    echo $debugger->renderDebugbar();
+Note that the data was collected only by the "default" collector.
 
-Below we have images of the debugbar generated by the code above:
+If you have another connection you can collect data with the collector "other"
+or any other name.
 
-.. image:: img/debugbar-collection.png
-    :alt: Aplus Debug - Debugbar Collection
+See below how the contents were rendered in the "default" collector panel in the
+"Database" collection:
 
-Each collection can have multiple collectors and they will appear in a select at
-the top right of the debugbar panel. Note that "other" has been selected in the
-image below:
+.. image:: img/debugbar-collector-with-statements.png
+    :alt: Aplus Debug - Debugbar Collector With Statements
 
-.. image:: img/debugbar-collection-other.png
-    :alt: Aplus Debug - Debugbar Collection Other
+And also, the collected activities will appear in the info panel:
 
-When a new collection is added, it will appear in the bottom bar, to the right
-of the last collection button:
+.. image:: img/debugbar-info-with-activities.png
+    :alt: Aplus Debug - Debugbar Info With Activities
 
-.. image:: img/debugbar-collection-2.png
-    :alt: Aplus Debug - Debugbar Collection 2
+Options
+#######
 
-The activities of all collectors are compared and shown in the panel by clicking
-on the **info** button, located at the bottom right of the debugbar.
+The debugger allows for several customizations to make the debug bar fit your
+brand.
 
-.. image:: img/debugbar-activities.png
-    :alt: Aplus Debug - Debugbar Activities
+The available options are:
+
+- `Icon Path`_
+- `Primary Color`_
+- `Info Contents`_
+
+Icon Path
+^^^^^^^^^
+
+Using the ``icon_path`` option you can set a different icon:
+
+.. code-block:: php
+
+    $debugger->setOption('icon_path', __DIR__ . '/logo-circle.png');
+
+.. image:: img/debugbar-custom-icon.png
+    :alt: Aplus Debug - Debugbar With Custom Icon
+
+Primary Color
+^^^^^^^^^^^^^
+
+Using the ``color`` option you can set a different primary color:
+
+.. code-block:: php
+
+    $debugger->setOption('color', '#00a5e3');
+
+.. image:: img/debugbar-custom-color.png
+    :alt: Aplus Debug - Debugbar With Custom Color
+
+Info Contents
+^^^^^^^^^^^^^
+
+Using the ``info_contents`` option, you can set different content for the info:
+
+.. code-block:: php
+
+    $debugger->setOption(
+        'info_contents',
+        '<p>★ <a href="https://domain.tld">Your website link here</a></p>'
+    );
+
+.. image:: img/debugbar-custom-info-contents.png
+    :alt: Aplus Debug - Debugbar With Custom Info Contents
+
+It is also possible to remove personalized content from the info:
+
+.. code-block:: php
+
+    $debugger->setOption('info_contents', '');
+
+.. image:: img/debugbar-custom-info-contents-disabled.png
+    :alt: Aplus Debug - Debugbar With Custom Info Contents Disabled
 
 You can toggle the debugbar by pressing the ``Ctrl + F12`` keys.
 
 Using the ``setDebugbarView`` method you can set a custom debug bar view for
 your brand.
+
+To see the debugbar being used in a real project, try the
+`App Project <https://github.com/aplus-framework/app>`_.
 
 Conclusion
 ----------
