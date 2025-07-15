@@ -116,7 +116,7 @@ registerArgumentsSet(
     'debugger_options',
     'color',
     'icon_path',
-    'info_link',
+    'info_contents',
 );
 expectedArguments(
     \Framework\Debug\Debugger::getOption(),

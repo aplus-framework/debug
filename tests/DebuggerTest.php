@@ -233,60 +233,14 @@ final class DebuggerTest extends TestCase
         $this->closeBuffer();
     }
 
-    public function testInfoLinkOption() : void
+    public function testInfoContentsOption() : void
     {
-        $this->debugger->setOption('info_link', [
-            'href' => 'https://foo.com',
-            'text' => 'Foo Website',
-        ]);
         $debugbar = $this->debugger->renderDebugbar();
-        self::assertStringContainsString('https://foo.com', $debugbar);
-        self::assertStringContainsString('Foo Website', $debugbar);
-    }
-
-    public function testInvalidInfoLinkOption() : void
-    {
-        $this->debugger->setOption('info_link', []);
-        try {
-            $this->debugger->renderDebugbar();
-        } catch (\LogicException $e) {
-            self::assertSame(
-                'Info link must contain "href" and "text" keys',
-                $e->getMessage()
-            );
-        }
-        $this->closeBuffer();
-        $this->debugger->setOption('info_link', [
-            'href' => '#',
-        ]);
-        try {
-            $this->debugger->renderDebugbar();
-        } catch (\LogicException $e) {
-            self::assertSame(
-                'Info link must contain "href" and "text" keys',
-                $e->getMessage()
-            );
-        }
-        $this->closeBuffer();
-        $this->debugger->setOption('info_link', [
-            'text' => '#',
-        ]);
-        try {
-            $this->debugger->renderDebugbar();
-        } catch (\LogicException $e) {
-            self::assertSame(
-                'Info link must contain "href" and "text" keys',
-                $e->getMessage()
-            );
-        }
-        $this->closeBuffer();
-        $this->debugger->setOption('info_link', [
-            'href' => 'https://foo.com',
-            'text' => 'Foo Website',
-        ]);
+        self::assertStringContainsString('★', $debugbar);
+        $this->debugger->setOption('info_contents', 'xxXxx');
         $debugbar = $this->debugger->renderDebugbar();
-        self::assertStringContainsString('https://foo.com', $debugbar);
-        self::assertStringContainsString('Foo Website', $debugbar);
+        self::assertStringContainsString('xxXxx', $debugbar);
+        self::assertStringNotContainsString('★', $debugbar);
     }
 
     public function testMakeSafeName() : void

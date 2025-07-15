@@ -8,11 +8,8 @@ use Framework\Debug\Debugger;
  * @var array<string,mixed> $options
  */
 $infoIcon = file_get_contents(__DIR__ . '/icons/info.svg');
-$hasInfoLink = isset($options['info_link']);
-if ($hasInfoLink) {
-    if (!isset($options['info_link']['href']) || !isset($options['info_link']['text'])) {
-        throw new LogicException('Info link must contain "href" and "text" keys');
-    }
+if (!isset($options['info_contents'])) {
+    $options['info_contents'] = '<p>★ <a href="https://aplus-framework.com" target="_blank">aplus-framework.com</a></p>';
 }
 $iconPath = __DIR__ . '/icon.png';
 if (isset($options['icon_path'])) {
@@ -50,15 +47,7 @@ echo $contents;
                             : '' ?> on <?= \PHP_OS_FAMILY ?> with PHP
                         <?= Debugger::roundVersion(\PHP_VERSION) ?>.
                     </p>
-                    <p>★
-                        <?php if ($hasInfoLink): ?>
-                            <a href="<?= htmlentities($options['info_link']['href']) ?>"
-                               target="_blank"><?= htmlentities($options['info_link']['text']) ?>
-                            </a>
-                        <?php else: ?>
-                            <a href="https://aplus-framework.com" target="_blank">aplus-framework.com</a>
-                        <?php endif ?>
-                    </p>
+                    <?= $options['info_contents'] ?>
                     <?php
                 $count = isset($activities['collected']) ? count($activities['collected']) : 0;
 if ($count):
