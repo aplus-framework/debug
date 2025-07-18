@@ -11,6 +11,7 @@ namespace Framework\Debug;
 
 use Framework\Helpers\Isolation;
 use InvalidArgumentException;
+use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * Class Debugger.
@@ -108,6 +109,12 @@ class Debugger
     /**
      * @return array<string,mixed>
      */
+    #[ArrayShape([
+        'min' => 'float',
+        'max' => 'float',
+        'total' => 'float',
+        'collected' => 'array',
+    ])]
     public function getActivities() : array
     {
         $collected = [];
