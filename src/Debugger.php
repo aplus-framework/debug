@@ -145,8 +145,13 @@ class Debugger
     {
         $total = $max - $min;
         $activity['total'] = $activity['end'] - $activity['start'];
-        $activity['left'] = \round(($activity['start'] - $min) * 100 / $total, 3);
-        $activity['width'] = \round($activity['total'] * 100 / $total, 3);
+        if ($total > 0) {
+            $activity['left'] = \round(($activity['start'] - $min) * 100 / $total, 3);
+            $activity['width'] = \round($activity['total'] * 100 / $total, 3);
+            return;
+        }
+        $activity['left'] = .0;
+        $activity['width'] = .0;
     }
 
     public function setDebugbarView(string $file) : static

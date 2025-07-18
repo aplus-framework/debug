@@ -179,6 +179,43 @@ final class DebuggerTest extends TestCase
         );
     }
 
+    public function testActivitiesDivisionByZero() : void
+    {
+        $microtime = \microtime(true);
+        $activities = [
+            [
+                'collector' => 'default',
+                'class' => 'Class name',
+                'description' => 'Collected data 1',
+                'start' => $microtime,
+                'end' => $microtime,
+            ],
+        ];
+        $collector = new CollectorMock();
+        $this->debugger->addCollector($collector, 'Foo');
+        $collector->activities = $activities;
+        self::assertSame([
+            'min' => $microtime,
+            'max' => $microtime,
+            'total' => .0,
+            'collected' => [
+                [
+                    'collection' => 'Foo',
+                    'collector' => 'default',
+                    'class' => 'Class name',
+                    'description' => 'Collected data 1',
+                    'start' => $microtime,
+                    'end' => $microtime,
+                    'total' => .0,
+                    'left' => .0,
+                    'width' => .0,
+                ],
+            ],
+        ], $this->debugger->getActivities());
+        $debugbar = $this->debugger->renderDebugbar();
+        self::assertStringContainsString('1 activity', $debugbar);
+    }
+
     public function testOptions() : void
     {
         self::assertEmpty($this->debugger->getOptions());
