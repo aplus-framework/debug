@@ -80,7 +80,7 @@ class Debugger
      */
     public function getCollection(string $name) : ?Collection
     {
-        return $this->getCollections()[$name] ?? null;
+        return $this->collections[$name] ?? null;
     }
 
     /**
