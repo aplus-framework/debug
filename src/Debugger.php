@@ -21,16 +21,39 @@ use JetBrains\PhpStorm\ArrayShape;
 class Debugger
 {
     /**
+     * Contains the Collections.
+     * Keys are the names and values are the Collections.
+     *
      * @var array<string,Collection>
      */
     protected array $collections = [];
     /**
+     * Contains the debug options.
+     * The keys are the names of the options.
+     *
      * @var array<string,mixed>
      */
     protected array $options = [];
+    /**
+     * Contains the path to the debugbar view file.
+     *
+     * @var string
+     */
     protected string $debugbarView = __DIR__ . '/Views/debugbar/debugbar.php';
+    /**
+     * Tells if the debugbar is enabled.
+     *
+     * @var bool
+     */
     protected bool $debugbarEnabled = true;
 
+    /**
+     * Add a new Collection.
+     *
+     * @param Collection $collection
+     *
+     * @return static
+     */
     public function addCollection(Collection $collection) : static
     {
         $this->collections[$collection->getName()] = $collection;
@@ -38,18 +61,39 @@ class Debugger
     }
 
     /**
-     * @return array<string,Collection>
+     * Get all Collections.
+     *
+     * @return array<string,Collection> An array where the keys are the names of
+     * the collections and the values are the collections
      */
     public function getCollections() : array
     {
         return $this->collections;
     }
 
+    /**
+     * Get a Collection by name.
+     *
+     * @param string $name The name of the Collection
+     *
+     * @return Collection|null The collection or null if it does not exist
+     */
     public function getCollection(string $name) : ?Collection
     {
         return $this->getCollections()[$name] ?? null;
     }
 
+    /**
+     * Add a collector to a collection.
+     *
+     * If a collection with the given name does not exist, a new one will be
+     * created.
+     *
+     * @param Collector $collector The collector
+     * @param string $collectionName The name of the collection
+     *
+     * @return static
+     */
     public function addCollector(Collector $collector, string $collectionName) : static
     {
         $collection = $this->getCollection($collectionName);
@@ -62,10 +106,12 @@ class Debugger
     }
 
     /**
+     * Set a debug option.
+     *
      * @since 4.5
      *
-     * @param string $name
-     * @param mixed $value
+     * @param string $name The name of the option
+     * @param mixed $value The value of the option
      *
      * @return static
      */
@@ -76,11 +122,13 @@ class Debugger
     }
 
     /**
+     * Get the value of a debug option.
+     *
      * @since 4.5
      *
-     * @param string $name
+     * @param string $name The name of the option
      *
-     * @return mixed
+     * @return mixed The value of the option or null
      */
     public function getOption(string $name) : mixed
     {
@@ -88,7 +136,9 @@ class Debugger
     }
 
     /**
-     * @param array<string,mixed> $options
+     * Set all debug options.
+     *
+     * @param array<string,mixed> $options All options
      *
      * @return static
      */
@@ -99,6 +149,8 @@ class Debugger
     }
 
     /**
+     * Get all debug options.
+     *
      * @return array<string,mixed>
      */
     public function getOptions() : array
@@ -107,6 +159,9 @@ class Debugger
     }
 
     /**
+     * Get an array with the minimum, maximum, and total execution times for
+     * all activities. Also, returns an array with all collected activities.
+     *
      * @return array<string,mixed>
      */
     #[ArrayShape([
@@ -144,9 +199,16 @@ class Debugger
     }
 
     /**
-     * @param array<string,mixed> $activity
-     * @param float $min
-     * @param float $max
+     * Updates the $activity variable.
+     *
+     * Adds the "total" key representing the total execution time.
+     *
+     * Adds the "left" and "width" keys representing the CSS `margin-left` and
+     * `width` properties used to create the time bar.
+     *
+     * @param array<string,mixed> $activity Current activity
+     * @param float $min The minimum time of the collected activities
+     * @param float $max The maximum time of collected activities
      */
     protected function addActivityValues(array &$activity, float $min, float $max) : void
     {
@@ -161,6 +223,13 @@ class Debugger
         $activity['width'] = .0;
     }
 
+    /**
+     * Set the path of the debugbar view.
+     *
+     * @param string $file The view file path
+     *
+     * @return static
+     */
     public function setDebugbarView(string $file) : static
     {
         $realpath = \realpath($file);
@@ -173,11 +242,21 @@ class Debugger
         return $this;
     }
 
+    /**
+     * Get the path of the debugbar view.
+     *
+     * @return string
+     */
     public function getDebugbarView() : string
     {
         return $this->debugbarView;
     }
 
+    /**
+     * Render the debug bar, if it is enabled.
+     *
+     * @return string The debug bar (if enabled) or a blank string
+     */
     public function renderDebugbar() : string
     {
         if (!$this->isDebugbarEnabled()) {
@@ -230,6 +309,13 @@ class Debugger
         return $this;
     }
 
+    /**
+     * Replace a list of characters with hyphens.
+     *
+     * @param string $name The name to be updated
+     *
+     * @return string Returns the name with replacements
+     */
     public static function makeSafeName(string $name) : string
     {
         return \strtr(\trim(\strip_tags(\strtolower($name))), [
@@ -245,6 +331,13 @@ class Debugger
         ]);
     }
 
+    /**
+     * Convert size to unit of measurement.
+     *
+     * @param float|int $size The size in bytes
+     *
+     * @return string Returns the size with unit of measurement
+     */
     public static function convertSize(float | int $size) : string
     {
         if (empty($size)) {
@@ -255,6 +348,13 @@ class Debugger
         return \round($size / (1024 ** $index), 3) . ' ' . $unit[$index];
     }
 
+    /**
+     * Make a value into a debug value.
+     *
+     * @param mixed $value Any value
+     *
+     * @return string The value made
+     */
     public static function makeDebugValue(mixed $value) : string
     {
         $type = \get_debug_type($value);
@@ -271,9 +371,9 @@ class Debugger
     /**
      * Remove dots and zeros from the end of the version.
      *
-     * @param string $version
+     * @param string $version The version
      *
-     * @return string
+     * @return string The updated version
      */
     public static function roundVersion(string $version) : string
     {
@@ -284,6 +384,14 @@ class Debugger
         return $version;
     }
 
+    /**
+     * Round seconds to milliseconds.
+     *
+     * @param float|int $seconds The number of seconds
+     * @param int $precision The number of decimal digits to round
+     *
+     * @return float Returns the value in milliseconds
+     */
     public static function roundSecondsToMilliseconds(float | int $seconds, int $precision = 3) : float
     {
         return \round($seconds * 1000, $precision);
