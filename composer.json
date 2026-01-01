@@ -38,10 +38,10 @@
     ],
     "require": {
         "php": ">=8.5",
-        "aplus/cli": "^3.0",
-        "aplus/helpers": "^4.0",
-        "aplus/language": "^4.0",
-        "aplus/log": "^4.0"
+        "aplus/cli": "4.x-dev",
+        "aplus/helpers": "^5.0",
+        "aplus/language": "5.x-dev",
+        "aplus/log": "5.x-dev"
     },
     "require-dev": {
         "ext-xdebug": "*",
