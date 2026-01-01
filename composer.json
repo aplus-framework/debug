@@ -37,7 +37,7 @@
         }
     ],
     "require": {
-        "php": ">=8.3",
+        "php": ">=8.5",
         "aplus/cli": "^3.0",
         "aplus/helpers": "^4.0",
         "aplus/language": "^4.0",
@@ -74,7 +74,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.x-dev"
+            "dev-master": "5.x-dev"
         }
     }
 }
