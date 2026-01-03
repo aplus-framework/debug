@@ -413,6 +413,10 @@
     color: red;
 }
 
+.aplus-debug .text-opaque {
+    color: gray;
+}
+
 .aplus-debug.inverted {
     filter: invert(1);
 }
