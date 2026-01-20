@@ -393,7 +393,7 @@ if ($traces
             <?php foreach ($values as $field => $value) : ?>
                 <tr>
                     <th><?= htmlentities($field) ?></th>
-                    <td><?= htmlentities($value) ?></td>
+                    <td><?= htmlentities((string) $value) ?></td>
                 </tr>
             <?php endforeach ?>
             </tbody>
