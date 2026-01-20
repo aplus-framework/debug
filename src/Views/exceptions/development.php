@@ -392,7 +392,7 @@ if ($traces
             <tbody>
             <?php
             foreach ($values as $field => $value) :
-                if ($value instanceof BackedEnum) {
+                if ($value instanceof UnitEnum) {
                     $value = $value::class . '::' . $value->name;
                 }
                 ?>
