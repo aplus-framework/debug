@@ -16,6 +16,7 @@ use Framework\Log\Log;
 use Framework\Log\Logger;
 use Framework\Log\Loggers\FileLogger;
 use Framework\Log\Loggers\SysLogger;
+use Framework\Log\LogLevel;
 use PHPUnit\Framework\TestCase;
 
 final class ExceptionHandlerTest extends TestCase
@@ -61,6 +62,20 @@ final class ExceptionHandlerTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid exceptions view file: /unknown/foo.php');
         $exceptions->setDevelopmentView('/unknown/foo.php');
+    }
+
+    public function testDevelopmentViewWithEnum() : void
+    {
+        $_ENV['logger.default.level'] = LogLevel::CRITICAL;
+        $exceptions = new ExceptionHandlerMock(ExceptionHandler::DEVELOPMENT);
+        $exceptions->cli = false;
+        \ob_start();
+        $exceptions->exceptionHandler(new \Exception('Foo'));
+        $contents = (string) \ob_get_clean();
+        self::assertStringContainsString(
+            'Framework\Log\LogLevel::CRITICAL',
+            $contents
+        );
     }
 
     public function testProductionView() : void
