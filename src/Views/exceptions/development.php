@@ -390,12 +390,19 @@ if ($traces
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($values as $field => $value) : ?>
+            <?php
+            foreach ($values as $field => $value) :
+                if ($value instanceof UnitEnum) {
+                    $value = $value::class . '::' . $value->name;
+                }
+                ?>
                 <tr>
                     <th><?= htmlentities($field) ?></th>
                     <td><?= htmlentities((string) $value) ?></td>
                 </tr>
-            <?php endforeach ?>
+            <?php
+            endforeach
+            ?>
             </tbody>
         </table>
     <?php endforeach ?>
