@@ -248,6 +248,14 @@ final class DebuggerTest extends TestCase
         );
     }
 
+    public function testDefaultIconPath() : void
+    {
+        self::assertStringContainsString(
+            '<svg width="32" height="32" ',
+            $this->debugger->renderDebugbar()
+        );
+    }
+
     protected function closeBuffer() : void
     {
         if (\ob_get_level()) {

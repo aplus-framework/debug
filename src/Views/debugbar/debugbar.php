@@ -11,7 +11,7 @@ $infoIcon = file_get_contents(__DIR__ . '/icons/info.svg');
 if (!isset($options['info_contents'])) {
     $options['info_contents'] = '<p>★ <a href="https://aplus-framework.com" target="_blank">aplus-framework.com</a></p>';
 }
-$iconPath = __DIR__ . '/icon.png';
+$iconPath = __DIR__ . '/icon.svg';
 if (isset($options['icon_path'])) {
     $iconPath = $options['icon_path'];
 }
@@ -130,7 +130,12 @@ endif
     </div>
     <div class="toolbar">
         <div class="icon">
-            <img src="data:image/png;base64,<?= base64_encode((string) file_get_contents($iconPath)) ?>" alt="A+" width="32" height="32">
+            <?php $contents = (string) file_get_contents($iconPath) ?>
+            <?php if(str_ends_with($iconPath, '.svg')) : ?>
+                <?= strtr($contents, ['<svg ' => '<svg width="32" height="32" ']) ?>
+            <?php else : ?>
+                <img src="data:image/png;base64,<?= base64_encode($contents) ?>" alt="A+" width="32" height="32">
+            <?php endif ?>
         </div>
         <div class="collections">
             <?php foreach ($collections as $collection): ?>
