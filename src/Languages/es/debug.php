@@ -16,7 +16,7 @@ return [
     'exceptionTitle' => 'Error 500 - Error Interno del Servidor',
     'exceptionDescription' => 'Algo salió mal. Por favor vuelve más tarde.',
     'internalServerError' => 'Error Interno del Servidor',
-    'search' => 'Buscar',
+    'searchWith' => 'Buscar con',
     'log' => 'Registro',
     'date' => 'Fecha',
     'time' => 'Tiempo',
