@@ -32,7 +32,8 @@ final class CollectionTest extends TestCase
 
     public function testIconPath() : void
     {
-        $collection = new class('Foo') extends Collection {
+        $collection = new class('Foo') extends Collection
+        {
             protected string $iconPath = __DIR__ . '/../src/Views/debugbar/icons/info.svg';
         };
         self::assertTrue($collection->hasIcon());
@@ -42,7 +43,8 @@ final class CollectionTest extends TestCase
     {
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Icon path is invalid: /foo/bar');
-        $collection = new class('Foo') extends Collection {
+        $collection = new class('Foo') extends Collection
+        {
             protected string $iconPath = '/foo/bar';
         };
     }
