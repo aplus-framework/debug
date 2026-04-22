@@ -40,7 +40,6 @@ class ExceptionHandler
     protected string $environment = ExceptionHandler::PRODUCTION;
     protected Language $language;
     protected bool $testing = false;
-    protected SearchEngines $searchEngines;
     protected bool $showLogId = true;
     protected int $jsonFlags = \JSON_THROW_ON_ERROR
     | \JSON_UNESCAPED_SLASHES
@@ -368,20 +367,6 @@ class ExceptionHandler
             $errfile,
             $errline
         );
-    }
-
-    public function getSearchEngines() : SearchEngines
-    {
-        if (!isset($this->searchEngines)) {
-            $this->setSearchEngines(new SearchEngines());
-        }
-        return $this->searchEngines;
-    }
-
-    public function setSearchEngines(SearchEngines $searchEngines) : static
-    {
-        $this->searchEngines = $searchEngines;
-        return $this;
     }
 
     /**
