@@ -27,6 +27,9 @@
     font-family: inherit;
     font-weight: 700;
     margin: 0 0 10px 0;
+    left: 0;
+    transform: none;
+    border: 0;
 }
 
 .aplus-debug h1 {
@@ -277,6 +280,8 @@
     padding: 0 10px 2px 10px;
     display: flex;
     align-items: center;
+    position: relative;
+    justify-content: left;
 }
 
 .aplus-debug .panels header .title {
