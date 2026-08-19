@@ -46,7 +46,7 @@ final class DebuggerTest extends TestCase
 
     public function testDebugbarView() : void
     {
-        self::assertIsString($this->debugger->getDebugbarView());
+        self::assertIsString($this->debugger->getDebugbarView()); // @phpstan-ignore-line
         $file = __DIR__ . '/../src/Views/debugbar/debugbar.php';
         $this->debugger->setDebugbarView($file);
         self::assertSame(\realpath($file), $this->debugger->getDebugbarView());

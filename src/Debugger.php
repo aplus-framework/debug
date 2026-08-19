@@ -184,7 +184,9 @@ class Debugger
             \usort($collected, static function ($c1, $c2) {
                 return $c1['start'] <=> $c2['start'];
             });
+            // @phpstan-ignore-next-line - Allowed to fail because activities must have the "start" key!
             $min = \min(\array_column($collected, 'start'));
+            // @phpstan-ignore-next-line - Allowed to fail because activities must have the "end" key!
             $max = \max(\array_column($collected, 'end'));
             foreach ($collected as &$activity) {
                 $this->addActivityValues($activity, $min, $max);
@@ -345,7 +347,7 @@ class Debugger
         }
         $unit = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
         $index = \floor(\log($size, 1024));
-        return \round($size / (1024 ** $index), 3) . ' ' . $unit[$index];
+        return \round($size / (1024 ** $index), 3) . ' ' . $unit[(int) $index];
     }
 
     /**

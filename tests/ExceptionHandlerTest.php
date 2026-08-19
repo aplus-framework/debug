@@ -72,7 +72,7 @@ final class ExceptionHandlerTest extends TestCase
         \ob_start();
         $exceptions->exceptionHandler(new \Exception('Foo'));
         \ob_end_clean();
-        self::assertTrue(true); // This test is only to increase coverage.
+        self::assertTrue(true); // @phpstan-ignore-line - This test is only to increase coverage.
     }
 
     public function testProductionView() : void
