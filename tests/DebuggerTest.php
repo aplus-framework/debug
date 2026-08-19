@@ -11,6 +11,7 @@ namespace Tests\Debug;
 
 use Framework\Debug\Collection;
 use Framework\Debug\Debugger;
+use LogicException;
 use PHPUnit\Framework\TestCase;
 
 final class DebuggerTest extends TestCase
@@ -216,6 +217,39 @@ final class DebuggerTest extends TestCase
         self::assertStringContainsString('1 activity', $debugbar);
     }
 
+    public function testActivitiesWithoutStartKey() : void
+    {
+        $collector = new CollectorMock();
+        $this->debugger->addCollector($collector, 'Foo');
+        $collector->activities = [
+            [
+                'collector' => 'default',
+                'class' => 'Class name',
+                'description' => 'Collected data 1',
+            ],
+        ];
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('An activity does not have the "start" key');
+        $this->debugger->getActivities();
+    }
+
+    public function testActivitiesWithoutEndKey() : void
+    {
+        $collector = new CollectorMock();
+        $this->debugger->addCollector($collector, 'Foo');
+        $collector->activities = [
+            [
+                'collector' => 'default',
+                'class' => 'Class name',
+                'description' => 'Collected data 1',
+                'start' => \microtime(),
+            ],
+        ];
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('An activity does not have the "end" key');
+        $this->debugger->getActivities();
+    }
+
     public function testOptions() : void
     {
         self::assertEmpty($this->debugger->getOptions());
@@ -269,7 +303,7 @@ final class DebuggerTest extends TestCase
         $this->debugger->setOption('icon_path', $iconPath);
         try {
             $this->debugger->renderDebugbar();
-        } catch (\LogicException $e) {
+        } catch (LogicException $e) {
             self::assertSame(
                 'Icon not found: ' . $iconPath,
                 $e->getMessage()
