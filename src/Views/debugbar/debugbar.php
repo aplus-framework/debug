@@ -1,6 +1,6 @@
 <?php
 
-use Framework\Debug\Debugger;
+use Framework\Debug\Debugger as D;
 
 /**
  * @var array<string,Framework\Debug\Collection> $collections
@@ -43,9 +43,9 @@ echo $contents;
                 <div class="collector-default">
                     <p>Running<?=
                         class_exists('Aplus')
-                            ? ' <a href="https://aplus-framework.com" target="_blank" class="aplus-link">Aplus</a> ' . Debugger::roundVersion(Aplus::VERSION)
+                            ? ' <a href="https://aplus-framework.com" target="_blank" class="aplus-link">Aplus</a> ' . D::roundVersion(Aplus::VERSION)
                             : '' ?> on <?= \PHP_OS_FAMILY ?> with PHP
-                        <?= Debugger::roundVersion(\PHP_VERSION) ?>.
+                        <?= D::roundVersion(\PHP_VERSION) ?>.
                     </p>
                     <?= $options['info_contents'] ?>
                     <?php
@@ -54,7 +54,7 @@ if ($count):
     ?>
                         <p><?= $count ?> activit<?= $count === 1
             ? 'y was'
-            : 'ies were' ?> collected in <?= Debugger::roundSecondsToMilliseconds($activities['total']) ?> milliseconds:
+            : 'ies were' ?> collected in <?= D::roundSecondsToMilliseconds($activities['total']) ?> milliseconds:
                         </p>
                         <table>
                             <thead>
@@ -78,7 +78,7 @@ if ($count):
                                     <td><?= htmlentities($collected['collection']) ?></td>
                                     <td title="<?= htmlentities($collected['class']) ?>"><?= htmlentities($collected['collector']) ?></td>
                                     <td><?= htmlentities($collected['description']) ?></td>
-                                    <td><?= Debugger::roundSecondsToMilliseconds($collected['total']) ?></td>
+                                    <td><?= D::roundSecondsToMilliseconds($collected['total']) ?></td>
                                     <td>
                                     <span style="width: <?= $collected['width'] ?>%; margin-left: <?=
                 $collected['left']
