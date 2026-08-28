@@ -405,4 +405,10 @@ class Debugger
     {
         return \round($seconds * 1000, $precision);
     }
+
+    public static function esc(mixed $value) : string
+    {
+        $value = (string) $value;
+        return \htmlspecialchars($value, \ENT_QUOTES | \ENT_HTML5);
+    }
 }
