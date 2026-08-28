@@ -75,9 +75,9 @@ if ($count):
                             <?php foreach ($activities['collected'] as $index => $collected): ?>
                                 <tr>
                                     <td><?= $index + 1 ?></td>
-                                    <td><?= htmlentities($collected['collection']) ?></td>
-                                    <td title="<?= htmlentities($collected['class']) ?>"><?= htmlentities($collected['collector']) ?></td>
-                                    <td><?= htmlentities($collected['description']) ?></td>
+                                    <td><?= D::esc($collected['collection']) ?></td>
+                                    <td title="<?= D::esc($collected['class']) ?>"><?= D::esc($collected['collector']) ?></td>
+                                    <td><?= D::esc($collected['description']) ?></td>
                                     <td><?= D::roundSecondsToMilliseconds($collected['total']) ?></td>
                                     <td>
                                     <span style="width: <?= $collected['width'] ?>%; margin-left: <?=
