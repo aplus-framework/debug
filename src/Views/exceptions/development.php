@@ -4,6 +4,7 @@
  * @var Framework\Debug\ExceptionHandler $handler
  */
 
+use Framework\Debug\Debugger as D;
 use Framework\Helpers\ArraySimple;
 
 $lang = static function (string $line, array $args = []) use ($handler) : string {
@@ -19,7 +20,7 @@ $lang = static function (string $line, array $args = []) use ($handler) : string
     <meta name="robots" content="noindex">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= $lang('exception') ?>: <?=
-        htmlentities($exception->getMessage()) ?></title>
+        D::esc($exception->getMessage()) ?></title>
     <link rel="shortcut icon" href="data:image/png;base64,<?= base64_encode((string) file_get_contents(__DIR__ . '/favicons/development.png')) ?>">
     <style>
         <?= file_get_contents(__DIR__ . '/../assets/prism-aplus.css') ?>
@@ -253,7 +254,7 @@ $lang = static function (string $line, array $args = []) use ($handler) : string
     <small><?= $lang('exception') ?>:</small>
     <h1><?= $exception::class ?></h1>
     <small><?= $lang('message') ?>:</small>
-    <h2><?= htmlentities($exception->getMessage()) ?></h2>
+    <h2><?= D::esc($exception->getMessage()) ?></h2>
     <div class="search-section">
         <span><?= $lang('searchWith') ?>:</span>
         <?php
@@ -272,7 +273,7 @@ $lang = static function (string $line, array $args = []) use ($handler) : string
 <section class="file">
     <div>
         <small><?= $lang('file') ?>:</small>
-        <h3><?= htmlentities($exception->getFile()) ?></h3>
+        <h3><?= D::esc($exception->getFile()) ?></h3>
     </div>
     <div class="line">
         <small><?= $lang('line') ?>:</small>
@@ -338,7 +339,7 @@ if ($traces
                         }
                     }
             ?></div>
-                        <pre class="code"><code class="language-php"><?= htmlentities($pre) ?></code></pre>
+                        <pre class="code"><code class="language-php"><?= D::esc($pre) ?></code></pre>
                     </dd>
                 </dl>
             <?php else : ?>
@@ -403,8 +404,8 @@ if ($traces
                 }
                 ?>
                 <tr>
-                    <th><?= htmlentities($field) ?></th>
-                    <td><?= htmlentities((string) $value) ?></td>
+                    <th><?= D::esc($field) ?></th>
+                    <td><?= D::esc((string) $value) ?></td>
                 </tr>
             <?php
             endforeach
@@ -429,16 +430,16 @@ if ($log): ?>
             </tr>
             <tr>
                 <th><?= $lang('level') ?></th>
-                <td><?= htmlentities($log->level->name) ?></td>
+                <td><?= D::esc($log->level->name) ?></td>
             </tr>
             <tr>
                 <th><?= $lang('id') ?></th>
-                <td><?= htmlentities($log->id) ?></td>
+                <td><?= D::esc($log->id) ?></td>
             </tr>
             <tr>
                 <th><?= $lang('message') ?></th>
                 <td dir="ltr">
-                    <pre><code class="language-log"><?= htmlentities($log->message) ?></code></pre>
+                    <pre><code class="language-log"><?= D::esc($log->message) ?></code></pre>
                 </td>
             </tr>
         </table>

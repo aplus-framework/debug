@@ -2,6 +2,7 @@
 /**
  * @var Framework\Debug\ExceptionHandler $handler
  */
+use Framework\Debug\Debugger as D;
 
 /**
  * @param string $line
@@ -55,19 +56,19 @@ $isRtl = $handler->getLanguage()->getCurrentLocaleDirection() === 'rtl';
 <?php if ($log) : ?>
     <?php if ($isRtl) : ?>
         <p><span class="log-id"
-                title="<?= htmlentities($lang('clickToCopyLogId')) ?>"
-            ><?= htmlentities($log->id) ?></span> :<?= $lang('logId') ?>
+                title="<?= D::esc($lang('clickToCopyLogId')) ?>"
+            ><?= D::esc($log->id) ?></span> :<?= $lang('logId') ?>
         </p>
     <?php else : ?>
         <p><?= $lang('logId') ?>: <span class="log-id"
-                title="<?= htmlentities($lang('clickToCopyLogId')) ?>"
-            ><?= htmlentities($log->id) ?></span>
+                title="<?= D::esc($lang('clickToCopyLogId')) ?>"
+            ><?= D::esc($log->id) ?></span>
         </p>
     <?php endif ?>
     <script>
         document.querySelector('.log-id').onclick = function () {
             navigator.clipboard.writeText(this.innerText);
-            alert("<?= htmlentities($lang('logIdCopied')) ?>");
+            alert("<?= D::esc($lang('logIdCopied')) ?>");
         }
     </script>
 <?php endif ?>
