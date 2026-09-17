@@ -11,7 +11,6 @@ namespace Framework\Debug;
 
 use Framework\Helpers\Isolation;
 use InvalidArgumentException;
-use JetBrains\PhpStorm\ArrayShape;
 use LogicException;
 
 /**
@@ -163,14 +162,13 @@ class Debugger
      * Get an array with the minimum, maximum, and total execution times for
      * all activities. Also, returns an array with all collected activities.
      *
-     * @return array<string,mixed>
+     * @return array{
+     *      min: float,
+     *      max: float,
+     *      total: float,
+     *      collected: array<int,array<mixed>>,
+     * }
      */
-    #[ArrayShape([
-        'min' => 'float',
-        'max' => 'float',
-        'total' => 'float',
-        'collected' => 'array',
-    ])]
     public function getActivities() : array
     {
         $collected = [];
