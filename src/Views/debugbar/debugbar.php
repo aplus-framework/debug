@@ -4,7 +4,22 @@ use Framework\Debug\Debugger as D;
 
 /**
  * @var array<string,Framework\Debug\Collection> $collections
- * @var array<string,mixed> $activities
+ * @var array{
+ *      min: float,
+ *      max: float,
+ *      total: float,
+ *      collected: array<int,array{
+ *          collection: string,
+ *          collector: string,
+ *          class: string,
+ *          description: string,
+ *          start: float,
+ *          end: float,
+ *          total: float,
+ *          left: float,
+ *          width: float,
+ *      }>,
+ * } $activities
  * @var array<string,mixed> $options
  */
 $infoIcon = file_get_contents(__DIR__ . '/icons/info.svg');
