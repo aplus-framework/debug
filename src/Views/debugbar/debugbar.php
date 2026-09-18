@@ -64,12 +64,11 @@ echo $contents;
                     </p>
                     <?= $options['info_contents'] ?>
                     <?php
-                $count = isset($activities['collected']) ? count($activities['collected']) : 0;
-if ($count):
-    ?>
-                        <p><?= $count ?> activit<?= $count === 1
-            ? 'y was'
-            : 'ies were' ?> collected in <?= D::roundSecondsToMilliseconds($activities['total']) ?> milliseconds:
+                    $count = count($activities['collected']);
+                    if ($count):
+                    ?>
+                        <p><?= $count ?> activit<?= $count === 1 ? 'y was' : 'ies were' ?>
+                        collected in <?= D::roundSecondsToMilliseconds($activities['total']) ?> milliseconds:
                         </p>
                         <table>
                             <thead>
@@ -95,20 +94,20 @@ if ($count):
                                     <td><?= D::esc($collected['description']) ?></td>
                                     <td><?= D::roundSecondsToMilliseconds($collected['total']) ?></td>
                                     <td>
-                                    <span style="width: <?= $collected['width'] ?>%; margin-left: <?=
-                $collected['left']
-                                ?>%" title="<?= $collected['width'] ?>% · From <?=
-                                $collected['left'] ?>% to <?=
-                                $collected['left'] + $collected['width'] ?>% · From <?=
-                                round($collected['start'], 6) ?> to <?= round($collected['end'], 6) ?> second"></span>
+                                    <span style="width: <?= $collected['width'] ?>%; margin-left: <?= $collected['left']?>%"
+                                        title="<?= $collected['width']
+                                        ?>% · From <?= $collected['left'] ?>% to <?= $collected['left'] + $collected['width']
+                                        ?>% · From <?= round($collected['start'], 6) ?> to <?= round($collected['end'], 6)
+                                        ?> second">
+                                    </span>
                                     </td>
                                 </tr>
                             <?php endforeach ?>
                             </tbody>
                         </table>
                     <?php
-endif
-?>
+                    endif
+                    ?>
                 </div>
             </div>
         </div>
