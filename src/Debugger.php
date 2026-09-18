@@ -11,7 +11,6 @@ namespace Framework\Debug;
 
 use Framework\Helpers\Isolation;
 use InvalidArgumentException;
-use LogicException;
 
 /**
  * Class Debugger.
@@ -180,14 +179,6 @@ class Debugger
         $min = .0;
         $max = .0;
         if ($collected) {
-            foreach($collected as $value) {
-                if (!isset($value['start'])) {
-                    throw new LogicException('An activity does not have the "start" key');
-                }
-                if (!isset($value['end'])) {
-                    throw new LogicException('An activity does not have the "end" key');
-                }
-            }
             \usort($collected, static function ($c1, $c2) {
                 return $c1['start'] <=> $c2['start'];
             });
