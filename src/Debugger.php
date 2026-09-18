@@ -185,8 +185,9 @@ class Debugger
             $min = \min(\array_column($collected, 'start'));
             $max = \max(\array_column($collected, 'end'));
             foreach ($collected as &$activity) {
-                $this->addActivityValues($activity, $min, $max);
+                $activity = $this->addActivityValues($activity, $min, $max);
             }
+            unset($activity);
         }
         return [
             'min' => $min,
@@ -204,21 +205,41 @@ class Debugger
      * Adds the "left" and "width" keys representing the CSS `margin-left` and
      * `width` properties used to create the time bar.
      *
-     * @param array<string,mixed> $activity Current activity
+     * @param array{
+     *      collection: string,
+     *      collector: string,
+     *      class: string,
+     *      description: string,
+     *      start: float,
+     *      end: float,
+     * } $activity Current activity
      * @param float $min The minimum time of the collected activities
      * @param float $max The maximum time of collected activities
+     *
+     * @return array{
+     *      collection: string,
+     *      collector: string,
+     *      class: string,
+     *      description: string,
+     *      start: float,
+     *      end: float,
+     *      total: float,
+     *      left: float,
+     *      width: float,
+     * }
      */
-    protected function addActivityValues(array &$activity, float $min, float $max) : void
+    protected function addActivityValues(array $activity, float $min, float $max) : array
     {
         $total = $max - $min;
         $activity['total'] = $activity['end'] - $activity['start'];
         if ($total > 0) {
             $activity['left'] = \round(($activity['start'] - $min) * 100 / $total, 3);
             $activity['width'] = \round($activity['total'] * 100 / $total, 3);
-            return;
+            return $activity;
         }
         $activity['left'] = .0;
         $activity['width'] = .0;
+        return $activity;
     }
 
     /**
