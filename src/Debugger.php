@@ -165,7 +165,17 @@ class Debugger
      *      min: float,
      *      max: float,
      *      total: float,
-     *      collected: array<int,array<mixed>>,
+     *      collected: array<int,array{
+     *          collection: string,
+     *          collector: string,
+     *          class: string,
+     *          description: string,
+     *          start: float,
+     *          end: float,
+     *          total: float,
+     *          left: float,
+     *          width: float,
+     *      }>,
      * }
      */
     public function getActivities() : array

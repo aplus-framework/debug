@@ -92,7 +92,14 @@ class Collection
     }
 
     /**
-     * @return array<int,array<int,array<string,mixed>>>
+     * @return array<int,array<int,array{
+     *      collection: string,
+     *      collector: string,
+     *      class: string,
+     *      description: string,
+     *      start: float,
+     *      end: float,
+     * }>>
      */
     public function getActivities() : array
     {

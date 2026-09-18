@@ -22,7 +22,13 @@ abstract class Collector
      */
     protected array $data = [];
     /**
-     * @var array<int,array<string,mixed>>
+     * @var array<int,array{
+     *      collector: string,
+     *      class: string,
+     *      description: string,
+     *      start: float,
+     *      end: float,
+     * }>
      */
     protected array $activities = [];
 
@@ -66,7 +72,13 @@ abstract class Collector
     }
 
     /**
-     * @return array<int,array<string,mixed>>
+     * @return array<int,array{
+     *      collector: string,
+     *      class: string,
+     *      description: string,
+     *      start: float,
+     *      end: float,
+     * }>
      */
     public function getActivities() : array
     {
