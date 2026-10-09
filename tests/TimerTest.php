@@ -49,10 +49,10 @@ final class TimerTest extends TestCase
     public function testTest() : void
     {
         $this->timer->test(10, static function () : void {
-            \strpos('abc', 'b'); // @phpstan-ignore-line
+            \strpos('abc', 'b');
         });
         $this->timer->test(10, static function () : void {
-            \stripos('abc', 'b'); // @phpstan-ignore-line
+            \stripos('abc', 'b');
         });
         self::assertSame([
             'debug[start]',
