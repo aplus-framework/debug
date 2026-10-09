@@ -261,7 +261,6 @@ $lang = static function (string $line, array $args = []) use ($handler) : string
         $query = $exception::class . ': ' . $exception->getMessage();
         $query = urlencode($query);
         ?>
-        <a href="https://www.ask.com/web?q=<?= $query ?>" rel="noreferrer" target="_blank" class="search-button">Ask</a>
         <a href="https://www.baidu.com/s?wd=<?= $query ?>" rel="noreferrer" target="_blank" class="search-button">Baidu</a>
         <a href="https://www.bing.com/search?q=<?= $query ?>" rel="noreferrer" target="_blank" class="search-button">Bing</a>
         <a href="https://duckduckgo.com/?q=<?= $query ?>" rel="noreferrer" target="_blank" class="search-button">DuckDuckGo</a>
