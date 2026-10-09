@@ -436,6 +436,10 @@ if ($log): ?>
                 <td><?= D::esc($log->id) ?></td>
             </tr>
             <tr>
+                <th><?= $lang('ip') ?></th>
+                <td><?= D::esc($log->ip) ?></td>
+            </tr>
+            <tr>
                 <th><?= $lang('message') ?></th>
                 <td dir="ltr">
                     <pre><code class="language-log"><?= D::esc($log->message) ?></code></pre>

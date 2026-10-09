@@ -22,6 +22,7 @@ return [
     'time' => 'Time',
     'level' => 'Level',
     'id' => 'ID',
+    'ip' => 'IP',
     'input' => 'Input',
     'logId' => 'Log id',
     'logIdCopied' => 'Log id copied!',
