@@ -9,6 +9,7 @@
  */
 namespace Tests\Debug;
 
+use Framework\Debug\Activity;
 use Framework\Debug\Collection;
 use Framework\Debug\Debugger;
 use LogicException;
@@ -98,21 +99,23 @@ final class DebuggerTest extends TestCase
     public function testActivities() : void
     {
         $microtime = \microtime(true);
+        $activityStart1 = new Activity(
+            collector: 'default',
+            class: 'Class name',
+            description: 'Collected data 1',
+            start: $microtime,
+            end: $microtime + .5,
+        );
+        $activityStart2 = new Activity(
+            collector: 'default',
+            class: 'Class name',
+            description: 'Collected data 2',
+            start: $microtime + .1,
+            end: $microtime + 1.0,
+        );
         $activities = [
-            [
-                'collector' => 'default',
-                'class' => 'Class name',
-                'description' => 'Collected data 1',
-                'start' => $microtime,
-                'end' => $microtime + .5,
-            ],
-            [
-                'collector' => 'default',
-                'class' => 'Class name',
-                'description' => 'Collected data 2',
-                'start' => $microtime + .1,
-                'end' => $microtime + 1.0,
-            ],
+            $activityStart1,
+            $activityStart2,
         ];
         self::assertSame([
             'min' => .0,
@@ -120,56 +123,43 @@ final class DebuggerTest extends TestCase
             'total' => .0,
             'collected' => [],
         ], $this->debugger->getActivities());
+
         $collector = new CollectorMock();
         $collector->activities[0] = $activities[0];
         $this->debugger->addCollector($collector, 'Foo');
-        self::assertSame([
+        $activityEnd = clone($activityStart1, [
+            'collection' => 'Foo',
+            'left' => .0,
+            'width' => 100.0,
+        ]);
+        self::assertEquals([
             'min' => $microtime,
-            'max' => $activities[0]['end'],
+            'max' => $activities[0]->end,
             'total' => .5,
             'collected' => [
-                [
-                    'collection' => 'Foo',
-                    'collector' => 'default',
-                    'class' => 'Class name',
-                    'description' => 'Collected data 1',
-                    'start' => $microtime,
-                    'end' => $microtime + .5,
-                    'total' => .5,
-                    'left' => .0,
-                    'width' => 100.0,
-                ],
+                $activityEnd,
             ],
         ], $this->debugger->getActivities());
         self::assertStringContainsString('1 activity', $this->debugger->renderDebugbar());
+
         $collector->activities = $activities;
-        self::assertSame([
+        $activityEnd1 = clone($activityStart1, [
+            'collection' => 'Foo',
+            'left' => .0,
+            'width' => 50.0,
+        ]);
+        $activityEnd2 = clone($activityStart2, [
+            'collection' => 'Foo',
+            'left' => 10.0,
+            'width' => 90.0,
+        ]);
+        self::assertEquals([
             'min' => $microtime,
-            'max' => $activities[1]['end'],
+            'max' => $activities[1]->end,
             'total' => 1.0,
             'collected' => [
-                [
-                    'collection' => 'Foo',
-                    'collector' => 'default',
-                    'class' => 'Class name',
-                    'description' => 'Collected data 1',
-                    'start' => $microtime,
-                    'end' => $microtime + .5,
-                    'total' => .5,
-                    'left' => .0,
-                    'width' => 50.0,
-                ],
-                [
-                    'collection' => 'Foo',
-                    'collector' => 'default',
-                    'class' => 'Class name',
-                    'description' => 'Collected data 2',
-                    'start' => $microtime + .1,
-                    'end' => $microtime + 1.0,
-                    'total' => $activities[1]['end'] - $activities[1]['start'],
-                    'left' => 10.0,
-                    'width' => 90.0,
-                ],
+                $activityEnd1,
+                $activityEnd2,
             ],
         ], $this->debugger->getActivities());
         $debugbar = $this->debugger->renderDebugbar();
@@ -183,34 +173,30 @@ final class DebuggerTest extends TestCase
     public function testActivitiesDivisionByZero() : void
     {
         $microtime = \microtime(true);
+        $activityStart = new Activity(
+            collector: 'default',
+            class: 'Class name',
+            description: 'Collected data 1',
+            start: $microtime,
+            end: $microtime,
+        );
         $activities = [
-            [
-                'collector' => 'default',
-                'class' => 'Class name',
-                'description' => 'Collected data 1',
-                'start' => $microtime,
-                'end' => $microtime,
-            ],
+            $activityStart,
         ];
         $collector = new CollectorMock();
         $this->debugger->addCollector($collector, 'Foo');
         $collector->activities = $activities;
-        self::assertSame([
+        $activityEnd = clone($activityStart, [
+            'collection' => 'Foo',
+            'left' => .0,
+            'width' => .0,
+        ]);
+        self::assertEquals([
             'min' => $microtime,
             'max' => $microtime,
             'total' => .0,
             'collected' => [
-                [
-                    'collection' => 'Foo',
-                    'collector' => 'default',
-                    'class' => 'Class name',
-                    'description' => 'Collected data 1',
-                    'start' => $microtime,
-                    'end' => $microtime,
-                    'total' => .0,
-                    'left' => .0,
-                    'width' => .0,
-                ],
+                $activityEnd,
             ],
         ], $this->debugger->getActivities());
         $debugbar = $this->debugger->renderDebugbar();

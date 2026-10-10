@@ -1,5 +1,6 @@
 <?php
 
+use Framework\Debug\Activity;
 use Framework\Debug\Debugger as D;
 
 /**
@@ -8,17 +9,7 @@ use Framework\Debug\Debugger as D;
  *      min: float,
  *      max: float,
  *      total: float,
- *      collected: array<int,array{
- *          collection: string,
- *          collector: string,
- *          class: string,
- *          description: string,
- *          start: float,
- *          end: float,
- *          total: float,
- *          left: float,
- *          width: float,
- *      }>,
+ *      collected: array<int,Activity>,
  * } $activities
  * @var array<string,mixed> $options
  */
@@ -89,16 +80,13 @@ echo $contents;
                             <?php foreach ($activities['collected'] as $index => $collected): ?>
                                 <tr>
                                     <td><?= $index + 1 ?></td>
-                                    <td><?= D::esc($collected['collection']) ?></td>
-                                    <td title="<?= D::esc($collected['class']) ?>"><?= D::esc($collected['collector']) ?></td>
-                                    <td><?= D::esc($collected['description']) ?></td>
-                                    <td><?= D::roundSecondsToMilliseconds($collected['total']) ?></td>
+                                    <td><?= D::esc($collected->collection) ?></td>
+                                    <td title="<?= D::esc($collected->class) ?>"><?= D::esc($collected->collector) ?></td>
+                                    <td><?= D::esc($collected->description) ?></td>
+                                    <td><?= D::roundSecondsToMilliseconds($collected->total()) ?></td>
                                     <td>
-                                    <span style="width: <?= $collected['width'] ?>%; margin-left: <?= $collected['left']?>%"
-                                        title="<?= $collected['width']
-                                        ?>% · From <?= $collected['left'] ?>% to <?= $collected['left'] + $collected['width']
-                                        ?>% · From <?= round($collected['start'], 6) ?> to <?= round($collected['end'], 6)
-                                        ?> second">
+                                    <span style="width: <?= $collected->width ?>%; margin-left: <?= $collected->left ?>%"
+                                        title="<?= $collected->title() ?>">
                                     </span>
                                     </td>
                                 </tr>

@@ -92,14 +92,7 @@ class Collection
     }
 
     /**
-     * @return array<int,array<int,array{
-     *      collection: string,
-     *      collector: string,
-     *      class: string,
-     *      description: string,
-     *      start: float,
-     *      end: float,
-     * }>>
+     * @return array<int,array<int,Activity>>
      */
     public function getActivities() : array
     {
@@ -107,10 +100,8 @@ class Collection
         foreach ($this->getCollectors() as $collector) {
             $activities = $collector->getActivities();
             if ($activities) {
-                foreach ($activities as &$activity) {
-                    $activity = \array_merge([
-                        'collection' => $this->getName(),
-                    ], $activity);
+                foreach ($activities as $activity) {
+                    $activity->collection = $this->getName();
                 }
                 unset($activity);
                 $result[] = $activities;

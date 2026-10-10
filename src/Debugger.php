@@ -165,17 +165,7 @@ class Debugger
      *      min: float,
      *      max: float,
      *      total: float,
-     *      collected: array<int,array{
-     *          collection: string,
-     *          collector: string,
-     *          class: string,
-     *          description: string,
-     *          start: float,
-     *          end: float,
-     *          total: float,
-     *          left: float,
-     *          width: float,
-     *      }>,
+     *      collected: array<int,Activity>,
      * }
      */
     public function getActivities() : array
@@ -190,12 +180,12 @@ class Debugger
         $max = .0;
         if ($collected) {
             \usort($collected, static function ($c1, $c2) {
-                return $c1['start'] <=> $c2['start'];
+                return $c1->start <=> $c2->start;
             });
             $min = \min(\array_column($collected, 'start'));
             $max = \max(\array_column($collected, 'end'));
-            foreach ($collected as &$activity) {
-                $activity = $this->addActivityValues($activity, $min, $max);
+            foreach ($collected as $activity) {
+                $activity->setTimeBarValues($min, $max);
             }
             unset($activity);
         }
@@ -205,51 +195,6 @@ class Debugger
             'total' => $max - $min,
             'collected' => $collected,
         ];
-    }
-
-    /**
-     * Updates the $activity variable.
-     *
-     * Adds the "total" key representing the total execution time.
-     *
-     * Adds the "left" and "width" keys representing the CSS `margin-left` and
-     * `width` properties used to create the time bar.
-     *
-     * @param array{
-     *      collection: string,
-     *      collector: string,
-     *      class: string,
-     *      description: string,
-     *      start: float,
-     *      end: float,
-     * } $activity Current activity
-     * @param float $min The minimum time of the collected activities
-     * @param float $max The maximum time of collected activities
-     *
-     * @return array{
-     *      collection: string,
-     *      collector: string,
-     *      class: string,
-     *      description: string,
-     *      start: float,
-     *      end: float,
-     *      total: float,
-     *      left: float,
-     *      width: float,
-     * }
-     */
-    protected function addActivityValues(array $activity, float $min, float $max) : array
-    {
-        $total = $max - $min;
-        $activity['total'] = $activity['end'] - $activity['start'];
-        if ($total > 0) {
-            $activity['left'] = \round(($activity['start'] - $min) * 100 / $total, 3);
-            $activity['width'] = \round($activity['total'] * 100 / $total, 3);
-            return $activity;
-        }
-        $activity['left'] = .0;
-        $activity['width'] = .0;
-        return $activity;
     }
 
     /**
