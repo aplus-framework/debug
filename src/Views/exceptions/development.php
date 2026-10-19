@@ -4,8 +4,8 @@
  * @var Framework\Debug\ExceptionHandler $handler
  */
 
+use Aplus\Helpers\ArraySimple;
 use Framework\Debug\Debugger as D;
-use Framework\Helpers\ArraySimple;
 
 $lang = static function (string $line, array $args = []) use ($handler) : string {
     return $handler->getLanguage()->render('debug', $line, $args);

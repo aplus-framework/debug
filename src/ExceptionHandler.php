@@ -9,9 +9,9 @@
  */
 namespace Framework\Debug;
 
+use Aplus\Helpers\Isolation;
 use ErrorException;
 use Framework\CLI\CLI;
-use Framework\Helpers\Isolation;
 use Framework\Language\Language;
 use Framework\Log\Log;
 use Framework\Log\Logger;

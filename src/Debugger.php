@@ -9,7 +9,7 @@
  */
 namespace Framework\Debug;
 
-use Framework\Helpers\Isolation;
+use Aplus\Helpers\Isolation;
 use InvalidArgumentException;
 
 /**
