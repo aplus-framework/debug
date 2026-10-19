@@ -56,7 +56,7 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Framework\\Debug\\": "src/"
+            "Aplus\\Debug\\": "src/"
         }
     },
     "autoload-dev": {
