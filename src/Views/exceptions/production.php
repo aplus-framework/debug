@@ -1,8 +1,8 @@
 <?php
 /**
- * @var Framework\Debug\ExceptionHandler $handler
+ * @var Aplus\Debug\ExceptionHandler $handler
  */
-use Framework\Debug\Debugger as D;
+use Aplus\Debug\Debugger as D;
 
 /**
  * @param string $line

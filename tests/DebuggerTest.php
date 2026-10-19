@@ -9,9 +9,9 @@
  */
 namespace Tests\Debug;
 
-use Framework\Debug\Activity;
-use Framework\Debug\Collection;
-use Framework\Debug\Debugger;
+use Aplus\Debug\Activity;
+use Aplus\Debug\Collection;
+use Aplus\Debug\Debugger;
 use LogicException;
 use PHPUnit\Framework\TestCase;
 

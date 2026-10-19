@@ -9,7 +9,7 @@
  */
 namespace Tests\Debug;
 
-use Framework\Debug\Collector;
+use Aplus\Debug\Collector;
 
 class CollectorMock extends Collector
 {

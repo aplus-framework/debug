@@ -9,7 +9,7 @@
  */
 namespace Tests\Debug;
 
-use Framework\Debug\Timer;
+use Aplus\Debug\Timer;
 use PHPUnit\Framework\TestCase;
 
 final class TimerTest extends TestCase

@@ -9,14 +9,14 @@
  */
 namespace Tests\Debug;
 
-use Framework\CLI\Streams\Stderr;
-use Framework\Debug\ExceptionHandler;
-use Framework\Language\Language;
-use Framework\Log\Log;
-use Framework\Log\Logger;
-use Framework\Log\Loggers\FileLogger;
-use Framework\Log\Loggers\SysLogger;
-use Framework\Log\LogLevel;
+use Aplus\Cli\Streams\Stderr;
+use Aplus\Debug\ExceptionHandler;
+use Aplus\Language\Language;
+use Aplus\Log\Log;
+use Aplus\Log\Logger;
+use Aplus\Log\Loggers\FileLogger;
+use Aplus\Log\Loggers\SysLogger;
+use Aplus\Log\LogLevel;
 use PHPUnit\Framework\TestCase;
 
 final class ExceptionHandlerTest extends TestCase

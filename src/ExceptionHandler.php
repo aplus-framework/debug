@@ -7,14 +7,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Framework\Debug;
+namespace Aplus\Debug;
 
+use Aplus\Cli\Cli;
 use Aplus\Helpers\Isolation;
+use Aplus\Language\Language;
+use Aplus\Log\Log;
+use Aplus\Log\Logger;
 use ErrorException;
-use Framework\CLI\CLI;
-use Framework\Language\Language;
-use Framework\Log\Log;
-use Framework\Log\Logger;
 use InvalidArgumentException;
 use RuntimeException;
 use Throwable;
@@ -298,7 +298,7 @@ class ExceptionHandler
         if ($log) {
             $message .= \PHP_EOL . $language->render('debug', 'logId') . ': ' . $log->id;
         }
-        CLI::error($message, $this->testing ? null : 1);
+        Cli::error($message, $this->testing ? null : 1);
     }
 
     protected function log(string $message) : void

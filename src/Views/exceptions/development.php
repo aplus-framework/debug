@@ -1,11 +1,11 @@
 <?php
 /**
  * @var Exception $exception
- * @var Framework\Debug\ExceptionHandler $handler
+ * @var Aplus\Debug\ExceptionHandler $handler
  */
 
+use Aplus\Debug\Debugger as D;
 use Aplus\Helpers\ArraySimple;
-use Framework\Debug\Debugger as D;
 
 $lang = static function (string $line, array $args = []) use ($handler) : string {
     return $handler->getLanguage()->render('debug', $line, $args);

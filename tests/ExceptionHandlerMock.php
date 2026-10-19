@@ -9,7 +9,7 @@
  */
 namespace Tests\Debug;
 
-use Framework\Debug\ExceptionHandler;
+use Aplus\Debug\ExceptionHandler;
 
 class ExceptionHandlerMock extends ExceptionHandler
 {

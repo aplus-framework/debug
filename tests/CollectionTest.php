@@ -9,7 +9,7 @@
  */
 namespace Tests\Debug;
 
-use Framework\Debug\Collection;
+use Aplus\Debug\Collection;
 use PHPUnit\Framework\TestCase;
 
 final class CollectionTest extends TestCase

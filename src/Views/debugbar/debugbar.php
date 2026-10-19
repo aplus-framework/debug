@@ -1,10 +1,10 @@
 <?php
 
-use Framework\Debug\Activity;
-use Framework\Debug\Debugger as D;
+use Aplus\Debug\Activity;
+use Aplus\Debug\Debugger as D;
 
 /**
- * @var array<string,Framework\Debug\Collection> $collections
+ * @var array<string,Aplus\Debug\Collection> $collections
  * @var array{
  *      min: float,
  *      max: float,
