@@ -34,8 +34,8 @@ object as an exception handler in a production environment:
 
 .. code-block:: php
 
-    use Framework\Debug\ExceptionHandler;
-    use Framework\Log\Loggers\SysLogger;
+    use Aplus\Debug\ExceptionHandler;
+    use Aplus\Log\Loggers\SysLogger;
     
     $logger = new SysLogger();
     
@@ -61,7 +61,7 @@ something went wrong and, if the logger is set, the log id will appear:
 
 .. code-block:: php
 
-    use Framework\Database\Database; 
+    use Aplus\Database\Database; 
     
     $database = new Database('root', 'lupalupa', logger: $logger);
 
@@ -118,30 +118,6 @@ If you want to hide any of them, do so as per the following example:
 
     $exceptionHandler->setHiddenInputs('$_ENV', '$_POST');
 
-Search Engine
-^^^^^^^^^^^^^
-
-On the development page there is a link to search for the exception in a search
-engine.
-
-You can choose between several predefined engines:
-
-- `ask <https://www.ask.com/web?q=aplus+framework>`_
-- `baidu <https://www.baidu.com/s?wd=aplus+framework>`_
-- `bing <https://www.bing.com/search?q=aplus+framework>`_
-- `duckduckgo <https://duckduckgo.com/?q=aplus+framework>`_
-- `google <https://www.google.com/search?q=aplus+framework>`_
-- `yahoo <https://search.yahoo.com/search?p=aplus+framework>`_
-- `yandex <https://yandex.com/search/?text=aplus+framework>`_
-
-The default engine is ``google``.
-
-If you want to change to another engine, do as in the example below:
-
-.. code-block:: php
-
-    $exceptionHandler->getSearchEngines()->setCurrent('bing');
-
 Command Line
 ############
 
@@ -159,7 +135,7 @@ class, which can be passed by the constructor or the setter:
 
 .. code-block:: php
 
-    use Framework\Language\Language;
+    use Aplus\Language\Language;
 
     $language = new Language('es');
     $exceptionHandler->setLanguage($language);
@@ -225,14 +201,14 @@ The development page contains detailed information about the exception:
             "file": "/var/www/app/vendor/aplus/database/src/Database.php",
             "line": 103,
             "function": "connect",
-            "class": "Framework\\Database\\Database",
+            "class": "Aplus\\Database\\Database",
             "type": "->"
           },
           {
             "file": "/var/www/app/public/index.php",
             "line": 19,
             "function": "__construct",
-            "class": "Framework\\Database\\Database",
+            "class": "Aplus\\Database\\Database",
             "type": "->"
           }
         ],
@@ -259,7 +235,7 @@ You can customize them as per the following example:
 Debugger
 --------
 
-The ``Framework\Debug\Debugger`` class has methods to help debug and, mainly,
+The ``Aplus\Debug\Debugger`` class has methods to help debug and, mainly,
 render the debugbar.
 
 .. code-block:: php
@@ -267,7 +243,7 @@ render the debugbar.
     <?php
     require __DIR__ . '/../vendor/autoload.php';
 
-    use Framework\Debug\Debugger;
+    use Aplus\Debug\Debugger;
 
     $debugger = new Debugger();
 
@@ -301,7 +277,7 @@ See below how to create a collection:
 
 .. code-block:: php
 
-    use Framework\Debug\Collection;
+    use Aplus\Debug\Collection;
 
     ...
 
@@ -353,7 +329,7 @@ See below how to add a collector to the collection:
 
 .. code-block:: php
 
-    use Framework\Debug\Collector;
+    use Aplus\Debug\Collector;
 
     ...
 
@@ -409,6 +385,8 @@ collectors and will appear in the info panel:
 
     <?php
     ...
+    use Aplus\Debug\Activity;
+    use Aplus\Debug\Collector;
 
     class DatabaseCollector extends Collector
     {
@@ -416,14 +394,13 @@ collectors and will appear in the info panel:
         {
             $activities = [];
             foreach ($this->getData() as $index => $data) {
-                $activities[] = [
-                    'collector' => $this->getName(),
-                    'class' => static::class,
-                    'description' => 'Statement ' . ($index + 1),
-                    'start' => $data['start'],
-                    'end' => $data['end'],
-                    'statement' => $data['statement'],
-                ];
+                $activities[] = new Activity(
+                    collector: $this->getName(),
+                    class: static::class,
+                    description: 'Statement ' . ($index + 1),
+                    start: $data['start'],
+                    end: $data['end'],
+                );
             }
             return $activities;
         }
