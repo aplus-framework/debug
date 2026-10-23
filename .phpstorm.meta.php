@@ -11,21 +11,21 @@ namespace PHPSTORM_META;
 
 registerArgumentsSet(
     'eh_env',
-    \Framework\Debug\ExceptionHandler::DEVELOPMENT,
-    \Framework\Debug\ExceptionHandler::PRODUCTION,
+    \Aplus\Debug\ExceptionHandler::DEVELOPMENT,
+    \Aplus\Debug\ExceptionHandler::PRODUCTION,
 );
 expectedArguments(
-    \Framework\Debug\ExceptionHandler::__construct(),
+    \Aplus\Debug\ExceptionHandler::__construct(),
     0,
     argumentsSet('eh_env')
 );
 expectedArguments(
-    \Framework\Debug\ExceptionHandler::setEnvironment(),
+    \Aplus\Debug\ExceptionHandler::setEnvironment(),
     0,
     argumentsSet('eh_env')
 );
 expectedReturnValues(
-    \Framework\Debug\ExceptionHandler::getEnvironment(),
+    \Aplus\Debug\ExceptionHandler::getEnvironment(),
     argumentsSet('eh_env')
 );
 registerArgumentsSet(
@@ -38,79 +38,44 @@ registerArgumentsSet(
     '$_SERVER',
 );
 expectedArguments(
-    \Framework\Debug\ExceptionHandler::validateInputName(),
+    \Aplus\Debug\ExceptionHandler::validateInputName(),
     0,
     argumentsSet('input_vars')
 );
 expectedArguments(
-    \Framework\Debug\ExceptionHandler::isHiddenInput(),
+    \Aplus\Debug\ExceptionHandler::isHiddenInput(),
     0,
     argumentsSet('input_vars')
 );
 expectedArguments(
-    \Framework\Debug\ExceptionHandler::setHiddenInputs(),
+    \Aplus\Debug\ExceptionHandler::setHiddenInputs(),
     0,
     argumentsSet('input_vars')
 );
 expectedArguments(
-    \Framework\Debug\ExceptionHandler::setHiddenInputs(),
+    \Aplus\Debug\ExceptionHandler::setHiddenInputs(),
     1,
     argumentsSet('input_vars')
 );
 expectedArguments(
-    \Framework\Debug\ExceptionHandler::addHiddenInputs(),
+    \Aplus\Debug\ExceptionHandler::addHiddenInputs(),
     0,
     argumentsSet('input_vars')
 );
 expectedArguments(
-    \Framework\Debug\ExceptionHandler::addHiddenInputs(),
+    \Aplus\Debug\ExceptionHandler::addHiddenInputs(),
     1,
     argumentsSet('input_vars')
 );
 expectedArguments(
-    \Framework\Debug\ExceptionHandler::removeHiddenInputs(),
+    \Aplus\Debug\ExceptionHandler::removeHiddenInputs(),
     0,
     argumentsSet('input_vars')
 );
 expectedArguments(
-    \Framework\Debug\ExceptionHandler::removeHiddenInputs(),
+    \Aplus\Debug\ExceptionHandler::removeHiddenInputs(),
     1,
     argumentsSet('input_vars')
-);
-registerArgumentsSet(
-    'search_engines',
-    'ask',
-    'baidu',
-    'bing',
-    'duckduckgo',
-    'google',
-    'yahoo',
-    'yandex',
-);
-expectedArguments(
-    \Framework\Debug\SearchEngines::__construct(),
-    0,
-    argumentsSet('search_engines')
-);
-expectedArguments(
-    \Framework\Debug\SearchEngines::add(),
-    0,
-    argumentsSet('search_engines')
-);
-expectedArguments(
-    \Framework\Debug\SearchEngines::getUrl(),
-    0,
-    argumentsSet('search_engines')
-);
-expectedArguments(
-    \Framework\Debug\SearchEngines::setCurrent(),
-    0,
-    argumentsSet('search_engines')
-);
-expectedArguments(
-    \Framework\Debug\SearchEngines::makeLink(),
-    1,
-    argumentsSet('search_engines')
 );
 registerArgumentsSet(
     'debugger_options',
@@ -119,12 +84,12 @@ registerArgumentsSet(
     'info_contents',
 );
 expectedArguments(
-    \Framework\Debug\Debugger::getOption(),
+    \Aplus\Debug\Debugger::getOption(),
     0,
     argumentsSet('debugger_options')
 );
 expectedArguments(
-    \Framework\Debug\Debugger::setOption(),
+    \Aplus\Debug\Debugger::setOption(),
     0,
     argumentsSet('debugger_options')
 );
