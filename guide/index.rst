@@ -429,8 +429,8 @@ are activities:
             ?>
             <p>Collector: <?= $this->getName() ?></p>
             <?php
-            $activities = $this->getActivities();
-            if (empty($activities)) {
+            $data = $this->getData();
+            if (empty($data)) {
                 return ob_get_clean();
             }
             ?>
@@ -443,13 +443,13 @@ are activities:
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($activities as $index => $activity) : ?>
+                <?php foreach ($data as $index => $item) : ?>
                     <tr>
                         <td><?= $index + 1 ?></td>
                         <td>
-                            <pre class="language-sql"><code><?= htmlentities($activity['statement']) ?></code></pre>
+                            <pre class="language-sql"><code><?= htmlentities($item['statement']) ?></code></pre>
                         </td>
-                        <td><?= Debugger::roundSecondsToMilliseconds($activity['end'] - $activity['start']) ?></td>
+                        <td><?= Debugger::roundSecondsToMilliseconds($item['end'] - $item['start']) ?></td>
                     </tr>
                 <?php endforeach ?>
                 </tbody>
