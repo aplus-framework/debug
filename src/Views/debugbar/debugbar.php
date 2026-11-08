@@ -24,10 +24,25 @@ if (isset($options['icon_path'])) {
 if (!is_file($iconPath)) {
     throw new LogicException('Icon not found: ' . $iconPath);
 }
+$isIconNotInverted = isset($options['icon_inverted']) && $options['icon_inverted'] === false;
+$isInverted = isset($options['inverted']) && $options['inverted'] === true;
+$prismFile = __DIR__ . '/../assets/prism-aplus.css';
+if ($isInverted) {
+    $prismFile = __DIR__ . '/../assets/prism-aplus-light.css';
+}
 ?>
 <!-- Aplus Framework Debugbar start -->
 <style>
-    <?= file_get_contents(__DIR__ . '/../assets/prism-aplus.css') ?>
+    <?php
+    echo file_get_contents($prismFile);
+    if ($isInverted && $isIconNotInverted) {
+       ?>
+.aplus-debug.inverted .icon {
+    filter: invert(1);
+}
+       <?php
+    }
+    ?>
 </style>
 <style>
     <?php
@@ -38,7 +53,7 @@ if (isset($options['color'])) {
 echo $contents;
 ?>
 </style>
-<div id="debugbar" class="aplus-debug" dir="ltr">
+<div id="debugbar" class="aplus-debug<?= $isInverted ? ' inverted' : '' ?>" dir="ltr">
     <div class="panels">
         <div class="panel info-collection">
             <div class="resize" title="Change panel height"></div>

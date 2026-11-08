@@ -525,6 +525,7 @@ The available options are:
 - `Icon Path`_
 - `Primary Color`_
 - `Info Contents`_
+- `Inverted Colors`_
 
 Icon Path
 ^^^^^^^^^
@@ -573,6 +574,22 @@ It is also possible to remove personalized content from the info:
 
 .. image:: img/debugbar-custom-info-contents-disabled.png
     :alt: Aplus Debug - Debugbar With Custom Info Contents Disabled
+
+Inverted Colors
+^^^^^^^^^^^^^^^
+
+Using the ``inverted`` option, it is possible to invert the colors of the debugbar:
+
+.. code-block:: php
+
+    $debugger->setOption('inverted', true);
+
+If you do not want the icon colors to be inverted, set the ``icon_inverted``
+option to ``false``:
+
+.. code-block:: php
+
+    $debugger->setOption('icon_inverted', false);
 
 You can toggle the debugbar by pressing the ``Ctrl + F12`` keys.
 

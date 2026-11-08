@@ -426,6 +426,20 @@
     filter: invert(1);
 }
 
+.aplus-debug.inverted a,
+.aplus-debug.inverted .info-collection table td span {
+    filter: invert(1);
+}
+
+.aplus-debug.inverted .aplus-link {
+    filter: invert(0);
+}
+
+.aplus-debug.inverted pre[class*="language-"] {
+    filter: invert(1);
+    border-color: #ddd;
+}
+
 /*
  * Bootstrap 5 Breakpoint
  * `md` applies to small devices (landscape phones, less than 768px)
