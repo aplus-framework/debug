@@ -31,7 +31,7 @@ if (!in_array($theme, ['dark', 'light'])) {
     throw new LogicException('Invalid debugbar theme: "' . $theme . '"');
 }
 $isLightTheme = $theme === 'light';
-$prismFile = __DIR__ . '/../assets/prism-aplus.css';
+$prismFile = __DIR__ . '/../assets/prism-aplus-dark.css';
 if ($isLightTheme) {
     $prismFile = __DIR__ . '/../assets/prism-aplus-light.css';
 }

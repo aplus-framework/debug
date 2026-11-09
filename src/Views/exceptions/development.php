@@ -23,7 +23,7 @@ $lang = static function (string $line, array $args = []) use ($handler) : string
         D::esc($exception->getMessage()) ?></title>
     <link rel="shortcut icon" href="data:image/png;base64,<?= base64_encode((string) file_get_contents(__DIR__ . '/favicons/development.png')) ?>">
     <style>
-        <?= file_get_contents(__DIR__ . '/../assets/prism-aplus.css') ?>
+        <?= file_get_contents(__DIR__ . '/../assets/prism-aplus-dark.css') ?>
     </style>
     <style>
         body {
