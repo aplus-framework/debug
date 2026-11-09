@@ -426,6 +426,16 @@
     filter: invert(1);
 }
 
+.aplus-debug.inverted .text-success {
+    color: green;
+    filter: invert(1);
+}
+
+.aplus-debug.inverted .text-error {
+    color: red;
+    filter: invert(1);
+}
+
 .aplus-debug.inverted a,
 .aplus-debug.inverted .info-collection table td span {
     filter: invert(1);
