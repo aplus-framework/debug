@@ -412,8 +412,8 @@ Collector Contents
 So far, we've seen a very simple panel, showing only the collector's name.
 
 In the example below, we will update the ``getContents`` method to return only
-the collector name if there are no activities and a table with details if there
-are activities:
+the collector name if there are no data and a table with details if there
+are data:
 
 .. code-block:: php
 
