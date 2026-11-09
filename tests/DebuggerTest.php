@@ -258,11 +258,62 @@ final class DebuggerTest extends TestCase
             $this->debugger->renderDebugbar();
         } catch (LogicException $e) {
             self::assertSame(
-                'Icon not found: ' . $iconPath,
+                'Debugbar icon not found: "' . $iconPath . '"',
                 $e->getMessage()
             );
         }
         $this->closeBuffer();
+    }
+
+    public function testInvalidThemeOption() : void
+    {
+        $this->debugger->setOption('theme', 'dark');
+        $this->debugger->renderDebugbar();
+        $this->debugger->setOption('theme', 'light');
+        $this->debugger->renderDebugbar();
+        $this->debugger->setOption('theme', 'foo');
+        try {
+            $this->debugger->renderDebugbar();
+        } catch (LogicException $e) {
+            self::assertSame(
+                'Invalid debugbar theme: "foo"',
+                $e->getMessage()
+            );
+        }
+        $this->closeBuffer();
+    }
+
+    public function testThemeOption() : void
+    {
+        $this->debugger->setOption('theme', 'dark');
+        self::assertStringNotContainsString(
+            'class="aplus-debug inverted"',
+            $this->debugger->renderDebugbar()
+        );
+        $this->debugger->setOption('theme', 'light');
+        self::assertStringContainsString(
+            'class="aplus-debug inverted"',
+            $this->debugger->renderDebugbar()
+        );
+    }
+
+    public function testCustomIconWithLightTheme() : void
+    {
+        self::assertStringNotContainsString(
+            '.aplus-debug.inverted .icon {',
+            $this->debugger->renderDebugbar()
+        );
+        $iconPath = __DIR__ . '/../guide/image.png';
+        $this->debugger->setOption('icon_path', $iconPath);
+        self::assertStringNotContainsString(
+            '.aplus-debug.inverted .icon {',
+            $this->debugger->renderDebugbar()
+        );
+        $this->debugger->setOption('theme', 'light');
+        self::assertStringContainsString(
+            '.aplus-debug.inverted .icon {',
+            $this->debugger->renderDebugbar()
+        );
     }
 
     public function testInfoContentsOption() : void

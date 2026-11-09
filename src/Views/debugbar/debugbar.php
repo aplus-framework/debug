@@ -18,16 +18,21 @@ if (!isset($options['info_contents'])) {
     $options['info_contents'] = '<p>★ <a href="https://aplus-framework.com" target="_blank">aplus-framework.com</a></p>';
 }
 $iconPath = __DIR__ . '/icon.svg';
+$hasCustomIcon = false;
 if (isset($options['icon_path'])) {
     $iconPath = $options['icon_path'];
+    $hasCustomIcon = true;
 }
 if (!is_file($iconPath)) {
-    throw new LogicException('Icon not found: ' . $iconPath);
+    throw new LogicException('Debugbar icon not found: "' . $iconPath . '"');
 }
-$isIconNotInverted = isset($options['icon_inverted']) && $options['icon_inverted'] === false;
-$isInverted = isset($options['inverted']) && $options['inverted'] === true;
+$theme = $options['theme'] ?? 'dark';
+if (!in_array($theme, ['dark', 'light'])) {
+    throw new LogicException('Invalid debugbar theme: "' . $theme . '"');
+}
+$isLightTheme = $theme === 'light';
 $prismFile = __DIR__ . '/../assets/prism-aplus.css';
-if ($isInverted) {
+if ($isLightTheme) {
     $prismFile = __DIR__ . '/../assets/prism-aplus-light.css';
 }
 ?>
@@ -35,13 +40,13 @@ if ($isInverted) {
 <style>
     <?php
     echo file_get_contents($prismFile);
-    if ($isInverted && $isIconNotInverted) {
+    if ($hasCustomIcon && $isLightTheme) :
        ?>
 .aplus-debug.inverted .icon {
     filter: invert(1);
 }
        <?php
-    }
+    endif;
     ?>
 </style>
 <style>
@@ -53,7 +58,7 @@ if (isset($options['color'])) {
 echo $contents;
 ?>
 </style>
-<div id="debugbar" class="aplus-debug<?= $isInverted ? ' inverted' : '' ?>" dir="ltr">
+<div id="debugbar" class="aplus-debug<?= $isLightTheme ? ' inverted' : '' ?>" dir="ltr">
     <div class="panels">
         <div class="panel info-collection">
             <div class="resize" title="Change panel height"></div>
