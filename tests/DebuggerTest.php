@@ -326,6 +326,15 @@ final class DebuggerTest extends TestCase
         self::assertStringNotContainsString('★', $debugbar);
     }
 
+    public function testAplusClass() : void
+    {
+        require __DIR__ . '/Aplus.php';
+        self::assertStringContainsString(
+            'class="aplus-link"',
+            $this->debugger->renderDebugbar()
+        );
+    }
+
     public function testMakeSafeName() : void
     {
         self::assertSame(
